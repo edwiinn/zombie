@@ -62,9 +62,9 @@ function loadObject(filename, objName){
 function waitObjectLoaded(){ // used to regularly get all object loaded. stop if all object are not null
     gun = scene.getObjectByName("gun");
     if(gun != null){ // initialize loaded object
-        gun.position.set(4.5, -7.5, -5);
+        gun.position.set(4.5, -7.5, -4.5);
         gun.rotateY(Math.PI*0.6);
-        gun.rotateZ(Math.PI*0.1);
+        gun.rotateZ(Math.PI*0.06);
         clearInterval(objLoad);
     }
 }
