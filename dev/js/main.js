@@ -1,14 +1,11 @@
 "use strict";
 
 var gun;
-
+var objLoad;
 
 function animate(){
     camera.updateProjectionMatrix();
     render();
-    if(!gun)
-        gun = scene.getObjectByName("gun");
-    
     requestAnimationFrame( animate );
 }
 
@@ -27,13 +24,11 @@ function render(){
 
     loadObject("gun.json", "gun");
     scene = new THREE.Scene();
-    // camera = new THREE.OrthographicCamera( window.innerWidth / - 2, container_width / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
-    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 25000);
-    camera.position.set(20, 10, 20);
-    // camera.lookAt(0,0,0);
+    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 2500);
     light = new THREE.AmbientLight(0x404040);
     clock = new THREE.Clock();
     scene.add(camera, light);
+    objLoad = setInterval(waitObjectLoaded, 100);
     animate();
     
 })();
@@ -64,9 +59,12 @@ function loadObject(filename, objName){
     );
 }
 
-function objectReady(obj){
-    if(obj){
-        obj.position.set(0,0,-100);
-        return true;
+function waitObjectLoaded(){ // used to regularly get all object loaded. stop if all object are not null
+    gun = scene.getObjectByName("gun");
+    if(gun != null){ // initialize loaded object
+        gun.position.set(4.5, -7.5, -5);
+        gun.rotateY(Math.PI*0.6);
+        gun.rotateZ(Math.PI*0.1);
+        clearInterval(objLoad);
     }
 }
