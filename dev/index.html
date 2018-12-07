@@ -6,8 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <audio id="bgm" src="" loop="true"></audio>
     <title>FP Grafkom</title>
-    <style></style>
-    <script src="../three.js-master/build/three.js"></script>
+    <style>
+        #container{
+            width: 95vw;
+            height: 92vh;
+            position: center;
+        };
+    </style>
+    <script src="../../../GRAFKOMC/three.js-master/build/three.js"></script>
 </head>
 <body>
     <div id="container"></div>
@@ -15,10 +21,9 @@
     <script>
     "use strict";
     // declaration of global variables
-    var renderer, scene_mainmenu, scene_charactercreation, scene_gamestage, scene_HUD;
-    var camera, camera_control, camera_HUD, spotlight, frontlight, gamestage_plane, planeBox;
-    var playerModel, playerHP, playerBox, _CLOCK_, deltaTime, _MAXFPS_;
-    var obstacles = [], playerMovSpeed;
+    var renderer, scene, camera, light, clock, loader, container_width, container_height;
     </script>
+    <script src="js/main.js"></script>
+
 </body>
 </html>
