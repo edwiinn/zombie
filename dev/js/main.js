@@ -22,13 +22,35 @@ function render(){
     renderer.setClearColor(0xffffff, 1);
     container.appendChild(renderer.domElement);
 
+    // init player object
+    playerObj = new THREE.Object3D();
+    playerObj.translateY(7.5);
+
+    // load object from json file
     loadObject("gun.json", "gun");
+
+    // init important var
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 2500);
+    camera.position.set(0, 7.5, 0);
     light = new THREE.AmbientLight(0x404040);
     clock = new THREE.Clock();
-    scene.add(camera, light);
+
+    scene.add(camera, light, playerObj);
+    
+    // create plane
+    plane = new THREE.Mesh(new THREE.BoxGeometry(1000, 2, 1000),
+                            new THREE.MeshPhongMaterial ({
+                            color: 0xf74321,
+                            shininess: 100,
+                            specular: 0x111111}));
+    plane.translateZ(-500);
+    scene.add(plane);
+
+    // regularly load object from scene to variable
     objLoad = setInterval(waitObjectLoaded, 100);
+
+    // animate
     animate();
     
 })();
@@ -62,9 +84,13 @@ function loadObject(filename, objName){
 function waitObjectLoaded(){ // used to regularly get all object loaded. stop if all object are not null
     gun = scene.getObjectByName("gun");
     if(gun != null){ // initialize loaded object
-        gun.position.set(4.5, -7.5, -4.5);
+        playerObj.add(gun);
+        console.log(playerObj.position, gun.position);
+        
+        gun.position.set(5, -7.5, -6.5);
         gun.rotateY(Math.PI*0.6);
         gun.rotateZ(Math.PI*0.06);
+        
         clearInterval(objLoad);
     }
 }
