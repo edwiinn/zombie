@@ -2,8 +2,10 @@
 
 var gun;
 var objLoad;
+var vec = new THREE.Vector3();
 
 function animate(){
+    delta = clock.getDelta();
     camera.updateProjectionMatrix();
     render();
     requestAnimationFrame( animate );
@@ -33,8 +35,11 @@ function render(){
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 2500);
     camera.position.set(0, 7.5, 0);
+    controls = new THREE.PointerLockControls( camera, 100, 30, true, playerObj );
     light = new THREE.AmbientLight(0x404040);
     clock = new THREE.Clock();
+
+    // playerObj.add(camera);
 
     scene.add(camera, light, playerObj);
     
