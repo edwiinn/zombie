@@ -6,6 +6,9 @@ var gun;
 function animate(){
     camera.updateProjectionMatrix();
     render();
+    if(!gun)
+        gun = scene.getObjectByName("gun");
+    
     requestAnimationFrame( animate );
 }
 
@@ -26,15 +29,12 @@ function render(){
     // camera = new THREE.OrthographicCamera( window.innerWidth / - 2, container_width / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 25000);
     camera.position.set(20, 10, 20);
-    camera.lookAt(0,0,0);
+    // camera.lookAt(0,0,0);
     light = new THREE.AmbientLight(0x404040);
     clock = new THREE.Clock();
     scene.add(camera, light);
-    // debug corner
-
-    // end
     animate();
-
+    
 })();
 
 
@@ -63,14 +63,9 @@ function loadObject(filename, objName){
     );
 }
 
-function getObjectFromScene(objName){
-    scene.traverse (function (object)
-    {
-        
-        if (object.name == objName){
-            console.log("found");
-          
-            return object;
-        }
-    });
+function objectReady(obj){
+    if(obj){
+        obj.position.set(0,0,-100);
+        return true;
+    }
 }
