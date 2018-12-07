@@ -20,11 +20,12 @@ function render(){
     // declaration of important variables
     loader = new THREE.ObjectLoader();  // used to load JSON file of model
     loader.setCrossOrigin("use-credentials");
-    loadObject("gun.json", "gun");
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0xffffff, 1);
     container.appendChild(renderer.domElement);
+
+    loadObject("gun.json", "gun");
     scene = new THREE.Scene();
     // camera = new THREE.OrthographicCamera( window.innerWidth / - 2, container_width / 2, window.innerHeight / 2, window.innerHeight / - 2, 1, 1000 );
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 25000);
