@@ -8,8 +8,8 @@ var gun;
     container_height = document.getElementById("container").height;
     loader = new THREE.JSONLoader();  // used to load JSON file of model
     loader.load( 'assets/.json', function ( geometry, materials ) {
-        var mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial( materials ) );
-        scene.add( mesh );
+        gun = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial( materials ) );
+        scene.add( gun );
     });
     renderer = new THREE.WebGLRenderer({antialias: true});
     scene = new THREE.Scene();
