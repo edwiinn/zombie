@@ -1,5 +1,6 @@
 var renderer, scene, camera;
 var group;
+var senterTarget;
 
 init();
 animate();
@@ -49,7 +50,6 @@ function init(){
   box.position.set(-4,0.5,-1);
   group.add(box);
 
-  console.log(group.children.length);
   var player = createBox(0.5,1,0.5);
   scene.add(player);
   player.position.set(0,0.5,0)
@@ -64,14 +64,23 @@ function init(){
   var ambientLight = new THREE.AmbientLight(0xffffff,0.2);
   scene.add(ambientLight);
   //
-  var spotLight = new THREE.SpotLight(0xffffff);
+  var spotLight = new THREE.SpotLight(0xffffff, 0.3);
   spotLight.penumbra = 0.486;
   spotLight.decay = 0.5;
-  spotLight.intensity = 0.3
   spotLight.position.set( 0, 10, 0 );
-  // spotLight.castShadow = true;
-  // spotLight.add(box);
   scene.add(spotLight);
+
+  senterSpotLight = new THREE.SpotLight(0xffffff, 0.7);
+  senterSpotLight.penumbra = 0.5;
+  senterSpotLight.position.set(0,2.3,0);
+  senterTarget = new THREE.Object3D();
+  var spotLightHelper = new THREE.SpotLightHelper( senterSpotLight );
+  scene.add( spotLightHelper );
+  scene.add(senterSpotLight);
+  // scene.add(senterTarget);
+  camera.add(senterTarget);
+  senterTarget.position.set(0,4,-8);
+  senterSpotLight.target = senterTarget;
 
   window.addEventListener( 'resize', onWindowResize, false );
   window.addEventListener( "mousemove", onDocumentMouseMove, false );
@@ -150,8 +159,8 @@ function onDocumentMouseMove( event ) {
     selectedObject.material.color.set( '#0f0' );
     selectedObject = null;
   }
-
   var intersects = getIntersects( event.layerX, event.layerY );
+  console.log(mouseVector);
   if ( intersects.length > 0 ) {
     var res = intersects.filter( function ( res ) {
       return res && res.object;
