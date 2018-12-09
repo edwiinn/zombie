@@ -31,8 +31,8 @@ function init(){
   // var box = new THREE.Mesh( boxGeometry, boxMaterial );
   var box = createBox(1,1,1);
   box.material.color.set('#0f0');
-  group.add( box );
   box.position.set(2,0.5,4);
+  group.add( box );
 
   var box = createBox(1,1,1);
   box.material.color.set('#ff0');
@@ -49,6 +49,7 @@ function init(){
   box.position.set(-4,0.5,-1);
   group.add(box);
 
+  console.log(group.children.length);
   var player = createBox(0.5,1,0.5);
   scene.add(player);
   player.position.set(0,0.5,0)
@@ -74,7 +75,8 @@ function init(){
 
   window.addEventListener( 'resize', onWindowResize, false );
   window.addEventListener( "mousemove", onDocumentMouseMove, false );
-  document.addEventListener('keydown', onDocumentKeyDown, false);
+  window.addEventListener('keydown', onDocumentKeyDown, false);
+  window.addEventListener("mousedown", onDocumentMouseDown, false)
 }
 
 function createBox(x, y, z, ccolor){
@@ -84,11 +86,26 @@ function createBox(x, y, z, ccolor){
   return box;
 }
 
+function onDocumentMouseDown(){
+  event.preventDefault();
+  if(selectedObject){
+    //event for mouse click on object
+    for(var it = 0; it < group.children.length; it++){
+      if(group.children[it].id == selectedObject.id){
+        group.children[it].geometry.dispose();
+        group.children[it].material.dispose();
+        group.remove(group.children[it]);
+      }
+    }
+    console.log("box killed");
+  }
+}
+
 var cameraRotateLeft = false;
 var cameraRotateRight = false;
 var isTransitionCameraDone = true;
 function onDocumentKeyDown(){
-  event.preventDefault;
+  event.preventDefault();
   if(isTransitionCameraDone){
     var keyName = event.key;
     if(keyName == 'a' || keyName == 'A'){
@@ -103,6 +120,7 @@ function onDocumentKeyDown(){
     }
   }
 }
+
 
 var targetRotation;
 function animate() {
