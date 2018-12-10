@@ -1,6 +1,6 @@
 var renderer, scene, camera;
 var group;
-var senterTarget;
+var player, cameraOriginVec;
 
 init();
 animate();
@@ -21,7 +21,8 @@ function init(){
   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 100);
   camera.position.x = 0;
   camera.position.z =0;
-  camera.position.y =1.5;
+  camera.position.y =1;
+  cameraOriginVec = new THREE.Vector3(0, 1, 0);
   // camera.lookAt(box);
   // camera.position.set(30,5,0);
   // camera.up = new THREE.Vector3(0,0,1);
@@ -50,8 +51,9 @@ function init(){
   box.position.set(-4,0.5,-1);
   group.add(box);
 
-  var player = createBox(0.5,1,0.5);
+  player = createBox(0.5,1,0.5);
   scene.add(player);
+  player.add(camera);
   player.position.set(0,0.5,0)
   var floorGeo = new THREE.PlaneBufferGeometry(2000,2000);
   var floorMat = new THREE.MeshPhongMaterial();
@@ -61,7 +63,11 @@ function init(){
   floorMsh.receiveShadow = true;
   floorMsh.position.set( 0, - 0.05, 0 );
 
-  var ambientLight = new THREE.AmbientLight(0xffffff,0.2);
+  mouseHelper = createBox(1,1,1);
+  scene.add(mouseHelper);
+
+
+  var ambientLight = new THREE.AmbientLight(0xffffff,0.1);
   scene.add(ambientLight);
   //
   var spotLight = new THREE.SpotLight(0xffffff, 0.3);
@@ -70,13 +76,13 @@ function init(){
   spotLight.position.set( 0, 10, 0 );
   scene.add(spotLight);
 
-  senterSpotLight = new THREE.SpotLight(0xffffff, 0.7);
+  var senterSpotLight = new THREE.SpotLight(0xffffff, 0.7);
   senterSpotLight.penumbra = 0.5;
   senterSpotLight.position.set(0,2.3,0);
-  senterTarget = new THREE.Object3D();
-  var spotLightHelper = new THREE.SpotLightHelper( senterSpotLight );
-  scene.add( spotLightHelper );
   scene.add(senterSpotLight);
+  var senterTarget = new THREE.Object3D();
+  // var spotLightHelper = new THREE.SpotLightHelper( senterSpotLight );
+  // scene.add( spotLightHelper );
   // scene.add(senterTarget);
   camera.add(senterTarget);
   senterTarget.position.set(0,4,-8);
@@ -119,12 +125,12 @@ function onDocumentKeyDown(){
     var keyName = event.key;
     if(keyName == 'a' || keyName == 'A'){
       cameraRotateLeft = true;
-      targetRotation = camera.rotation.y + Math.PI/2;
+      targetRotation = player.rotation.y + Math.PI/2;
       isTransitionCameraDone = false;
     }
     else if(keyName == 'd' || keyName == 'D'){
       cameraRotateRight = true;
-      targetRotation = camera.rotation.y - Math.PI/2;
+      targetRotation = player.rotation.y - Math.PI/2;
       isTransitionCameraDone = false;
     }
   }
@@ -133,16 +139,17 @@ function onDocumentKeyDown(){
 
 var targetRotation;
 function animate() {
+  // player.rotation.y += 0.1;
   if(cameraRotateLeft){
-    camera.rotation.y += 0.02;
-    if(camera.rotation.y >= targetRotation){
+    player.rotation.y += 0.02;
+    if(player.rotation.y >= targetRotation){
       cameraRotateLeft = false;
       isTransitionCameraDone = true;
     }
   }
   if(cameraRotateRight){
-    camera.rotation.y -= 0.02;
-    if(camera.rotation.y <= targetRotation){
+    player.rotation.y -= 0.02;
+    if(player.rotation.y <= targetRotation){
       cameraRotateRight = false;
       isTransitionCameraDone = true;
     }
@@ -160,7 +167,9 @@ function onDocumentMouseMove( event ) {
     selectedObject = null;
   }
   var intersects = getIntersects( event.layerX, event.layerY );
-  console.log(mouseVector);
+  // console.log(mouseVector);
+  camera.position.x = cameraOriginVec.x + mouseVector.x * 0.2;
+  camera.position.y = cameraOriginVec.y + mouseVector.y * 0.2;
   if ( intersects.length > 0 ) {
     var res = intersects.filter( function ( res ) {
       return res && res.object;
@@ -184,6 +193,7 @@ var mouseVector = new THREE.Vector3();
 function getIntersects( x, y ) {
   x = ( x / window.innerWidth ) * 2 - 1;
   y = - ( y / window.innerHeight ) * 2 + 1;
+
   mouseVector.set( x, y, 0.5 );
   raycaster.setFromCamera( mouseVector, camera );
   return raycaster.intersectObject( group, true );
