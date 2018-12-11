@@ -4,10 +4,12 @@ var gun;
 var vec = new THREE.Vector3();
 
 function animate(){
+    deltaTime = clock.getDelta();
     requestAnimationFrame( animate );
     // if(controls.enabled){
-        camera.updateProjectionMatrix();
-        render();
+    camera.updateProjectionMatrix();
+    render();
+    
     // }
 }
 
@@ -18,6 +20,7 @@ function LockCamera(){
 
 function waitGunLoaded(){
     gun = scene.getObjectByName("gun");
+    
     if(gun != null){ // initialize loaded object
         gun.position.set(5, -7.5, -4.5);
         gun.rotateY(Math.PI*0.6);
@@ -43,8 +46,8 @@ function initGame(){
     
     // init important var
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 2500);
-    camera.position.set(0, 7.5, 0);
+    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 1000);
+    camera.position.set(0, 4, 0);
     light = new THREE.AmbientLight(0x404040);
     clock = new THREE.Clock();
 
@@ -65,13 +68,14 @@ function initGame(){
 }
 
 
-function loadObject(filename, objName){
+function loadObject(filename, objName, scale){
     loader.load(
         "assets/"+filename,
         function ( obj ) {
             // Add the loaded object to the scene
             obj.name = objName;
             if(scene.getObjectByName(objName) == null){
+                // obj.scale.set(scale);
                 scene.add( obj );
                 console.log(objName+" have been loaded");
                 return;
@@ -82,6 +86,40 @@ function loadObject(filename, objName){
     );
 }
 
-document.addEventListener("keydown", function(event){
-    
-})
+document.addEventListener('keydown', (event) => {
+    switch (event.key){
+        case 'w':
+            camera.position.set(
+                camera.position.x,
+                camera.position.y,
+                camera.position.z - movSpeed * deltaTime
+            );
+            break;
+        case 'd':
+            camera.position.set(
+                camera.position.x + movSpeed * deltaTime,
+                camera.position.y,
+                camera.position.z
+            );
+            // camera.translateX(movSpeed * deltaTime);
+            break;
+        case 's':
+            camera.position.set(
+                camera.position.x,
+                camera.position.y,
+                camera.position.z + movSpeed * deltaTime
+            );
+            // camera.translateY((-1) * movSpeed * deltaTime);
+            break;
+        case 'a':
+            camera.position.set(
+                camera.position.x - movSpeed * deltaTime,
+                camera.position.y,
+                camera.position.z
+            );
+            // camera.translateX((-1) * movSpeed * deltaTime);
+            break;
+        default:
+            break;
+    }
+});
