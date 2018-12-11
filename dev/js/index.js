@@ -8,12 +8,10 @@ async function index() {
     loadObject("gun.json", "gun");
     await delay(1000);
     waitObjectLoaded();
-    await delay(500);
     initEnemy();
     await delay(numOfEnemy*1000);
     waitEnemyLoaded();
-    console.log(enemy.length);
-    
+    await delay(500);
     animate();
 }
 

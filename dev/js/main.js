@@ -3,13 +3,14 @@
 var gun;
 var vec = new THREE.Vector3();
 
-
-
 function animate(){
     camera.updateProjectionMatrix();
-    controls.update();
 	render();
     requestAnimationFrame( animate );
+}
+
+function LockCamera(){
+    controls.lock();
 }
 
 function waitObjectLoaded(){
@@ -58,9 +59,7 @@ function initGame(){
     scene.add(plane);
     
 	controls = new THREE.PointerLockControls( camera );
-    
     scene.add( controls.getObject() );
-	
 	return;
 }
 
