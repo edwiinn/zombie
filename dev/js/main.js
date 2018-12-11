@@ -52,6 +52,7 @@ function initGame(){
     clock = new THREE.Clock();
 
     scene.add(light);
+    camera.scale.set(0.5, 0.5, 0.5);
     
     // create plane
     plane = new THREE.Mesh(new THREE.BoxGeometry(100, 4, 100),
@@ -59,7 +60,6 @@ function initGame(){
                             color: 0xf74321,
                             shininess: 100,
                             specular: 0x111111}));
-    plane.translateZ(-500);
     scene.add(plane);
     
 	controls = new THREE.PointerLockControls( camera );
@@ -73,10 +73,17 @@ function loadObject(filename, objName, scale){
         "assets/"+filename,
         function ( obj ) {
             // Add the loaded object to the scene
-            obj.name = objName;
+            // obj.name = objName;
             if(scene.getObjectByName(objName) == null){
-                // obj.scale.set(scale);
-                scene.add( obj );
+                var tmp = new THREE.Group();
+                var tmp2;
+                tmp.name = objName;
+                obj.name = objName;
+                tmp.add(obj);
+                
+                // tmp2 = tmp.getObjectByName(objName);
+                // tmp2.scale.set(scale);
+                scene.add( tmp );
                 console.log(objName+" have been loaded");
                 return;
             }

@@ -31,9 +31,4 @@ function waitEnemyLoaded(){
 		// enemy.push( instance );
 		scene.add(instance);
     }
-	// if(enemy.length == numOfEnemy){ // initialize loaded object
-    //     for(var i=0; i < numOfEnemy; i++){
-	// 		scene.add( enemy[i] );
-	// 	}
-    // }
 }
