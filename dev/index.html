@@ -4,17 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <audio id="bgm" src="" loop="true"></audio>
     <title>FP Grafkom</title>
     <style>
-        /* #container{
-            width: 95vw;
-            height: 92vh;
-            position: center;
-        }; */
     </style>
-    <script src="../../../GRAFKOMC/three.js-master/build/three.js"></script>
-    <script src="js/FPSControls.js"></script>
+    <script src="js/three.min.js"></script>
+	<script src="js/PointerLockControls.js"></script>
 </head>
 <body>
     <div id="container"></div>
@@ -22,10 +16,10 @@
     <script>
     "use strict";
     // declaration of global variables
-    var renderer, scene, camera, light, playerObj, clock, loader, container_width, container_height;
+    var renderer, scene, camera, light, clock, loader;
     var controls, plane, delta;
     </script>
     <script src="js/main.js"></script>
-
+	<script src="js/index.js"></script>
 </body>
 </html>

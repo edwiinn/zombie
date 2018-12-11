@@ -1,1 +1,0 @@
-indexCamera > gerak pake 'a' dan 'd'
