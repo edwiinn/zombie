@@ -1,7 +1,7 @@
 "use strict";
 
 var enemy = [];
-var numOfEnemy = 5;
+var numOfEnemy = 0;
 var minRadius = 200;
 
 function generateEnemyPosition(){

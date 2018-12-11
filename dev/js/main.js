@@ -51,7 +51,7 @@ function initGame(){
     scene.add(light);
     
     // create plane
-    plane = new THREE.Mesh(new THREE.BoxGeometry(10000, 4, 10000),
+    plane = new THREE.Mesh(new THREE.BoxGeometry(100, 4, 100),
                             new THREE.MeshPhongMaterial ({
                             color: 0xf74321,
                             shininess: 100,
