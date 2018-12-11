@@ -4,13 +4,16 @@ var gun;
 var vec = new THREE.Vector3();
 
 function animate(){
-    camera.updateProjectionMatrix();
-	render();
     requestAnimationFrame( animate );
+    // if(controls.enabled){
+        camera.updateProjectionMatrix();
+        render();
+    // }
 }
 
 function LockCamera(){
     controls.lock();
+    controls.enabled = true;
 }
 
 function waitGunLoaded(){
@@ -79,3 +82,6 @@ function loadObject(filename, objName){
     );
 }
 
+document.addEventListener("keydown", function(event){
+    
+})

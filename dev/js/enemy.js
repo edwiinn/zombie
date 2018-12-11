@@ -4,38 +4,36 @@ var enemy = [];
 var numOfEnemy = 5;
 var minRadius = 200;
 
-function initEnemy(){    // Auto run function
-	var name;
-    for(var i=0; i < numOfEnemy; i++){
-		name = "enemy"+i;
-		if(scene.getObjectByName(name) == null)
-			loadObject("enemy.json", name);
-    }
-};
-
 function generateEnemyPosition(){
 	var xsign = 0, zsign = 0;
 	if(Math.random()%2 == 0){xsign=1;}
 	else{xsign=-1;}
 	if(Math.random()%2 == 0){zsign=1;}
 	else{zsign=-1;}
-	return THREE.Vector3(camera.position.x+(minRadius+150)*xsign,0,camera.position.z+(minRadius+150)*zsign);
+	return new THREE.Vector3(camera.position.x+(minRadius+150)*xsign,0,camera.position.z+(minRadius+150)*zsign);
+}
+
+function getSign(){
+	return (Math.ceil( 100 * Math.random()%2) ) ? -1: 1;
 }
 
 function waitEnemyLoaded(){
     enemy = [];
 	var instance, name;
+	var temp = scene.getObjectByName("baseEnemy");
 	for(var i=0; i < numOfEnemy && camera != null; i++){
 		name = "enemy"+i;
-		instance = scene.getObjectByName(name);
-		if(instance != null){
-			instance.position.set(generateEnemyPosition());
-			enemy.push( instance );
-		}
+		instance = temp.clone();
+		instance.name = name;
+		instance.position.x = camera.position.x+(minRadius+150) * getSign();
+		instance.position.z = camera.position.z+(minRadius+150) * getSign();
+		// instance.position.set(generateEnemyPosition());
+		// enemy.push( instance );
+		scene.add(instance);
     }
-	if(enemy.length == numOfEnemy){ // initialize loaded object
-        for(var i=0; i < numOfEnemy; i++){
-			scene.add( enemy[i] );
-		}
-    }
+	// if(enemy.length == numOfEnemy){ // initialize loaded object
+    //     for(var i=0; i < numOfEnemy; i++){
+	// 		scene.add( enemy[i] );
+	// 	}
+    // }
 }
