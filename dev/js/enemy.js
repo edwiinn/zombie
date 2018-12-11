@@ -1,7 +1,7 @@
 "use strict";
 
 var enemy = [];
-var numOfEnemy = 1;
+var numOfEnemy = 5;
 var minRadius = 200;
 
 function initEnemy(){    // Auto run function
@@ -22,7 +22,7 @@ function generateEnemyPosition(){
 	return THREE.Vector3(camera.position.x+(minRadius+150)*xsign,0,camera.position.z+(minRadius+150)*zsign);
 }
 
-function waitObjectLoaded(){
+function waitEnemyLoaded(){
     enemy = [];
 	var instance, name;
 	for(var i=0; i < numOfEnemy && camera != null; i++){

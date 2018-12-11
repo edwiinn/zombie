@@ -7,15 +7,13 @@ var vec = new THREE.Vector3();
 
 function animate(){
     camera.updateProjectionMatrix();
+    controls.update();
 	render();
     requestAnimationFrame( animate );
-    // console.log(gun);
 }
 
 function waitObjectLoaded(){
     gun = scene.getObjectByName("gun");
-    console.log("hah");
-    
     if(gun != null){ // initialize loaded object
         console.log("load");
         
@@ -49,10 +47,7 @@ function initGame(){
     clock = new THREE.Clock();
 
     scene.add(light);
-
-    // load gun object from json file
-    loadObject("gun.json", "gun");
-
+    
     // create plane
     plane = new THREE.Mesh(new THREE.BoxGeometry(10000, 4, 10000),
                             new THREE.MeshPhongMaterial ({
@@ -82,8 +77,8 @@ function loadObject(filename, objName){
                 return;
             }
         },
-        function ( xhr ) {},
-        function ( err ) {}
+        function ( xhr ) {return;},
+        function ( err ) {return;}
     );
 }
 
