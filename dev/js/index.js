@@ -1,3 +1,9 @@
 "use strict";
 
-initGame();
+function index() {
+    initGame();
+    waitObjectLoaded();
+    animate();
+}
+
+index();

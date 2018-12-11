@@ -9,18 +9,23 @@ function animate(){
     camera.updateProjectionMatrix();
 	render();
     requestAnimationFrame( animate );
-    
+    // console.log(gun);
 }
 
 function waitObjectLoaded(){
     gun = scene.getObjectByName("gun");
+    console.log("hah");
+    
     if(gun != null){ // initialize loaded object
+        console.log("load");
+        
         gun.position.set(5, -7.5, -4.5);
         gun.rotateY(Math.PI*0.6);
         gun.rotateZ(Math.PI*0.06);
 		
 		camera.add(gun);
     }
+    return;
 }
 
 function render(){
@@ -35,10 +40,7 @@ function initGame(){
     renderer.setSize(1028, 514);
     renderer.setClearColor(0x000000, 1);
     document.getElementById("container").appendChild(renderer.domElement);
-	
-    // load gun object from json file
-    loadObject("gun.json", "gun");
-
+    
     // init important var
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 2500);
@@ -47,7 +49,10 @@ function initGame(){
     clock = new THREE.Clock();
 
     scene.add(light);
-    
+
+    // load gun object from json file
+    loadObject("gun.json", "gun");
+
     // create plane
     plane = new THREE.Mesh(new THREE.BoxGeometry(10000, 4, 10000),
                             new THREE.MeshPhongMaterial ({
@@ -61,11 +66,7 @@ function initGame(){
     
     scene.add( controls.getObject() );
 	
-	waitObjectLoaded().then(function(){
-		console.log("success");
-	}, function(){
-		console.log("failure");
-	});
+	return;
 }
 
 
@@ -78,6 +79,7 @@ function loadObject(filename, objName){
             if(scene.getObjectByName(objName) == null){
                 scene.add( obj );
                 console.log(objName+" have been loaded");
+                return;
             }
         },
         function ( xhr ) {},
