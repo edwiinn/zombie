@@ -13,11 +13,9 @@ function LockCamera(){
     controls.lock();
 }
 
-function waitObjectLoaded(){
+function waitGunLoaded(){
     gun = scene.getObjectByName("gun");
     if(gun != null){ // initialize loaded object
-        console.log("load");
-        
         gun.position.set(5, -7.5, -4.5);
         gun.rotateY(Math.PI*0.6);
         gun.rotateZ(Math.PI*0.06);

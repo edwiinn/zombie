@@ -7,7 +7,7 @@ async function index() {
     await delay(1000);
     loadObject("gun.json", "gun");
     await delay(1000);
-    waitObjectLoaded();
+    waitGunLoaded();
     initEnemy();
     await delay(numOfEnemy*1000);
     waitEnemyLoaded();
