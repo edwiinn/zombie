@@ -20,6 +20,7 @@ function getSign(){
 function waitEnemyLoaded(){
     enemy = [];
 	var instance, name;
+	while(scene.getObjectByName("baseEnemy")==undefined);
 	var tmp =scene.getObjectByName("baseEnemy");
 	for(var i=0; i < numOfEnemy && camera != null; i++){
 		name = "enemy"+i;
