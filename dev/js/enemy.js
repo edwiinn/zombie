@@ -20,10 +20,10 @@ function getSign(){
 function waitEnemyLoaded(){
     enemy = [];
 	var instance, name;
-	var temp = scene.getObjectByName("baseEnemy");
+	var tmp =scene.getObjectByName("baseEnemy");
 	for(var i=0; i < numOfEnemy && camera != null; i++){
 		name = "enemy"+i;
-		instance = temp.clone();
+		instance = tmp.clone();
 		instance.name = name;
 		instance.position.x = camera.position.x+(minRadius+150) * getSign();
 		instance.position.z = camera.position.z+(minRadius+150) * getSign();

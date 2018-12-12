@@ -3,29 +3,14 @@
 var gun;
 var vec = new THREE.Vector3();
 
-function animate(){
-    deltaTime = clock.getDelta();
-    requestAnimationFrame( animate );
-    // if(controls.enabled){
-    camera.updateProjectionMatrix();
-    render();
-    
-    // }
-}
-
-function LockCamera(){
-    controls.lock();
-    controls.enabled = true;
-}
-
 function waitGunLoaded(){
     gun = scene.getObjectByName("gun");
-    
+
     if(gun != null){ // initialize loaded object
         gun.position.set(5, -7.5, -4.5);
         gun.rotateY(Math.PI*0.6);
         gun.rotateZ(Math.PI*0.06);
-		
+
 		camera.add(gun);
     }
     return;
@@ -43,7 +28,7 @@ function initGame(){
     renderer.setSize(1028, 514);
     renderer.setClearColor(0x000000, 1);
     document.getElementById("container").appendChild(renderer.domElement);
-    
+
     // init important var
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 1000);
@@ -53,7 +38,7 @@ function initGame(){
 
     scene.add(light);
     camera.scale.set(0.5, 0.5, 0.5);
-    
+
     // create plane
     plane = new THREE.Mesh(new THREE.BoxGeometry(100, 4, 100),
                             new THREE.MeshPhongMaterial ({
@@ -61,37 +46,12 @@ function initGame(){
                             shininess: 100,
                             specular: 0x111111}));
     scene.add(plane);
-    
+
 	controls = new THREE.PointerLockControls( camera );
     scene.add( controls.getObject() );
 	return;
 }
 
-
-function loadObject(filename, objName, scale){
-    loader.load(
-        "assets/"+filename,
-        function ( obj ) {
-            // Add the loaded object to the scene
-            // obj.name = objName;
-            if(scene.getObjectByName(objName) == null){
-                var tmp = new THREE.Group();
-                var tmp2;
-                tmp.name = objName;
-                obj.name = objName;
-                tmp.add(obj);
-                
-                // tmp2 = tmp.getObjectByName(objName);
-                // tmp2.scale.set(scale);
-                scene.add( tmp );
-                console.log(objName+" have been loaded");
-                return;
-            }
-        },
-        function ( xhr ) {return;},
-        function ( err ) {return;}
-    );
-}
 
 document.addEventListener('keydown', (event) => {
     switch (event.key){
