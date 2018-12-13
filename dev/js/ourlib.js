@@ -22,7 +22,6 @@ function loadObject(filename, objName, scale){
             // obj.name = objName;
             if(scene.getObjectByName(objName) == null){
                 var tmp = new THREE.Group();
-                var tmp2;
                 tmp.name = objName;
                 obj.name = objName;
                 tmp.add(obj);
