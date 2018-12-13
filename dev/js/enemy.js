@@ -14,7 +14,7 @@ async function enemyMain(){
 }
 
 function createBaseEnemy(){
-    loadObject("baseEnemy", "baseEnemy", "enemyModel");
+    loadObject("pikachu/pikachu-pokemon-go.json", "baseEnemy", "enemyModel");
 }
 
 function initEnemies(){

@@ -21,9 +21,7 @@ function render(){
 }
 
 function initGame(){
-    // declaration of important variables
-    loader = new THREE.ObjectLoader();  // used to load JSON file of model
-    loader.setCrossOrigin("use-credentials");
+    objectLoader.setCrossOrigin("use-credentials");
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(1028, 514);
     renderer.setClearColor(0x000000, 1);
@@ -43,8 +41,8 @@ function initGame(){
     plane = new THREE.Mesh(new THREE.BoxGeometry(100, 4, 100),
                             new THREE.MeshPhongMaterial ({
                             color: 0xf74321,
-                            shininess: 100,
-                            specular: 0x111111}));
+                            shininess: 10,
+                            specular: 0x000000}));
     scene.add(plane);
 
 	controls = new THREE.PointerLockControls( camera );
