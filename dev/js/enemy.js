@@ -1,35 +1,50 @@
 "use strict";
 
-var enemy = [];
-var numOfEnemy =2;
-var minRadius = 200;
+// createBaseEnemy: create base model of enemy. Must be finished before running initEnemies
+// initEnemies: clone from base model of enemy. Generate random position over X and Z plane
+// getEnemiesReference: Add reference to global variable 'enemies'
 
-function generateEnemyPosition(){
-	var xsign = 0, zsign = 0;
-	if(Math.random()%2 == 0){xsign=1;}
-	else{xsign=-1;}
-	if(Math.random()%2 == 0){zsign=1;}
-	else{zsign=-1;}
-	return new THREE.Vector3(camera.position.x+(minRadius+150)*xsign,0,camera.position.z+(minRadius+150)*zsign);
+async function enemyMain(){
+    createBaseEnemy();
+    await delay(1000);
+    initEnemies();
+    await delay(Math.ceil(Math.sqrt(numEnemy)) * 800);
+    getEnemiesReference();
+    await delay(500);
+}
+
+function createBaseEnemy(){
+    loadObject("baseEnemy", "baseEnemy", "enemyModel");
+}
+
+function initEnemies(){
+    var instance, name;
+	while(scene.getObjectByName("baseEnemy")==undefined);
+    var tmp =scene.getObjectByName("baseEnemy");
+	for(var i=0;tmp != null && i < numOfEnemy && camera != null; i++){ // NOTE: change camera into player if needed
+		name = "enemy_"+i;
+		instance = tmp.clone();
+		instance.name = name;
+		instance.position.x = camera.position.x + (generatePosition(150, 200));
+		instance.position.z = camera.position.z + (generatePosition(150, 200));
+		scene.add(instance);
+    }
+}
+
+function getEnemiesReference(){
+    var instance, name;
+    for(var i = 0; i < numEnemy; i++){
+        name = "enemy_" + i;
+        instance = scene.getObjectByName( name );
+        enemies[name] = instance;
+    }
 }
 
 function getSign(){
 	return (Math.ceil( (100 * Math.random()) )%2 ) ? -1: 1;
 }
 
-function waitEnemyLoaded(){
-    enemy = [];
-	var instance, name;
-	while(scene.getObjectByName("baseEnemy")==undefined);
-	var tmp =scene.getObjectByName("baseEnemy");
-	for(var i=0; i < numOfEnemy && camera != null; i++){
-		name = "enemy"+i;
-		instance = tmp.clone();
-		instance.name = name;
-		instance.position.x = camera.position.x+(minRadius+150) * getSign();
-		instance.position.z = camera.position.z+(minRadius+150) * getSign();
-		// instance.position.set(generateEnemyPosition());
-		// enemy.push( instance );
-		scene.add(instance);
-    }
+function generatePosition(minValue, maxDistanceValue){
+	return (getSign() * (minValue + maxDistanceValue));
 }
+

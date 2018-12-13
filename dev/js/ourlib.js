@@ -1,11 +1,8 @@
 function animate(){
     deltaTime = clock.getDelta();
     requestAnimationFrame( animate );
-    // if(controls.enabled){
     camera.updateProjectionMatrix();
     render();
-
-    // }
 }
 
 function LockCamera(){
@@ -14,20 +11,16 @@ function LockCamera(){
 }
 
 
-function loadObject(filename, objName, scale){
-    loader.load(
+function loadObject(filename, parentName, objName){
+    objectLoader.load(
         "assets/"+filename,
         function ( obj ) {
             // Add the loaded object to the scene
-            // obj.name = objName;
             if(scene.getObjectByName(objName) == null){
                 var tmp = new THREE.Group();
-                tmp.name = objName;
+                tmp.name = parentName;
                 obj.name = objName;
                 tmp.add(obj);
-
-                // tmp2 = tmp.getObjectByName(objName);
-                // tmp2.scale.set(scale);
                 scene.add( tmp );
                 console.log(objName+" have been loaded");
                 return;
@@ -52,3 +45,5 @@ function loadObjectGLTF(filename){
 
 				} );
 }
+
+const delay = (duration) => new Promise(resolve => setTimeout(resolve, duration))
