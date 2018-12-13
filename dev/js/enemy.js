@@ -14,7 +14,7 @@ function generateEnemyPosition(){
 }
 
 function getSign(){
-	return (Math.ceil( 100 * Math.random()%2) ) ? -1: 1;
+	return (Math.ceil( (100 * Math.random()) )%2 ) ? -1: 1;
 }
 
 function waitEnemyLoaded(){
