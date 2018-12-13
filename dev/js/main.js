@@ -29,14 +29,14 @@ function initGame(){
 
     // init important var
     scene = new THREE.Scene();
-    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 1000);
+    camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 10000);
     camera.position.set(0, 4, 0);
     light = new THREE.AmbientLight(0x404040);
     clock = new THREE.Clock();
 
     scene.add(light);
     camera.scale.set(0.5, 0.5, 0.5);
-
+    camera.translateZ(50);
     // create plane
     plane = new THREE.Mesh(new THREE.BoxGeometry(100, 4, 100),
                             new THREE.MeshPhongMaterial ({

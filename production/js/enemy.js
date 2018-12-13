@@ -14,14 +14,14 @@ async function enemyMain(){
 }
 
 function createBaseEnemy(){
-    loadObject("baseEnemy", "baseEnemy", "enemyModel");
+    loadObject("pikachu/pikachu-pokemon-go.json", "baseEnemy", "enemyModel");
 }
 
 function initEnemies(){
     var instance, name;
 	while(scene.getObjectByName("baseEnemy")==undefined);
     var tmp =scene.getObjectByName("baseEnemy");
-	for(var i=0;tmp != null && i < numOfEnemy && camera != null; i++){ // NOTE: change camera into player if needed
+	for(var i=0;tmp != null && i < numEnemy && camera != null; i++){ // NOTE: change camera into player if needed
 		name = "enemy_"+i;
 		instance = tmp.clone();
 		instance.name = name;
