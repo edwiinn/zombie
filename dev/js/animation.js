@@ -103,8 +103,8 @@ function fallingto(model)
                 .halt();
 								//tambah efek kebakar(opsional)
 							},2890);
-              setTimeout(function(){scene.remove(zombie);
-              },2890);
+              setTimeout(function(){scene.remove(scene.getObjectByName(model));
+              },2891);
 
 				//need disapear;
 		}
