@@ -4,7 +4,7 @@
 
 var scene, player, camera, objectLoader, enemies = {}, numEnemy = 2;
 var renderer, clock, controls, deltaTime;
-
+var mixer;
 objectLoader = new THREE.ObjectLoader();
 
 
