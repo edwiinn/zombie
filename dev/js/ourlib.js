@@ -2,6 +2,7 @@ function animate(){
     deltaTime = clock.getDelta();
     requestAnimationFrame( animate );
     camera.updateProjectionMatrix();
+    if ( mixer ) mixer.update( deltaTime );
     render();
 }
 
@@ -35,19 +36,34 @@ function loadObject(filename, parentName, objName){
     );
 }
 
+function loadObjectGLTF(filename, parentName, objName,scale,generateAnimation){ //scale = [[1],[2],[3]]
+    console.log(filename);
+    loaderGLTF_m = new THREE.GLTFLoader();
+    loaderGLTF_m.load(
+        "assets/"+filename,
+        function ( obj ) {
+            // Add the loaded object to the scene
+          //  scane.add(gltf.scene);
+             if(scene.getObjectByName(objName) == null){
+                 var tmp = new THREE.Group();
+                 tmp.name = parentName;
+                 obj.scene.name = objName;
+                 obj.scene.scale.x=scale[0];
+                 obj.scene.scale.y=scale[1];
+                 obj.scene.scale.z=scale[2];
+                 tmp.add(obj.scene);
+                 scene.add(tmp );
+                 modDir[parentName]=obj.scene;
+                 generateAnimation(modDir[parentName],obj.animations);
+                 console.log(objName+" have been loaded");
+                 return;
+             }
+        },
+        function ( xhr ) {return;},
+        function ( err ) {return;}
 
-function loadObjectGLTF(filename){
-
-  gltfloader.load(filename, function ( gltf ) {
-
-
-					scene.add( gltf.scene );
-
-				}, undefined, function ( e ) {
-
-					console.error( e );
-
-				} );
+    );
 }
+
 
 const delay = (duration) => new Promise(resolve => setTimeout(resolve, duration))
