@@ -60,27 +60,27 @@
       camera.position.set( - 5, 3, 10 );
       camera.lookAt( new THREE.Vector3( 0, 2, 0 ) );
       scene = new THREE.Scene();
-      scene.background = new THREE.Color( 0xe0e0e0 );
-      scene.fog = new THREE.Fog( 0xe0e0e0, 20, 100 );
       clock = new THREE.Clock();
 
 			// lights
-      var light = new THREE.HemisphereLight( 0xffffff, 0x444444 );
-      light.position.set( 0, 20, 0 );
-      scene.add( light );
-      light = new THREE.DirectionalLight( 0xffffff );
-      light.position.set( 0, 20, 10 );
-      scene.add( light );
+			scene.add( new THREE.AmbientLight( 0xffffff ) );
+
+			//background
+			scene.background = new THREE.Color( 0x17181C );
+			scene.fog = new THREE.Fog( 0x525252, 500, 1000 );
 
 		  // ground
-      var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+			 		loader_t = new THREE.TextureLoader();
+			var textureGround = loader_t.load( 'assets/textures/ground.jpg');
+					textureGround.wrapS = textureGround.wrapT = THREE.RepeatWrapping;
+					textureGround.repeat.set( 100, 100 );
+					textureGround.anisotropy = 20;
+			var materialGround = new THREE.MeshLambertMaterial( { map: textureGround } );
+      var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ),materialGround );
       mesh.rotation.x = - Math.PI / 2;
+			mesh.receiveShadow = true;
       scene.add( mesh );
-      var grid = new THREE.GridHelper( 200, 40, 0x000000, 0x000000 );
-      grid.material.opacity = 0.2;
-      grid.material.transparent = true;
-      var mymodel;
-      scene.add( grid );
+
       // model
       var loader = new THREE.GLTFLoader();
 			loadObjectGLTF("zombie_k/scene.gltf","mymodel","mymodel",[0.02,0.02,0.02],generateAnimationZombieX);
