@@ -1,0 +1,166 @@
+<html>
+	<head>
+		<meta charset=utf-8>
+		<title>Camera</title>
+		<style>
+      <style>
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info p {
+				max-width: 600px;
+				margin-left: auto;
+				margin-right: auto;
+				padding: 0 2em;
+			}
+			#info a {
+				color: #2fa1d6;
+				font-weight: bold;
+			}
+			.dg.ac {
+				z-index: 999 !important;
+			}
+		</style>
+		<!--built in-->
+		 <script src="js/three.js"></script>
+		  <script src="js/stats.min.js"></script>
+			<script src="js/dat.gui.min.js"></script>
+			<script src="js/WebGL.js"></script>
+		  <script src="js/PointerLockControls.js"></script>
+			<script src="js/GLTFLoader.js"></script>
+		 <!--our built-->
+		 <script src="js/ourlib.js"></script>
+	</head>
+	<body>
+		<script src="js/ourlib.js"></script>
+		<script src="js/globalVariable.js"></script>
+		<script src="js/animation.js"></script>
+  <script>
+    if ( WEBGL.isWebGLAvailable() === false ) {
+      document.body.appendChild( WEBGL.getWebGLErrorMessage() );
+    }
+    var container, stats, clock, gui, mixer, actions, activeAction, previousAction,temp;
+    var camera, scene, renderer, model, face;
+		//deklarasi var zombie
+
+    var api = { state: 'Walking' };
+    init();
+    animate();
+    function init() {
+      container = document.createElement( 'div' );
+      document.body.appendChild( container );
+      camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.25, 100 );
+      camera.position.set( - 5, 3, 10 );
+      camera.lookAt( new THREE.Vector3( 0, 2, 0 ) );
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color( 0xe0e0e0 );
+      scene.fog = new THREE.Fog( 0xe0e0e0, 20, 100 );
+      clock = new THREE.Clock();
+      // lights
+      var light = new THREE.HemisphereLight( 0xffffff, 0x444444 );
+      light.position.set( 0, 20, 0 );
+      scene.add( light );
+      light = new THREE.DirectionalLight( 0xffffff );
+      light.position.set( 0, 20, 10 );
+      scene.add( light );
+      // ground
+      var mesh = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ), new THREE.MeshPhongMaterial( { color: 0x999999, depthWrite: false } ) );
+      mesh.rotation.x = - Math.PI / 2;
+      scene.add( mesh );
+      var grid = new THREE.GridHelper( 200, 40, 0x000000, 0x000000 );
+      grid.material.opacity = 0.2;
+      grid.material.transparent = true;
+      var mymodel;
+      scene.add( grid );
+      // model
+      var loader = new THREE.GLTFLoader();
+      // loader.load( 'assets/zombie_k/scene.gltf', function( gltf ) {
+      //   gltf.scene.name="mymodel";
+			// 	 gltf.scene.scale.x =0.02;
+			// 	 gltf.scene.scale.y =0.02;
+			// 	 gltf.scene.scale.z =0.02;
+			// 	scene.add(gltf.scene);
+			// 	modDir[gltf.scene.name] = scene.getObjectByName("mymodel");
+			// 	//aniDir[gltf.scene.name] = gtlf.animations;
+			// 	console.log(gltf.animations);
+			// 	generateAnimationZombieX(modDir[gltf.scene.name], gltf.animations);
+      // }
+			// ,function(xhr){return;}
+      // ,function( e ){
+      //   console.error( e );
+      // });
+
+			loadObjectGLTF("zombie_k/scene.gltf","mymodel","mymodel",[0.02,0.02,0.02],generateAnimationZombieX);
+      //konfigurasi model
+
+      //--end
+      renderer = new THREE.WebGLRenderer( { antialias: true } );
+      renderer.setPixelRatio( window.devicePixelRatio );
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      renderer.gammaOutput = true;
+      renderer.gammaFactor = 2.2;
+      container.appendChild( renderer.domElement );
+      window.addEventListener( 'resize', onWindowResize, false );
+      // stats
+      stats = new Stats();
+      container.appendChild( stats.dom );
+    }
+		//tes animation
+
+
+    function onWindowResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+    }
+    //
+
+
+		//tester
+		document.addEventListener('keydown', (event) => {
+		    switch (event.key){
+		        case '1':
+
+						modDir["mymodel"].position.z -= 0.1;
+
+		            break;
+		        case '2':
+						modDir["mymodel"].position.z += 0.1;
+
+		            // camera.translateX(movSpeed * deltaTime);
+		            break;
+		        case '3':
+							moveto("mymodel",-5,5,false,false);
+							//attackto("mymodel",10);
+
+		            // camera.translateY((-1) * movSpeed * deltaTime);
+		            break;
+		        case '4':
+							fallingto("mymodel");
+		            // camera.translateX((-1) * movSpeed * deltaTime);
+		            break;
+
+								case '5':
+									console.log(actions);
+										// camera.translateX((-1) * movSpeed * deltaTime);
+								break;
+		        default:
+		            break;
+		    }
+		});
+
+  </script>
+
+</body>
+</html>
