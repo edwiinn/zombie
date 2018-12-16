@@ -6,3 +6,13 @@ var scene, player, camera, objectLoader, enemies = {}, numEnemy = 2;
 var renderer, clock, controls, deltaTime;
 
 objectLoader = new THREE.ObjectLoader();
+
+
+//---------------variabel for model and animation
+//Loader
+var loaderGLTF_m;//loader gltfloader
+var loader_t;//loader texture
+var modDir = {};
+var actions = {};
+var playeragle =(180/360)*6.28;
+
