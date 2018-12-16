@@ -1,6 +1,13 @@
 // https://blog.teamtreehouse.com/the-beginners-guide-to-three-js
 
 var stats, scene, camera, renderer;
+var cube;
+var raycaster = new THREE.Raycaster();
+var mouseVector = new THREE.Vector3(), INTERSECTED;
+var parentmenu;
+
+window.addEventListener('resize', onWindowResize, false);
+window.addEventListener('mousemove', onDocumentMouseMove, false);
 
 init();
 animate();
@@ -22,7 +29,7 @@ function init(){
   scene.add(camera);
 
   //Create axes
-  var axes = new THREE.AxisHelper(5);
+  var axes = new THREE.AxesHelper(5);
   scene.add(axes);
 
   // Hemisphere light
@@ -31,7 +38,7 @@ function init(){
 
   // Create light
   var light = new THREE.PointLight(0xffffff);
-  light.position.set(-10, 20, 10);
+  light.position.set(100, 200, 100);
   scene.add(light);
 
   // Load mesh
@@ -49,12 +56,12 @@ function init(){
   fontLoader.load('mainmenujs/fonts/helvetiker_regular.typeface.json', function(font){
     var textstart = new THREE.TextGeometry('Start', {
       font: font,
-      size: 5,
+      size: 3,
       height: 2,
       curveSegments: 5,
       bevelEnabled: true,
-      bevelThickness: 0.4,
-      bevelSize: 0.2,
+      bevelThickness: 0.1,
+      bevelSize: 0.1,
       bevelSegments: 1,
       // steps: 1
     });
@@ -63,33 +70,56 @@ function init(){
     // scene.add(text); // TIDAK JALAN (?)
 
     // https://talk.olab.io/t/three-js-dat-gui-to-control-and-3d-text-geometry/208
-    // text3d.computeBoundingBox();
+    textstart.computeBoundingBox();
     var textMaterial = new THREE.MeshLambertMaterial({color: 0xff003c}); // color 0xd40a2e
     text = new THREE.Mesh(textstart, textMaterial);
     text.position.x = 2; text.position.y = 0; text.position.z = 0;
     // text.rotation.x = -45;
     // text.rotation.y = Math.PI * 2;
 
-    var textcredit = new THREE.TextGeometry('Credit', {
+    var textcredit = new THREE.TextGeometry('Credits', {
       font: font,
-      size: 5,
+      size: 3,
       height: 2,
       curveSegments: 5,
       bevelEnabled: true,
-      bevelThickness: 0.4,
-      bevelSize: 0.2,
+      bevelThickness: 0.2,
+      bevelSize: 0.1,
       bevelSegments: 1,
       // steps: 1
     });
-    text2 = new THREE.Mesh(textcredit, textMaterial);
+    textcredit.computeBoundingBox();
+    var textCreditMaterial = new THREE.MeshLambertMaterial({color: 0xd40a2e});
+    text2 = new THREE.Mesh(textcredit, textCreditMaterial);
     text2.position.x = 0; text2.position.y = -10; text2.position.z = 0;
-    parent = new THREE.Object3D();
-    parent.add(text);
-    parent.add(text2);
-    scene.add(parent);
+    parentmenu = new THREE.Object3D();
+    parentmenu.add(text);
+    parentmenu.add(text2);
+    scene.add(parentmenu);
+
   });
 
-
+fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font){
+  var texttitle = new THREE.TextGeometry('Fear in The Dark', {
+    font: font,
+    size: 5,
+    height: 2,
+  });
+  // var texttitle2 = new THREE.TextGeometry('The Dark', {
+  //   font: font,
+  //   size: 5,
+  //   height: 2,
+  // });
+  var textTitleMaterial = new THREE.MeshLambertMaterial();
+  text3 = new THREE.Mesh(texttitle, textTitleMaterial);
+  text3.position.x = -10; text3.position.y = 8; text3.position.z = 0;
+  // text4 = new THREE.Mesh(texttitle2, textTitleMaterial);
+  // text4.position.x = -10; text4.position.y = 6; text4.position.z = 0;
+  parenttitle = new THREE.Object3D();
+  parenttitle.add(text3);
+  // parent.add(text4);
+  scene.add(parenttitle);
+});
 
 //   var fontLoader = new THREE.FontLoader();
 //   var font = fontLoader.load('mainmenujs/fonts/helvetiker_bold.typeface.json',
@@ -112,17 +142,53 @@ scene.add( cube );
 
   // Add OrbitControls so that we can pan around with the mouse.
     controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+// https://medium.com/@PavelLaptev/three-js-for-beginers-32ce451aabda
+    // raycaster = new THREE.Raycaster();
+    // mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    // mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
 }
-var cube;
 
 function animate(){
   stats.update();
   requestAnimationFrame(animate);
+  render();
 
+  controls.update();
+}
+function render(){
   cube.rotation.x += 0.01;
 
+  // raycaster find intersections
+  raycaster.setFromCamera( mouseVector, camera );
+  var intersects = raycaster.intersectObjects(parentmenu.children);
+  if (intersects.length > 0){
+    if (INTERSECTED != intersects[0].object){
+      // if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+      if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.material.color.getHex());
+      INTERSECTED = intersects[0].object;
+      console.log(INTERSECTED);
+      INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+      // INTERSECTED.material.emmisive.setHex(0xff0000);
+      INTERSECTED.material.color.setHex(0xffffff);
+    }
+  } else {
+    if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+    INTERSECTED = null;
+  }
+
+  // if ( intersects.length > 0 ) {
+  //   var res = intersects.filter( function ( res ) {
+  //     return res && res.object;
+  //   })[ 0 ];
+  //   if ( res && res.object ) {
+  //     selectedObject = res.object;
+  //     selectedObject.material.color.set( '#f00' );
+  //   }
+  // }
+
   renderer.render(scene, camera);
-  controls.update();
 }
 
 // from book Learning Three.js
@@ -140,13 +206,60 @@ function initStats(){
   var stats = new Stats();
   stats.setMode(0); // 0: fps, 1: ms
 
-
   // Align top-left
   stats.domElement.style.position = 'absolute';
   stats.domElement.style.left = '0px';
   stats.domElement.style.top = '0px';
 
   document.getElementById("Stats-output").appendChild(stats.domElement);
-
   return stats;
+}
+
+// https://medium.com/@PavelLaptev/three-js-for-beginers-32ce451aabda
+function onWindowResize(){
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+// https://github.com/mrdoob/three.js/blob/master/examples/webgl_interactive_cubes.html
+function onDocumentMouseMove(event){
+  event.preventDefault();
+  // mouseX = event.clientX - window.innerWidth / 2;
+  //   mouseY = event.clientY - window.innerHeight / 2;
+    // camera.position.x += (mouseX - camera.position.x) * 0.005;
+    // camera.position.y += (mouseY - camera.position.y) * 0.005;
+    // //set up camera position
+    // camera.lookAt(scene.position);
+
+    mouseVector.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouseVector.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+/*
+  // update the picking ray with the camera and mouse position
+	raycaster.setFromCamera( mouseVector, camera );
+  var intersects = raycaster.intersectObjects(parentmenu.children);
+  if (intersects.length > 0){
+    if (INTERSECTED != intersects[0].object){
+      if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+      INTERSECTED = intersects[0].object;
+      INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+      INTERSECTED.material.emmisive.setHex(0xff0000);
+    }
+  } else {
+    if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+    INTERSECTED = null;
+  }
+  // var intersects = getIntersects(event.layerX, event.layerY);
+*/
+}
+
+
+function getIntersects( x, y ) {
+  x = ( x / window.innerWidth ) * 2 - 1;
+  y = - ( y / window.innerHeight ) * 2 + 1;
+
+  mouseVector.set( x, y, 0.5 );
+  raycaster.setFromCamera( mouseVector, camera );
+  return raycaster.intersectObject( parentmenu, true );
 }
