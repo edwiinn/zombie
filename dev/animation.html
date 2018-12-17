@@ -37,6 +37,7 @@
 			<script src="js/WebGL.js"></script>
 		  <script src="js/PointerLockControls.js"></script>
 			<script src="js/GLTFLoader.js"></script>
+			<script src="js/OrbitControls.js"></script>
 
 		 <!--our built-->
 		 <script src="js/ourlib.js"></script>
@@ -66,10 +67,9 @@
 			// lights
 			//moon
 		//	loadObjectGLTF("statis/moon/scene.gltf","moon","moon",[0.02,0.02,0.02],[-4,3,-4],null);
-	
 
-		moonlight(0xffffff,[0.1,0.1,0.1],[0,30,0],10,10000);
 
+		moonlight(0x444444,[0.1,0.1,0.1],[0,30,0],10,10000);
 
 				//ambient
 			scene.add( new THREE.AmbientLight( 0x333333) );
@@ -92,7 +92,7 @@
 
       // model
 					//zombie
-				 loadObjectGLTF("zombie_x/scene.gltf","mymodel","mymodel",[0.04,0.025,0.03],[1,1,1],generateAnimationZombie);
+				 loadObjectGLTF("zombie_x/scene.gltf","mymodel","mymodel",[0.04,0.025,0.03],[1,0,1],generateAnimationZombie);
 			   //loadObjectGLTF("zombie_y/scene_type1.glb","mymodel2","mymodel2",[0.02,0.02,0.02],null,generateAnimationZombie);
 			   //loadObjectGLTF("zombie_y/scene_type2.glb","mymodel3","mymodel3",[0.02,0.02,0.02],[3,0,3],generateAnimationZombie);
 			 //  loadObjectGLTF("zombie_y/scene_type3.glb","mymodel4","mymodel4",[0.02,0.02,0.02],[1,0,3],generateAnimationZombie);
@@ -108,10 +108,12 @@
 					//loadObjectGLTF("statis/tomb4/scene.gltf","tomb4","tomb4",[0.1,0.1,0.1],[0,0.7,3],null);
 					//loadObjectGLTF("statis/remains/scene.gltf","remains","remains",[1,1,1],[0,0,3],null);
 					//tree
-					//loadObjectGLTF("statis/tree/scene.gltf","tree","tree",[0.02,0.02,0.02],[-4,0,-4],null);
-
-
+					 loadObjectGLTF("statis/tree/scene.gltf","tree","tree",[0.02,0.02,0.02],[-4,0,-4],null);
+					//wall
+					loadObjectGLTF("statis/wall/scene.gltf","wall","wall",[7,7,7],[-8,1.8,-6],null);
       //--end
+
+			var controls = new THREE.OrbitControls( camera );
       renderer = new THREE.WebGLRenderer( { antialias: true } );
       renderer.setPixelRatio( window.devicePixelRatio );
       renderer.setSize( window.innerWidth, window.innerHeight );
@@ -127,7 +129,7 @@
 		    switch (event.key){
 		        case '1':
 							//attackXto("mymodel",1);
-								var moonlight = scene.getObjectByName("moonlight");
+								attackXto("mymodel",4);
 								moonlight.position.y +=1;
 		            break;
 		        case '2':
