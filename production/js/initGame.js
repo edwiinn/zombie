@@ -7,7 +7,7 @@ function initGame(){
     // renderer
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(1028, 514);
-    renderer.setClearColor(0x0f0f0f, 1);
+    renderer.setClearColor(0xffffff, 1);
     document.getElementById("container").appendChild(renderer.domElement);
 
     // init scene
@@ -18,7 +18,7 @@ function initGame(){
     camera.position.set(0, 4, 10);
 
     // init light
-    light = new THREE.AmbientLight(0xf0f0f0);
+    light = new THREE.AmbientLight(0xffffff, 5);
 
     // init clock
     clock = new THREE.Clock();

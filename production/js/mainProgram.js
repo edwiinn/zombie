@@ -1,6 +1,6 @@
 "use strict";
 
-async function main() {
+function main() {
     initGame();
 
     // main menu
