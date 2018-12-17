@@ -62,7 +62,10 @@ function loadObjectGLTF(filename, parentName, objName, scale,position,generateAn
                  modDir[parentName]=obj.scene;
                  if(generateAnimation!=null)
                     generateAnimation(modDir[parentName],obj.animations);
-                scene.add(tmp );
+                 scene.add( tmp );
+                 var tmp2 = obj.animations;
+                 tmp2.name = "anim_";
+                 scene.add( tmp2 );
                  console.log(parentName+" have been loaded");
                  return;
              }

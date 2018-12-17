@@ -12,5 +12,6 @@ objectLoader = new THREE.ObjectLoader();
 var loaderGLTF_m;//loader gltfloader
 var loader_t;//loader texture
 var modDir = {};
+var animDir = {};
 var actions = {};
 var playeragle =(180/360)*6.28;
