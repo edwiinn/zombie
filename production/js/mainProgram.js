@@ -9,7 +9,6 @@ function main() {
 
     // load enemy
     enemyMain();
-    console.log(modDir);
     
     // game start
     animate();
