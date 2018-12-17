@@ -5,6 +5,10 @@ function animate(){
     render();
 }
 
+function render(){
+    renderer.render(scene, camera);
+}
+
 function LockCamera(){
     controls.lock();
     controls.enabled = true;
