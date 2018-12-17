@@ -37,6 +37,8 @@
 			<script src="js/WebGL.js"></script>
 		  <script src="js/PointerLockControls.js"></script>
 			<script src="js/GLTFLoader.js"></script>
+			<script src="js/OrbitControls.js"></script>
+
 		 <!--our built-->
 		 <script src="js/ourlib.js"></script>
 	</head>
@@ -63,7 +65,14 @@
       clock = new THREE.Clock();
 
 			// lights
-			scene.add( new THREE.AmbientLight( 0xffffff ) );
+			//moon
+		//	loadObjectGLTF("statis/moon/scene.gltf","moon","moon",[0.02,0.02,0.02],[-4,3,-4],null);
+
+
+		moonlight(0x444444,[0.1,0.1,0.1],[0,30,0],10,10000);
+
+				//ambient
+			scene.add( new THREE.AmbientLight( 0x333333) );
 
 			//background
 			scene.background = new THREE.Color( 0x17181C );
@@ -82,10 +91,29 @@
       scene.add( mesh );
 
       // model
-      var loader = new THREE.GLTFLoader();
-			loadObjectGLTF("zombie_k/scene.gltf","mymodel","mymodel",[0.02,0.02,0.02],generateAnimationZombieX);
+					//zombie
+				 loadObjectGLTF("zombie_x/scene.gltf","mymodel","mymodel",[0.04,0.025,0.03],[1,0,1],generateAnimationZombie);
+			   //loadObjectGLTF("zombie_y/scene_type1.glb","mymodel2","mymodel2",[0.02,0.02,0.02],null,generateAnimationZombie);
+			   //loadObjectGLTF("zombie_y/scene_type2.glb","mymodel3","mymodel3",[0.02,0.02,0.02],[3,0,3],generateAnimationZombie);
+			 //  loadObjectGLTF("zombie_y/scene_type3.glb","mymodel4","mymodel4",[0.02,0.02,0.02],[1,0,3],generateAnimationZombie);
+			//
+					//figuran
+			 		loadObjectGLTF("bat/scene.gltf","bat","bat",[0.07,0.07,0.07],[0,3,4],generateAnimationZombie);
 
+			//statis
+					//tomb type
+					//loadObjectGLTF("statis/tomb1/scene.gltf","tomb1","tomb1",[0.4,0.4,0.4],[-2,0,-3],generateAnimationZombie);
+					//loadObjectGLTF("statis/tomb2/scene.gltf","tomb2","tomb2",[0.1,0.1,0.1],[0,2,-10],null);
+					//loadObjectGLTF("statis/tomb3/scene.gltf","tomb3","tomb3",[0.1,0.1,0.1],[0,-0.07,3],null);
+					//loadObjectGLTF("statis/tomb4/scene.gltf","tomb4","tomb4",[0.1,0.1,0.1],[0,0.7,3],null);
+					//loadObjectGLTF("statis/remains/scene.gltf","remains","remains",[1,1,1],[0,0,3],null);
+					//tree
+					 loadObjectGLTF("statis/tree/scene.gltf","tree","tree",[0.02,0.02,0.02],[-4,0,-4],null);
+					//wall
+					loadObjectGLTF("statis/wall/scene.gltf","wall","wall",[7,7,7],[-8,1.8,-6],null);
       //--end
+
+			var controls = new THREE.OrbitControls( camera );
       renderer = new THREE.WebGLRenderer( { antialias: true } );
       renderer.setPixelRatio( window.devicePixelRatio );
       renderer.setSize( window.innerWidth, window.innerHeight );
@@ -100,28 +128,42 @@
 		document.addEventListener('keydown', (event) => {
 		    switch (event.key){
 		        case '1':
-
-						modDir["mymodel"].position.z -= 0.1;
-
+							//attackXto("mymodel",1);
+								attackXto("mymodel",4);
+								moonlight.position.y +=1;
 		            break;
 		        case '2':
-						modDir["mymodel"].position.z += 0.1;
 
 		            // camera.translateX(movSpeed * deltaTime);
 		            break;
 		        case '3':
-							moveto("mymodel",-5,5,false,false);
-							attackto("mymodel",10);
+							moveXto("mymodel",-5,5,false,false);
+							//attackto("mymodel",10);
 
 		            // camera.translateY((-1) * movSpeed * deltaTime);
 		            break;
 		        case '4':
-							fallingto("mymodel");
+							modDir["mymodel2"].position.z -= 0.1;
+							fallingXto("mymodel");
+							fallingYto("mymodel2");
+							fallingYto("mymodel3");
 		            // camera.translateX((-1) * movSpeed * deltaTime);
 		            break;
 
 								case '5':
-									console.log(actions);
+									moveYto("mymodel4",-5,5,false,false);
+									//moveYto("mymodel2",2,2,false,false);
+									console.log(modDir);
+										// camera.translateX((-1) * movSpeed * deltaTime);
+								break;
+
+								case '6':
+
+									runFirst("bat");
+									runFirst("bat1");
+									runFirst("bat2");
+									moveBatto("bat1",[-4,4,4],[false,false,false],180);
+									console.log(modDir);
 										// camera.translateX((-1) * movSpeed * deltaTime);
 								break;
 		        default:
