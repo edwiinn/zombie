@@ -1,6 +1,6 @@
 var renderer, scene, camera;
 var group;
-var player, cameraOriginVec;
+var player, cameraOriginVec, gunFlashLight, gun, mouseHelper;
 
 init();
 animate();
@@ -22,14 +22,8 @@ function init(){
   camera.position.x = 0;
   camera.position.z =0;
   camera.position.y =1;
-  // camera.position.set(30,5,0);
   cameraOriginVec = new THREE.Vector3(camera.position.x,camera.position.y,camera.position.z);
-  // camera.up = new THREE.Vector3(0,0,1);
-  // camera.lookAt(new THREE.Vector3(0,0,0));
 
-  // var boxGeometry = new THREE.BoxGeometry( 1, 1, 1 );
-  // var boxMaterial = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
-  // var box = new THREE.Mesh( boxGeometry, boxMaterial );
   var box = createBox(1,1,1);
   box.material.color.set('#0f0');
   box.position.set(2,0.5,4);
@@ -62,32 +56,23 @@ function init(){
   floorMsh.receiveShadow = true;
   floorMsh.position.set( 0, - 0.05, 0 );
 
-  mouseHelper = createBox(1,1,1);
-  scene.add(mouseHelper);
-
-
   var ambientLight = new THREE.AmbientLight(0xffffff,0.1);
   scene.add(ambientLight);
-  //
-  var spotLight = new THREE.SpotLight(0xffffff, 0.3);
+
+  var spotLight = new THREE.SpotLight(0xffffff, 0.04);
   spotLight.penumbra = 0.486;
   spotLight.decay = 0.5;
   spotLight.position.set( 0, 10, 0 );
   scene.add(spotLight);
-
   var senterSpotLight = new THREE.SpotLight(0xffffff, 0.7);
   senterSpotLight.penumbra = 0.5;
   senterSpotLight.position.set(0,2.3,0);
   scene.add(senterSpotLight);
   var senterTarget = new THREE.Object3D();
-  // var spotLightHelper = new THREE.SpotLightHelper( senterSpotLight );
-  // scene.add( spotLightHelper );
-  // scene.add(senterTarget);
   camera.add(senterTarget);
   senterTarget.position.set(0,4,-8);
   senterSpotLight.target = senterTarget;
 
-  // var texture = new THREE.TextureLoader().load( "asset/modern-weapons/Pistol/Textures/Pistol_Albedo.png" );
   var gunMetalnessTexture = new THREE.TGALoader().load( "asset/modern-weapons/Pistol/Textures/Pistol_Metallic.tga" );
   var gunNormalTexture = new THREE.TextureLoader().load( "asset/modern-weapons/Pistol/Textures/Pistol_Normal.png" );
   var gunAlbedoTexture = new THREE.TextureLoader().load( "asset/modern-weapons/Pistol/Textures/Pistol_Albedo.png" );
@@ -96,6 +81,7 @@ function init(){
   loader.load( 'asset/modern-weapons/Pistol/Pistol.fbx', function ( object ) {
     // mesh.scale.set( 2, 2, 2 );
     // object.mesh.scale.set(1,1,1);
+
     object.rotation.y = Math.PI/2;
     object.position.set(0.3,-0.44,-1);
     object.scale.set(0.05,0.05,0.05);
@@ -103,34 +89,17 @@ function init(){
     material.roughness = 1; // attenuates roughnessMap
     material.metalness = 1; // attenuates metalnessMap
 
-    // material.siveMap = gunAlbedoTexture;
-    // roughness is in G channel, metalness is in B channel
     material.metalnessMap = material.roughnessMap = gunMetalnessTexture;
     material.normalMap = gunNormalTexture;
-
-    // material.map.wrapS = THREE.RepeatWrapping;
-    // material.roughnessMap.wrapS = THREE.RepeatWrapping;
-    // material.metalnessMap.wrapS = THREE.RepeatWrapping;
-    // material.normalMap.wrapS = THREE.RepeatWrapping;
-    // material.needsUpdate = true;
     object.traverse(function (child){
       if(child instanceof THREE.Mesh){
         child.material = material;
-        // child.material = new THREE.MeshPhongMaterial();
-        // child.material.map = texture;
-        // child.material.metalness = 1;
-        // console.log(child.material);
-        // child.material = MeshStandardMaterial();
-        // child.material.metalnessMap = gunMetalnessTexture;
-        // child.material.normalMap = gunNormalTexture;
-        // child.material.alphaMap = gunAlbedoTexture;
-        // child.material.needsUpdate = true;
       }
     });
+    gun = object;
     camera.add( object );
-    // console.log(object);
   } );
-  // console.log(loader);
+
   window.addEventListener( 'resize', onWindowResize, false );
   window.addEventListener( "mousemove", onDocumentMouseMove, false );
   window.addEventListener('keydown', onDocumentKeyDown, false);
@@ -146,7 +115,8 @@ function createBox(x, y, z, ccolor){
 
 function onDocumentMouseDown(){
   event.preventDefault();
-  if(selectedObject){
+
+  if(selectedObject && !isGunFired){
     //event for mouse click on object
     for(var it = 0; it < group.children.length; it++){
       if(group.children[it].id == selectedObject.id){
@@ -157,11 +127,15 @@ function onDocumentMouseDown(){
     }
     console.log("box killed");
   }
+
+  isGunFired = true;
+  isGunFiredBackTransition = true;
 }
 
 var cameraRotateLeft = false;
 var cameraRotateRight = false;
 var isTransitionCameraDone = true;
+var isGunFired = false;
 function onDocumentKeyDown(){
   event.preventDefault();
   if(isTransitionCameraDone){
@@ -181,8 +155,26 @@ function onDocumentKeyDown(){
 
 
 var targetRotation;
+var isGunFiredBackTransition = false;
 function animate() {
-  // player.rotation.y += 0.1;
+  if(isGunFired){
+    if(isGunFiredBackTransition){
+      camera.position.z += 0.3;
+      gun.position.z += 0.1;
+      if(camera.position.z >= 1){
+        isGunFiredBackTransition = false;
+      }
+    }
+    else{
+      camera.position.z -= 0.1;
+      if(!(gun.position.z <= -1)){
+        gun.position.z -= 0.1;
+      }
+      if(camera.position.z <= 0){
+        isGunFired = false;
+      }
+    }
+  }
   if(cameraRotateLeft){
     player.rotation.y += 0.02;
     if(player.rotation.y >= targetRotation){
@@ -210,10 +202,10 @@ function onDocumentMouseMove( event ) {
     selectedObject = null;
   }
   var intersects = getIntersects( event.layerX, event.layerY );
-  // console.log(mouseVector);
   camera.position.x = cameraOriginVec.x + mouseVector.x * 0.2;
   camera.position.y = cameraOriginVec.y + mouseVector.y * 0.2;
-
+  gun.rotation.y = Math.PI/2 - Math.PI/2  * mouseVector.x  * 0.5;
+  gun.rotation.x = Math.PI/2 * mouseVector.y * 0.3;
   if ( intersects.length > 0 ) {
     var res = intersects.filter( function ( res ) {
       return res && res.object;
