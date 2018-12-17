@@ -32,8 +32,12 @@ function initGame(){
 
     //scene background
     scene.background = new THREE.Color( 0x17181C );
+<<<<<<< HEAD
     scene.fog = new THREE.Fog( 0x525252, 500, 1000 );
 
+=======
+    // scene.fog = new THREE.Fog( 0x525252, 500, 1000 );
+>>>>>>> 49105aaa1ccdccffdba2ecc0b68d488320276566
     // create ground
     loader_t = new THREE.TextureLoader();
     var textureGround = loader_t.load( 'assets/textures/ground.jpg');
