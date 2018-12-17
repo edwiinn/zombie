@@ -1,23 +1,18 @@
-function generateAnimationZombieX( model, animations ) {
-  var states = [ 'Zombie@attack', 'Zombie@fallingback', 'Zombie@idle', 'Zombie@walk', 'Zombie@walk_in_place' ];
-  mixer = new THREE.AnimationMixer( model );
-  console.log(animations);
+function generateAnimationZombie( model, animations ) {
+  mixer.push(new THREE.AnimationMixer( model ));
   for ( var i = 0; i < animations.length; i++ ) {
     var clip = animations[ i ];
     console.log(clip.name);
-    var action = mixer.clipAction( clip );
+    var action = mixer[mixer.length-1].clipAction( clip );
     actions[model.name+clip.name ] = action;
-    if (states.indexOf( clip.name ) != 7) {
         action.clampWhenFinished = true;
         action.loop = THREE.LoopOnce;
-    }
   }
-  console.log("done");
+  console.log("done animation for"+model.name);
 }
 
-function moveto(model,x,z,goalX,goalZ)
+function moveXto(model,x,z,goalX,goalZ)
 		{
-      console.log(modDir[model].position);
 			var stepX;
 			if(x>modDir[model].position.x)
 			stepX = 0.2;
@@ -31,18 +26,18 @@ function moveto(model,x,z,goalX,goalZ)
 			stepZ = -0.2;
 
 			var timeScale = 4;
-      console.log(playeragle,modDir[model].rotation.y);
-				if(!goalX && !goalZ || playeragle-modDir[model].rotation.y>=0.17){//10 degree
+				if(!goalX || !goalZ || anglePlayer-modDir[model].rotation.y>=0.17){//10 degree
 
 					if(!actions[(model+"Zombie@walk_in_place")].isRunning()){
 							actions[(model+"Zombie@walk_in_place")]
 							.reset()
 							.setEffectiveTimeScale(timeScale)
 							.setEffectiveWeight( 10 )
-							.play()
+							.play();
 					if(!goalZ){
 
 							modDir[model].position.z += stepZ;
+
 							if((Math.abs(modDir[model].position.z)-Math.abs(z))>=0)
 									goalZ=true;
 							}
@@ -55,43 +50,90 @@ function moveto(model,x,z,goalX,goalZ)
 						}
 
 					}
-						setTimeout(function(){	moveto(model,x,z,goalX,goalZ);},50);
+						setTimeout(function(){	moveXto(model,x,z,goalX,goalZ);},50);
 			 		}
 			else {
 						actions[(model+"Zombie@walk_in_place")]
 						.fadeOut(1);
 			 	   }
-        if((playeragle-modDir[model].rotation.y)>0)
+        if((anglePlayer-modDir[model].rotation.y)>0)
         modDir[model].rotation.y +=(1/180)*3.14;
-        else if ((playeragle-modDir[model].rotation.y)<0)
+        else if ((anglePlayer-modDir[model].rotation.y)<0)
         modDir[model].rotation.y -=(1/180)*3.14;
 
 		}
 
-function attackto(model,n)
+  function moveYto(model,x,z,goalX,goalZ)
+    		{
+    			var stepX;
+    			if(x>modDir[model].position.x)
+    			stepX = 0.1;
+    			else
+    			stepX = -0.1;
+
+    			var stepZ;
+    			if(z>modDir[model].position.z)
+    			stepZ = 0.1;
+    			else
+    			stepZ = -0.1;
+    			var timeScale = 1;
+
+    				if(!goalX || !goalZ || anglePlayer-modDir[model].rotation.y>=0.17){//10 degree
+
+    					if(!actions[(model+"mixamo.com")].isRunning()){
+                  actions[(model+"mixamo.com")]
+                  .reset()
+                  .setEffectiveTimeScale(timeScale)
+    							.setEffectiveWeight( 10 )
+    							.play();
+                }
+    					if(!goalZ){
+
+    							modDir[model].position.z += stepZ;
+    							if((Math.abs(modDir[model].position.z)-Math.abs(z))>=0)
+    									goalZ=true;
+    							}
+    					if(!goalX){
+    							modDir[model].position.x += stepX;
+    							if((Math.abs(modDir[model].position.x)-Math.abs(x))>=0)
+    								goalX=true;
+    						}
+                if((anglePlayer-modDir[model].rotation.y)>0)
+                modDir[model].rotation.y +=(1/180)*3.14;
+                else if ((anglePlayer-modDir[model].rotation.y)<0)
+                modDir[model].rotation.y -=(1/180)*3.14;
+
+    						setTimeout(function(){	moveYto(model,x,z,goalX,goalZ);},200);
+    			 		}
+    			else {
+    						actions[(model+"mixamo.com")]
+    						.fadeOut(1);
+    			 	   }
+
+
+    		}
+
+function attackXto(model,n)
 		{
 				var timeScale=1.5;
+            actions[model+"Zombie@attack"].stop();
 						actions[model+"Zombie@attack"]
 						.reset()
 						.setEffectiveTimeScale(timeScale)
 						.setEffectiveWeight(25)
 						.play();
-
-						console.log(n);
 						if(n>0)
-						setTimeout(function(){attackto(model,n-1)},800);
+						setTimeout(function(){attackXto(model,n-1)},800);
 
 					if(n==0)
 					{
 						actions[model+"Zombie@attack"].halt();
 					}
-					console.log(n);
 		}
 
-function fallingto(model)
+function fallingXto(model)
 		{
 					var timeScale=2;
-							console.log()
 							actions[model+"Zombie@fallingback"]
 							.reset()
 							.setEffectiveTimeScale (3)
@@ -108,3 +150,87 @@ function fallingto(model)
 
 				//need disapear;
 		}
+
+    function fallingYto(model)
+    		{
+
+          actions[(model+"mixamo.com")]
+          .reset()
+          .setEffectiveTimeScale(1)
+          .setDuration(20)
+          .setEffectiveWeight( 10 )
+          .play();
+          setTimeout(function(){
+            actions[model+"Zombie@fallingback"]
+            .halt();
+            //tambah efek kebakar(opsional)
+          },2900);
+                  setTimeout(function(){scene.remove(scene.getObjectByName(model));
+                  },3000);
+
+    				//need disapear;
+    		}
+
+function runFirst(model)
+{
+          actions[(model+"ArmatureAction")].clampWhenFinished =true;
+          actions[(model+"ArmatureAction")].loop = THREE.LoopRepeat ;
+            actions[(model+"ArmatureAction")]
+            .reset()
+            .setEffectiveTimeScale(0.5)
+            .setEffectiveWeight( 10 )
+            .play();
+
+}
+
+function moveBatto(model,loc,inisialGoal,angleEnd)
+      {
+        angleEndRad =(angleEnd/360)*6.28;
+        var x=loc[0];
+        var y=loc[1];
+        var z=loc[2];
+
+        var stepX;
+        if(x>modDir[model].position.x)
+        stepX = 0.01;
+        else
+        stepX = -0.01;
+
+        var stepZ;
+        if(z>modDir[model].position.z)
+        stepZ = 0.01;
+        else
+        stepZ = -0.01;
+
+        var stepY;
+        if(y>modDir[model].position.y)
+        stepY = 0.01;
+        else
+        stepY = -0.01;
+
+          if(!inisialGoal[0] || !inisialGoal[2] || !inisialGoal[1] || angleEndRad-modDir[model].rotation.y>=0.1){//10 degree
+
+            if(!inisialGoal[2]){
+                modDir[model].position.z += stepZ;
+                if((Math.abs(modDir[model].position.z)-Math.abs(z))>=0)
+                    inisialGoal[2]=true;
+                }
+            if(!inisialGoal[0]){
+                modDir[model].position.x += stepX;
+                if((Math.abs(modDir[model].position.x)-Math.abs(x))>=0)
+                  inisialGoal[1]=true;
+                }
+            if(!inisialGoal[1]){
+                    modDir[model].position.x += stepY;
+                    if((Math.abs(modDir[model].position.y)-Math.abs(y))>=0)
+                    inisialGoal[1]=true;
+                    }
+
+            if((angleEndRad-modDir[model].rotation.y)>0)
+                modDir[model].rotation.y +=(1/180)*3.14;
+          else if ((angleEndRad-modDir[model].rotation.y)<0)
+                    modDir[model].rotation.y -=(1/180)*3.14;
+
+              setTimeout(function(){	moveBatto(model,loc,inisialGoal,angleEnd);},10);
+            }
+      }
