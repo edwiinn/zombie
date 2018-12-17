@@ -8,6 +8,9 @@ function initGame(){
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(cont.clientWidth, cont.clientHeight);
     renderer.setClearColor(0x0f0f0f, 1);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
     cont.appendChild(renderer.domElement);
 
     // init scene
@@ -21,9 +24,7 @@ function initGame(){
     var controls = new THREE.OrbitControls( camera );
 
     // init light
-    light = new THREE.AmbientLight(0x333333,1);
-    moonlight(0x222222,[0.1,0.1,0.1],[0,40,0],30,10000);
-    scene.add(light);
+    moonlight(0x222222,[0.1,0.1,0.1],[0,100,40],2,5);
 
     // init clock
     clock = new THREE.Clock();

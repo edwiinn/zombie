@@ -246,14 +246,15 @@ function moveBatto(model,loc,inisialGoal,angleEnd)
             "assets/"+"statis/moon/scene.gltf",
             function ( obj ) {
                  if(scene.getObjectByName(objName) == null){
-                    var pointLight = new THREE.PointLight(color,intensity,range,2 );
-                    pointLight.position.set( position[0], position[1], position[2] );
-                    var sphereSize = 1;
-                    var pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
 
+                    var light = new THREE.DirectionalLight( 0xffffff, intensity, range );
+                    light.position.set( position[0], position[1], position[2]);
+                    light.castShadow = true;            // default false
+
+                    var sphereSize = 1;
                      var tmp = new THREE.Group();
-                     tmp.add(pointLight);
-                     tmp.add(pointLightHelper);
+                     tmp.add(light);
+
                      tmp.name = parentName;
                      obj.scene.name = objName;
                      if(scale!=null){

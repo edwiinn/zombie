@@ -58,7 +58,7 @@ function loadObjectGLTF(filename, parentName, objName, scale,position,generateAn
                     obj.scene.position.z=position[2];
                  }
                  tmp.add(obj.scene);
-                 
+
                  modDir[parentName]=obj.scene;
                  if(generateAnimation!=null)
                     generateAnimation(modDir[parentName],obj.animations);
