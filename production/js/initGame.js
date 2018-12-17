@@ -29,9 +29,11 @@ function initGame(){
     // init clock
     clock = new THREE.Clock();
 
+
     //scene background
     scene.background = new THREE.Color( 0x17181C );
     scene.fog = new THREE.Fog( 0x525252, 500, 1000 );
+
     // create ground
     loader_t = new THREE.TextureLoader();
     var textureGround = loader_t.load( 'assets/textures/ground.jpg');
@@ -42,6 +44,18 @@ function initGame(){
     var meshGround = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ),materialGround );
     meshGround.rotation.x = - Math.PI / 2;
     meshGround.receiveShadow = true;
+
+    //add decoration model
+        //statis
+          //tree
+            loadObjectGLTF("statis/tree/scene.gltf","tree","tree",[0.02,0.02,0.02],[27,0,27],null);
+            loadObjectGLTF("statis/tree/scene.gltf","tree_2","tree_2",[0.02,0.02,0.02],[-30,0,40],null);
+            //bat apear from
+          //tomb
+            loadObjectGLTF("statis/tomb1/scene.gltf","tomb1_1","tomb1_1",[0.4,0.4,0.4],[20,0,20],generateAnimationZombie);
+            loadObjectGLTF("statis/tomb1/scene.gltf","tomb1_2","tomb1_2",[0.4,0.4,0.4],[20,0,15],generateAnimationZombie);
+
+
     // push to scene
     scene.add(camera,meshGround);
 
