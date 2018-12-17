@@ -3,8 +3,8 @@ function animate(){
     requestAnimationFrame( animate );
     camera.updateProjectionMatrix();
 
-      for(var i=0;i<mixer.length;i++)
-      if ( mixer[i] ) mixer[i].update( deltaTime );
+    //   for(var i=0;i<mixer.length;i++)
+    //   if ( mixer[i] ) mixer[i].update( deltaTime );
       render();
 }
 
@@ -81,4 +81,4 @@ function onWindowResize() {
   renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
-//const delay = (duration) => new Promise(resolve => setTimeout(resolve, duration))
+const delay = (duration) => new Promise(resolve => setTimeout(resolve, duration))

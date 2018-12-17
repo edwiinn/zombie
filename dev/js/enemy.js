@@ -18,12 +18,14 @@ function createBaseEnemy(){
 }
 
 function initEnemies(){
-    var instance, name;
+    var instance, name, tmp2;
 	while(scene.getObjectByName("baseEnemy")==undefined);
     var tmp =scene.getObjectByName("baseEnemy");
 	for(var i=0;tmp != null && i < numEnemy && camera != null; i++){ // NOTE: change camera into player if needed
 		name = "enemy_"+i;
-		instance = tmp.clone();
+        instance = tmp.clone();
+        tmp2 = instance.getObjectByName("enemyModel");
+        tmp2.scale.set(0.5, 0.5, 0.5);
 		instance.name = name;
 		instance.position.x = camera.position.x + (generatePosition(150, 200));
 		instance.position.z = camera.position.z + (generatePosition(150, 200));
@@ -36,6 +38,7 @@ function getEnemiesReference(){
     for(var i = 0; i < numEnemy; i++){
         name = "enemy_" + i;
         instance = scene.getObjectByName( name );
+
         enemies[name] = instance;
     }
 }
@@ -45,6 +48,6 @@ function getSign(){
 }
 
 function generatePosition(minValue, maxDistanceValue){
-	return (getSign() * (minValue + maxDistanceValue));
+	return (getSign() * Math.random()*(minValue + maxDistanceValue));
 }
 
