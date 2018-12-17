@@ -3,17 +3,15 @@
 function initGame(){
     // utils
     objectLoader.setCrossOrigin("use-credentials");
-
+    var cont = document.getElementById("container");
     // renderer
     renderer = new THREE.WebGLRenderer({antialias: true});
-    renderer.setSize(1028, 514);
+    renderer.setSize(cont.clientWidth, cont.clientHeight);
     renderer.setClearColor(0x0f0f0f, 1);
-    document.getElementById("container").appendChild(renderer.domElement);
+    cont.appendChild(renderer.domElement);
 
     // init scene
     scene = new THREE.Scene();
-
-
 
     // init camera
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 10000);
