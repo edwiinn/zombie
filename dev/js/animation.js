@@ -233,4 +233,48 @@ function moveBatto(model,loc,inisialGoal,angleEnd)
 
               setTimeout(function(){	moveBatto(model,loc,inisialGoal,angleEnd);},10);
             }
+
+
+      }
+
+      function moonlight(color,scale,position,intensity,range)
+      {
+        var parentName = "moonlight";
+        var objName ="moon";
+        loaderGLTF_m = new THREE.GLTFLoader();                  //position =[[x],[y],[z]]
+        loaderGLTF_m.load(                                     //scale =[[x],[y],[z]]
+            "assets/"+"statis/moon/scene.gltf",
+            function ( obj ) {
+                 if(scene.getObjectByName(objName) == null){
+                    var pointLight = new THREE.PointLight(color,intensity,range,2 );
+                    pointLight.position.set( position[0], position[1], position[2] );
+                    var sphereSize = 1;
+                    var pointLightHelper = new THREE.PointLightHelper( pointLight, sphereSize );
+
+                     var tmp = new THREE.Group();
+                     tmp.add(pointLight);
+                     tmp.add(pointLightHelper);
+                     tmp.name = parentName;
+                     obj.scene.name = objName;
+                     if(scale!=null){
+                     obj.scene.scale.x=scale[0];
+                     obj.scene.scale.y=scale[1];
+                     obj.scene.scale.z=scale[2];
+                     }
+                     if(position!=null){
+                     obj.scene.position.x=position[0];
+                     obj.scene.position.y=position[1];
+                     obj.scene.position.z=position[2];
+                     }
+                     tmp.add(obj.scene);
+                     scene.add(tmp );
+                     modDir[parentName]=obj.scene;
+                     console.log(objName+" have been loaded");
+                     return;
+                 }
+            },
+            function ( xhr ) {return;},
+            function ( err ) {return;}
+
+        );
       }
