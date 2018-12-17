@@ -13,11 +13,8 @@ async function enemyMain(){
 
 function createBaseEnemy(){
     loadObjectGLTF("zombie_k/scene.gltf", "baseEnemy1", "enemyModel1", [0.04, 0.025, 0.03], [0, 0, 0], null);
-
     loadObjectGLTF("zombie_y/scene_type1.glb", "baseEnemy2", "enemyModel2", [0.04, 0.025, 0.03], [0, 0, 0], null);
-
     loadObjectGLTF("zombie_y/scene_type2.glb", "baseEnemy3", "enemyModel3", [0.04, 0.025, 0.03], [0, 0, 0], null);
-
     loadObjectGLTF("zombie_y/scene_type3.glb", "baseEnemy4", "enemyModel4", [0.04, 0.025, 0.03], [0, 0, 0], null);
 }
 
@@ -27,17 +24,17 @@ function initEnemies(){
     var tmp2 = modDir["baseEnemy2"];
     var tmp3 = modDir["baseEnemy3"];
     var tmp4 = modDir["baseEnemy4"];
+    
 	for(var i=0; i < numEnemy ; i++){
         name = "enemy_"+i;
         console.log(i);
-        
         if(i%4 == 0) instance = tmp1.clone();
         else if(i%4 == 1) instance = tmp2.clone();
         else if(i%4 == 2) instance = tmp3.clone();
         else if(i%4 == 3) instance = tmp4.clone();
 		instance.name = name;
-		instance.position.x = camera.position.x + (generatePosition(150, 200));
-        instance.position.z = camera.position.z + (generatePosition(150, 200));
+		instance.position.x = (generatePosition(0.1, 0.2));
+        instance.position.z = (generatePosition(0.1, 0.2));
         modDir[name] = instance;
 		scene.add(instance);
     }
