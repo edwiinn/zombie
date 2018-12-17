@@ -24,7 +24,7 @@ function init(){
   // Create renderer and add to DOM
   renderer = new THREE.WebGLRenderer({antialias: true});
   renderer.setSize( window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x333F47, 1);
+  renderer.setClearColor(0x3d3b3a, 1);
   document.body.appendChild(renderer.domElement);
 
   // Create camera
@@ -45,15 +45,52 @@ function init(){
   scene.add(axes);
 
   // Hemisphere light
-  var hLight = new THREE.HemisphereLight(0xffffff, 0x080820, 1);
-  scene.add(hLight);
+  // var hLight = new THREE.HemisphereLight(0xffffff, 0x080820, 1);
+  // scene.add(hLight);
+
+  // Directional light
+  // var directionalLight = new THREE.DirectionalLight(0x0d4fba, 1);
+  // directionalLight.position = new THREE.Vector3(0, 0, 100);
+  // scene.add(directionalLight.target);
+  // directionalLight.target = plane;
+  // scene.add(directionalLight);
+
+  // // Load plane
+  var geometry = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight);
+  var material = new THREE.MeshPhongMaterial({color: 0x424447, side: THREE.DoubleSide}); //0x424447
+  var plane = new THREE.Mesh(geometry, material);
+  plane.position.set(0, 0, -1);
+  plane.rotation.y = Math.PI;
+  plane.receiveShadow = true;
+  scene.add(plane);
+
+  // Spot light
+  var spotLight = new THREE.SpotLight( 0xffffff, 0.65);
+  spotLight.position.set(0, 10, 100);
+  spotLight.penumbra = 0.2;
+  spotLight.castShadow = true;
+  spotLight.shadow.mapSize.width = 1024;
+spotLight.shadow.mapSize.height = 1024;
+
+spotLight.shadow.camera.near = 10;
+spotLight.shadow.camera.far = 200;
+
+var spotLightTarget = new THREE.Object3D();
+camera.add(spotLightTarget);
+spotLightTarget.position.set(0, 0, 0);
+// spotLight.target = spotLightTarget;
+spotLight.target = plane;
+scene.add( spotLight );
+
+spotLightHelper = new THREE.SpotLightHelper(spotLight);
+scene.add(spotLightHelper);
 
   // Create light
-  var light = new THREE.PointLight(0xffffff);
-  light.position.set(100, 200, 100);
-  scene.add(light);
+  // var light = new THREE.PointLight(0xffffff);
+  // light.position.set(100, 200, 100);
+  // scene.add(light);
 
-  scene.fog = new THREE.Fog(0xefd1b5, -10, 200);
+  // scene.fog = new THREE.Fog(0xefd1b5, -10, 200);
   // scene.fog = new THREE.FogExp2( 0xefd1b5, 0.01 );
 
 
@@ -70,6 +107,7 @@ function init(){
   // https://threejs.org/docs/index.html#api/en/geometries/TextGeometry
   var fontLoader = new THREE.FontLoader();
   fontLoader.load('mainmenujs/fonts/helvetiker_regular.typeface.json', function(font){
+    // start
     var textstart = new THREE.TextGeometry('Start', {
       font: font,
       size: 3,
@@ -90,9 +128,7 @@ function init(){
     var textMaterial = new THREE.MeshLambertMaterial({color: 0xff003c}); // color 0xd40a2e
     text = new THREE.Mesh(textstart, textMaterial);
     text.position.x = 2; text.position.y = 0; text.position.z = 0;
-    // text.rotation.x = -45;
-    // text.rotation.y = Math.PI * 2;
-
+    // credits
     var textcredit = new THREE.TextGeometry('Credits', {
       font: font,
       size: 3,
@@ -102,18 +138,19 @@ function init(){
       bevelThickness: 0.2,
       bevelSize: 0.1,
       bevelSegments: 1,
-      // steps: 1
+
     });
     textcredit.computeBoundingBox();
     var textCreditMaterial = new THREE.MeshLambertMaterial({color: 0xd40a2e});
     text2 = new THREE.Mesh(textcredit, textCreditMaterial);
     text2.position.x = 0; text2.position.y = -10; text2.position.z = 0;
     text2.userData.name = 'credits';
+
+    // text5.visible = false;
     parentmenu = new THREE.Object3D();
     parentmenu.add(text);
     parentmenu.add(text2);
     scene.add(parentmenu);
-
   });
 
 fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font){
@@ -191,14 +228,37 @@ scene.add( cube );
 
 // https://stemkoski.github.io/Three.js/Video.html
   // https://github.com/mrdoob/three.js/blob/master/examples/webgl_materials_video.html
-  geometry = new THREE.BoxGeometry(40, 20, 10);
+  geometry = new THREE.PlaneGeometry(60, 30);
   videoMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: videoTexture});
   videoMesh = new THREE.Mesh(geometry, videoMaterial);
   scene2.add(videoMesh);
   // videoMesh.rotation.x = -0.25;
+/*
+  fontLoader.load('mainmenujs/fonts/optimer_regular.typeface.json', function(font){
+        var textback = new THREE.TextGeometry('Back', {
+          font: font,
+          size: 2,
+          height: 2,
+          curveSegments: 5,
+          bevelEnabled: true,
+          bevelThickness: 0.2,
+          bevelSize: 0.1,
+          bevelSegments: 1,
+
+        });
+        textback.computeBoundingBox();
+        var textBackMaterial = new THREE.MeshLambertMaterial({color: 0xcc44907});
+        text5 = new THREE.Mesh(textback, textBackMaterial);
+        text5.position.x = -30; text5.position.y = -15; text5.position.z = 0;
+        text5.userData.name = 'back';
+        parentcredit = new THREE.Object3D();
+        parentcredit.add(text5);
 
 
-
+        // parentmenu.add(text5);
+        scene2.add(parentcredit);
+  });
+*/
 }
 
 function animate(){
@@ -216,7 +276,7 @@ function render(){
   // cube.position.z = 20 * Math.sin(t) + 0;
   // camera.lookAt(cube.position.x, 0, 0);
   // camera.rotation.y += 0.001;
-
+/*
   // raycaster find intersections
   raycaster.setFromCamera( mouseVector, camera );
   var intersects = raycaster.intersectObjects(parentmenu.children);
@@ -234,6 +294,7 @@ function render(){
     if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
     INTERSECTED = null;
   }
+  */
 
   // if ( intersects.length > 0 ) {
   //   var res = intersects.filter( function ( res ) {
@@ -279,7 +340,7 @@ function onWindowResize(){
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 }
-
+console.log(window.innerWidth, window.innerHeight);
 // https://github.com/mrdoob/three.js/blob/master/examples/webgl_interactive_cubes.html
 function onMouseMove(event){
   event.preventDefault();
@@ -293,6 +354,25 @@ function onMouseMove(event){
 
     mouseVector.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouseVector.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
+
+  // raycaster find intersections
+  raycaster.setFromCamera( mouseVector, camera );
+  var intersects = raycaster.intersectObjects(parentmenu.children);
+  if (intersects.length > 0){
+    if (INTERSECTED != intersects[0].object){
+      // if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
+      if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.material.color.getHex());
+      INTERSECTED = intersects[0].object;
+      console.log(INTERSECTED);
+      INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
+      // INTERSECTED.material.emmisive.setHex(0xff0000);
+      INTERSECTED.material.color.setHex(0xffffff);
+    }
+  } else {
+    if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
+    INTERSECTED = null;
+  }
 }
 
 function onDocumentMouseDown(event){
@@ -306,7 +386,12 @@ function onDocumentMouseDown(event){
       // camera.lookAt(new THREE.Vector3(0, 10, 0));
       if (intersects[0].object.userData.name == "credits"){
       sceneStatus = 2;
+      text.visible = false; text2.visible = false;
       video.play();
+    }
+    else if (intersects[0].object.userData.name == "back"){
+      sceneStatus = 1;
+      // text.visible = true; text2.visible = true; text5.visible = false;
     }
     }
 }
