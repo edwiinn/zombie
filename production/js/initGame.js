@@ -32,12 +32,7 @@ function initGame(){
 
     //scene background
     scene.background = new THREE.Color( 0x17181C );
-<<<<<<< HEAD
-    scene.fog = new THREE.Fog( 0x525252, 500, 1000 );
-
-=======
     // scene.fog = new THREE.Fog( 0x525252, 500, 1000 );
->>>>>>> 49105aaa1ccdccffdba2ecc0b68d488320276566
     // create ground
     loader_t = new THREE.TextureLoader();
     var textureGround = loader_t.load( 'assets/textures/ground.jpg');
@@ -45,7 +40,7 @@ function initGame(){
         textureGround.repeat.set( 100, 100 );
         textureGround.anisotropy = 20;
     var materialGround = new THREE.MeshLambertMaterial( { map: textureGround } );
-    var meshGround = new THREE.Mesh( new THREE.PlaneBufferGeometry( 2000, 2000 ),materialGround );
+    var meshGround = new THREE.Mesh( new THREE.PlaneBufferGeometry( 500, 500 ),materialGround );
     meshGround.rotation.x = - Math.PI / 2;
     meshGround.receiveShadow = true;
 

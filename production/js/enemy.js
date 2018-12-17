@@ -5,22 +5,15 @@
 // getEnemiesReference: Add reference to global variable 'enemies'
 
 async function enemyMain(){
-    createBaseEnemy();
-    await delay(4000);
     initEnemies();
     await delay(Math.ceil(Math.sqrt(numEnemy)) * 800);
 }
 
-function createBaseEnemy(){
-    loadObjectGLTF("zombie_k/scene.gltf", "baseEnemy1", "enemyModel1", [0.04, 0.025, 0.03], [0, 0, 0], null);
-}
-
 function initEnemies(){
     var name;
-    
 	for(var i=0; i < numEnemy ; i++){
-        name = "scene_type"+i+".glb";
-        loadObjectGLTF("zombie/"+name, "baseEnemy1", "enemyModel1", [0.04, 0.025, 0.03], [0, 0, 0], null);
+        name = "enemy_"+i;
+        loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(10, 30), 0, generatePosition(20, 40)], null);
     }
 }
 
@@ -29,6 +22,5 @@ function getSign(){
 }
 
 function generatePosition(minValue, maxDistanceValue){
-	return (getSign() * (minValue + maxDistanceValue));
+	return (getSign() * (minValue + Math.random()*maxDistanceValue));
 }
-
