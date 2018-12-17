@@ -13,7 +13,7 @@ function initEnemies(){
     var name;
 	for(var i=0; i < numEnemy ; i++){
         name = "enemy_"+i;
-        loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(10, 30), 0, generatePosition(20, 40)], null);
+        loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(30, 50), 0, generatePosition(30, 40)], null);
     }
 }
 

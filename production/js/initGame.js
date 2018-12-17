@@ -24,7 +24,7 @@ function initGame(){
     var controls = new THREE.OrbitControls( camera );
 
     // init light
-    moonlight(0x222222,[0.1,0.1,0.1],[0,100,40],2,5);
+    moonlight(0x222222,[0.1,0.1,0.1],[0,100,40],2,1);
 
     // init clock
     clock = new THREE.Clock();
@@ -40,7 +40,7 @@ function initGame(){
         textureGround.repeat.set( 100, 100 );
         textureGround.anisotropy = 20;
     var materialGround = new THREE.MeshLambertMaterial( { map: textureGround } );
-    var meshGround = new THREE.Mesh( new THREE.PlaneBufferGeometry( 500, 500 ),materialGround );
+    var meshGround = new THREE.Mesh( new THREE.PlaneBufferGeometry( 100, 100 ),materialGround );
     meshGround.rotation.x = - Math.PI / 2;
     meshGround.receiveShadow = true;
 

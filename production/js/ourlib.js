@@ -39,8 +39,8 @@ function loadObject (filename, parentName, objName){
 }
 
 function loadObjectGLTF(filename, objName, scale, position, generateAnimation){
-    loaderGLTF_m = new THREE.GLTFLoader();                  //position =[[x],[y],[z]]
-    loaderGLTF_m.load(                                     //scale =[[x],[y],[z]]
+    loaderGLTF_m = new THREE.GLTFLoader();                  
+    loaderGLTF_m.load(                                     
         "assets/"+filename,
         function ( obj ) {
                 obj.scene.name = objName;
