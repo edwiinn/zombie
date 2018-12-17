@@ -15,10 +15,10 @@ function initGame(){
 
     // init camera
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 10000);
-    camera.position.set(0, 4, 0);
+    camera.position.set(0, 4, 10);
 
     // init light
-    light = new THREE.AmbientLight(0x404040);
+    light = new THREE.AmbientLight(0xf0f0f0);
 
     // init clock
     clock = new THREE.Clock();
@@ -29,6 +29,8 @@ function initGame(){
                             color: 0xf74321,
                             shininess: 10,
                             specular: 0x000000}));
+    
+    ground.translateY(-5);
     
     // push to scene
     scene.add(camera, light, ground);

@@ -1,8 +1,18 @@
 "use strict";
 
-function main() {
+async function main() {
     initGame();
-    render();
+
+    // main menu
+
+    // load game scene
+
+    // load enemy
+    enemyMain();
+    console.log(modDir);
+    
+    // game start
+    animate();
 }
 
 main();

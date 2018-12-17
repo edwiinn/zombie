@@ -9,34 +9,24 @@ async function enemyMain(){
     await delay(1000);
     initEnemies();
     await delay(Math.ceil(Math.sqrt(numEnemy)) * 800);
-    getEnemiesReference();
-    await delay(500);
 }
 
 function createBaseEnemy(){
-    loadObject("pikachu/pikachu-pokemon-go.json", "baseEnemy", "enemyModel");
+    loadObjectGLTF("zombie_k/scene.gltf", "baseEnemy", "enemyModel", [0.04, 0.025, 0.03], [0, 0, 0], null);
+
 }
 
 function initEnemies(){
     var instance, name;
-	while(scene.getObjectByName("baseEnemy")==undefined);
-    var tmp =scene.getObjectByName("baseEnemy");
+    var tmp = modDir["baseEnemy"];
 	for(var i=0;tmp != null && i < numEnemy && camera != null; i++){ // NOTE: change camera into player if needed
 		name = "enemy_"+i;
 		instance = tmp.clone();
 		instance.name = name;
 		instance.position.x = camera.position.x + (generatePosition(150, 200));
-		instance.position.z = camera.position.z + (generatePosition(150, 200));
+        instance.position.z = camera.position.z + (generatePosition(150, 200));
+        modDir[name] = instance;
 		scene.add(instance);
-    }
-}
-
-function getEnemiesReference(){
-    var instance, name;
-    for(var i = 0; i < numEnemy; i++){
-        name = "enemy_" + i;
-        instance = scene.getObjectByName( name );
-        enemies[name] = instance;
     }
 }
 

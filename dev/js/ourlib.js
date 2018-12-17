@@ -38,7 +38,7 @@ function loadObject (filename, parentName, objName){
     );
 }
 
-function loadObjectGLTF(filename, parentName, objName,scale,position,generateAnimation){
+function loadObjectGLTF(filename, parentName, objName, scale,position,generateAnimation){
     loaderGLTF_m = new THREE.GLTFLoader();                  //position =[[x],[y],[z]]
     loaderGLTF_m.load(                                     //scale =[[x],[y],[z]]
         "assets/"+filename,
