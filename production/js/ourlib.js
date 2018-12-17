@@ -2,6 +2,11 @@ function animate(){
     deltaTime = clock.getDelta();
     requestAnimationFrame( animate );
     camera.updateProjectionMatrix();
+    
+    for(var i=0; i<numEnemy; i++){
+        modDir["enemy_"+i].position.x += ((0 - modDir["enemy_"+i].position.x)*deltaTime*0.05);
+        modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z)*deltaTime*0.05);
+    }
 
     //   for(var i=0;i<mixer.length;i++)
     //   if ( mixer[i] ) mixer[i].update( deltaTime );

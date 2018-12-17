@@ -1,9 +1,5 @@
 "use strict";
 
-// createBaseEnemy: create base model of enemy. Must be finished before running initEnemies
-// initEnemies: clone from base model of enemy. Generate random position over X and Z plane
-// getEnemiesReference: Add reference to global variable 'enemies'
-
 async function enemyMain(){
     initEnemies();
     await delay(Math.ceil(Math.sqrt(numEnemy)) * 800);
@@ -13,7 +9,7 @@ function initEnemies(){
     var name;
 	for(var i=0; i < numEnemy ; i++){
         name = "enemy_"+i;
-        loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(30, 50), 0, generatePosition(30, 40)], null);
+        loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(60, 120), 0, generatePosition(60, 120)], null);
     }
 }
 

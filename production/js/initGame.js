@@ -40,7 +40,7 @@ function initGame(){
         textureGround.repeat.set( 100, 100 );
         textureGround.anisotropy = 20;
     var materialGround = new THREE.MeshLambertMaterial( { map: textureGround } );
-    var meshGround = new THREE.Mesh( new THREE.PlaneBufferGeometry( 100, 100 ),materialGround );
+    var meshGround = new THREE.Mesh( new THREE.PlaneBufferGeometry( 300, 300 ),materialGround );
     meshGround.rotation.x = - Math.PI / 2;
     meshGround.receiveShadow = true;
 
