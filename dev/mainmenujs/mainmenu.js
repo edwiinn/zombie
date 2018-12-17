@@ -1,6 +1,6 @@
 // https://blog.teamtreehouse.com/the-beginners-guide-to-three-js
 
-var stats, scene, camera, renderer, controls;
+var stats, scene, camera, renderer, controls, sound;
 var scene2, camera2, videoTexture, video;
 var sceneStatus;
 var cube;
@@ -55,9 +55,10 @@ function init(){
   // directionalLight.target = plane;
   // scene.add(directionalLight);
 
-  // // Load plane
-  var geometry = new THREE.PlaneGeometry(window.innerWidth, window.innerHeight);
-  var material = new THREE.MeshPhongMaterial({color: 0x424447, side: THREE.DoubleSide}); //0x424447
+  // Load plane
+  var menuTexture = new THREE.TextureLoader().load('mainmenujs/texture/stockvault-grunge-stone-wall-texture.jpg');
+  var geometry = new THREE.PlaneGeometry(150, 100);
+  var material = new THREE.MeshPhongMaterial({side: THREE.DoubleSide, map: menuTexture}); //0x424447
   var plane = new THREE.Mesh(geometry, material);
   plane.position.set(0, 0, -1);
   plane.rotation.y = Math.PI;
@@ -93,14 +94,18 @@ scene.add(spotLightHelper);
   // scene.fog = new THREE.Fog(0xefd1b5, -10, 200);
   // scene.fog = new THREE.FogExp2( 0xefd1b5, 0.01 );
 
-
-  // Load mesh
-  // var loader = new THREE.JSONLoader();
-  // loader.load("mainmenujs/treehouse_logo.js", function(geometry){
-  //   var material = new THREE.MeshLambertMaterial({color: 0x55B663});
-  //   mesh = new THREE.Mesh(geometry, material);
-  //   scene.add(mesh);
-  // });
+  // Load Audio https://threejs.org/docs/index.html#api/en/audio/Audio
+  var listener = new THREE.AudioListener();
+  camera.add(listener);
+  sound = new THREE.Audio (listener);
+  var audioLoader = new THREE.AudioLoader();
+  // audioLoader.load('mainmenujs/sound/Scary_Demon_Haunting.mp3', function (buffer) {
+  audioLoader.load('mainmenujs/sound/hell-Mike.mp3', function (buffer) {
+    sound.setBuffer(buffer);
+    sound.setLoop(true);
+    sound.setVolume(1.0);
+    sound.play();
+  });
 
   // https://github.com/jeromeetienne/threex.text
   // https://jeromeetienne.github.io/slides/howtomakeagame-nextgamefrontier-2014/#27
@@ -125,7 +130,7 @@ scene.add(spotLightHelper);
 
     // https://talk.olab.io/t/three-js-dat-gui-to-control-and-3d-text-geometry/208
     textstart.computeBoundingBox();
-    var textMaterial = new THREE.MeshLambertMaterial({color: 0xff003c}); // color 0xd40a2e
+    var textMaterial = new THREE.MeshLambertMaterial({color: 0xede2dc}); // color 0xd40a2e
     text = new THREE.Mesh(textstart, textMaterial);
     text.position.x = 2; text.position.y = 0; text.position.z = 0;
     // credits
@@ -141,15 +146,52 @@ scene.add(spotLightHelper);
 
     });
     textcredit.computeBoundingBox();
-    var textCreditMaterial = new THREE.MeshLambertMaterial({color: 0xd40a2e});
+    var textCreditMaterial = new THREE.MeshLambertMaterial({color: 0xede2dc}); // 0xd40a2e
     text2 = new THREE.Mesh(textcredit, textCreditMaterial);
-    text2.position.x = 0; text2.position.y = -10; text2.position.z = 0;
+    text2.position.x = 0; text2.position.y = -15; text2.position.z = 0;
     text2.userData.name = 'credits';
+
+    var textmusicon = new THREE.TextGeometry('Music: ON', {
+      font: font,
+      size: 3,
+      height: 2,
+      curveSegments: 5,
+      bevelEnabled: true,
+      bevelThickness: 0.2,
+      bevelSize: 0.1,
+      bevelSegments: 1,
+
+    });
+
+    var textMusicOnMaterial = new THREE.MeshLambertMaterial({color: 0xede2dc}); // 0xd40a2e
+    text4 = new THREE.Mesh(textmusicon, textMusicOnMaterial);
+    text4.position.x = -2; text4.position.y = -7; text4.position.z = 0;
+    text4.userData.name = 'musicon';
+
+    var textmusicoff = new THREE.TextGeometry('Music: OFF', {
+      font: font,
+      size: 3,
+      height: 2,
+      curveSegments: 5,
+      bevelEnabled: true,
+      bevelThickness: 0.2,
+      bevelSize: 0.1,
+      bevelSegments: 1,
+
+    });
+
+    var textMusicOffMaterial = new THREE.MeshLambertMaterial({color: 0xede2dc}); // 0xd40a2e
+    text5 = new THREE.Mesh(textmusicoff, textMusicOffMaterial);
+    text5.position.x = -3; text5.position.y = -7; text5.position.z = 0;
+    text5.userData.name = 'musicoff';
+    text5.visible = false;
 
     // text5.visible = false;
     parentmenu = new THREE.Object3D();
     parentmenu.add(text);
     parentmenu.add(text2);
+    parentmenu.add(text4);
+    parentmenu.add(text5);
     scene.add(parentmenu);
   });
 
@@ -164,14 +206,13 @@ fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font
   //   size: 5,
   //   height: 2,
   // });
-  var textTitleMaterial = new THREE.MeshLambertMaterial();
+  var textTitleMaterial = new THREE.MeshLambertMaterial({color: 0xe50606}); //0xc60909
   text3 = new THREE.Mesh(texttitle, textTitleMaterial);
   text3.position.x = -10; text3.position.y = 8; text3.position.z = 0;
-  // text4 = new THREE.Mesh(texttitle2, textTitleMaterial);
-  // text4.position.x = -10; text4.position.y = 6; text4.position.z = 0;
+
   parenttitle = new THREE.Object3D();
   parenttitle.add(text3);
-  // parent.add(text4);
+
   scene.add(parenttitle);
 });
 
@@ -327,7 +368,7 @@ function initStats(){
 
   // Align top-left
   stats.domElement.style.position = 'absolute';
-  stats.domElement.style.left = '0px';
+  stats.domElement.style.left = '5px';
   stats.domElement.style.top = '0px';
 
   document.getElementById("Stats-output").appendChild(stats.domElement);
@@ -367,7 +408,7 @@ function onMouseMove(event){
       console.log(INTERSECTED);
       INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
       // INTERSECTED.material.emmisive.setHex(0xff0000);
-      INTERSECTED.material.color.setHex(0xffffff);
+      INTERSECTED.material.color.setHex(0xd40a2e);
     }
   } else {
     if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
@@ -389,9 +430,13 @@ function onDocumentMouseDown(event){
       text.visible = false; text2.visible = false;
       video.play();
     }
-    else if (intersects[0].object.userData.name == "back"){
-      sceneStatus = 1;
-      // text.visible = true; text2.visible = true; text5.visible = false;
+    else if (intersects[0].object.userData.name == "musicon"){
+      text4.visible = false; text5.visible = true;
+      sound.pause();
+    }
+    else if (intersects[0].object.userData.name == "musicoff"){
+      text4.visible = true; text5.visible = false;
+      sound.play();
     }
     }
 }
