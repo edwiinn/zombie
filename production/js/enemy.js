@@ -5,9 +5,10 @@ async function enemyMain(){
     await delay(Math.ceil(Math.sqrt(numEnemy)) * 800);
 }
 
-function intervalAddEnemy(){
+async function intervalAddEnemy(){
     console.log("enemy_"+(numEnemy));
     loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy), [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
+    await delay(500);
     moveXto("enemy_"+(numEnemy), 0, 0, false, false);
     numEnemy += 1;
     movSpeed += 0.005;
