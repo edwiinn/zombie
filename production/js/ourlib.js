@@ -10,7 +10,7 @@ function animate(){
         }
       }
       else{
-        camera.position.z -= 0.1;
+        camera.position.z -= 0.06;
         if(!(gun.position.z <= -1)){
           gun.position.z -= 0.1;
         }

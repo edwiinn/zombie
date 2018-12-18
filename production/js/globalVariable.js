@@ -26,6 +26,7 @@ var isGunFired = false;
 var targetRotation;
 var isGunFiredBackTransition = false;
 var selectedObject = null;
+var selectedObjectName = "";
 var mouseVector = new THREE.Vector3();
 var group = new THREE.Group();
 // var modDirChildren =[];

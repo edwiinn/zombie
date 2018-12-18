@@ -5,13 +5,18 @@ function createBox(x, y, z){
   var box = new THREE.Mesh(geometry, material);
   return box;
 }
-function onDocumentMouseDown(){
+function onDocumentMouseDown(event){
   event.preventDefault();
-  if(selectedObject && !isGunFired){
-      console.log("box killed");
+  if(event.buttons == 1 && !isGunFired){
+    if(selectedObject){
+      var name = selectedObject.parent.parent.parent.parent.parent.parent.parent.name;
+      fallingXto(name);
+     // modDir[name].position.x = generatePosition(30, 90);
+      console.log(name);
+    }
+    isGunFired = true;
+    isGunFiredBackTransition = true;
   }
-  isGunFired = true;
-  isGunFiredBackTransition = true;
 }
 
 function onDocumentKeyDown(){
@@ -36,7 +41,6 @@ function onDocumentMouseMove( event ) {
 
   if ( selectedObject ) {
     console.log("zombieeee");
-    // selectedObject.material.color.set( '#0f0' );
     selectedObject = null;
   }
   var intersects = getIntersects( event.layerX, event.layerY );

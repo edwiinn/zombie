@@ -131,8 +131,14 @@ function fallingXto(model)
                 actions[model+"Zombie@walk_in_place"].halt();
 								//tambah efek kebakar(opsional)
 							},900);
-              // setTimeout(function(){scene.remove(scene.getObjectByName(model));
-              // },2891);
+               setTimeout(function(){
+                 modDir[model].position.x = generatePosition(30, 90);
+                 modDir[model].position.z = generatePosition(30, 90);
+                 modDir[model].lookAt(new THREE.Vector3(0,0,0));
+                actions[model+"Zombie@fallingback"].fadeOut(1);
+                actions[model+"Zombie@attack"].fadeOut(1);
+                actions[model+"Zombie@walk_in_place"].fadeOut(1);
+              },1210);
             }
 				//need disapear;
 		}

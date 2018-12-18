@@ -71,20 +71,9 @@ function initGame(){
             loadObjectGLTF("statis/tree/scene.gltf","tree_2",[0.02,0.02,0.02],[20,0,-20],null);
             loadObjectGLTF("statis/tree/scene.gltf","tree_3",[0.02,0.02,0.02],[-20,0,-20],null);
             loadObjectGLTF("statis/tree/scene.gltf","tree_4",[0.02,0.02,0.02],[20,0,20],null);
-            // loadObjectGLTF("statis/tree/scene.gltf","tree_5",[0.02,0.02,0.02],[-40,0,70],null);
-            // loadObjectGLTF("statis/tree/scene.gltf","tree_6",[0.02,0.02,0.02],[40,0,-70],null);
-          //
-          //   //bat apear from
-          // //tomb
-            // loadObjectGLTF("statis/remains/scene.gltf","tomb1_2",[0.4,0.4,0.4],[20,0,-15],null);
-            // loadObjectGLTF("statis/tomb1/scene.gltf","tomb1_1",[0.4,0.4,0.4],[20,0,10],null);
-            // loadObjectGLTF("statis/remains/scene.gltf","tomb1_3",[0.4,0.4,0.4],[-10,0,-5],null);
-
-            // loadObjectGLTF("statis/tomb3/scene.gltf","tomb3_1",[0.1,0.1,0.1],[10,-0.07,-10],null);
-            // loadObjectGLTF("statis/tomb4/scene.gltf","tomb4_1",[0.1,0.1,0.1],[7,0.7,15],null);
-            // loadObjectGLTF("statis/remains/scene.gltf","tomb5_1",[1,1,1],[-13,0.7,15],null);
-
-          //   //ruin
+            loadObjectGLTF("statis/tree/scene.gltf","tree_5",[0.02,0.02,0.02],[-40,0,70],null);
+            
+            //ruin
             loadObjectGLTF("statis/ruin2/scene.gltf","ruin2_1",[0.04,0.04,0.04],[-20,0,-20],null);
             loadObjectGLTF("statis/ruin1/scene.gltf","ruin1_2",[0.02,0.02,0.02],[20,0,20],null);
     // push to scene

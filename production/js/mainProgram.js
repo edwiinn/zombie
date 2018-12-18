@@ -2,7 +2,7 @@
 
 async function main() {
     initGame();
-    await delay(10000);
+    await delay(5000);
 
     // main menu
 
