@@ -24,7 +24,7 @@ function initGame(){
     var controls = new THREE.OrbitControls( camera );
 
     // init light
-    moonlight(0x222222,[0.1,0.1,0.1],[0,100,40],2,1);
+    moonlight(0x222222,[0.1,0.1,0.1],[0,100,40],0.7,1);
 
     // init clock
     clock = new THREE.Clock();
@@ -32,7 +32,7 @@ function initGame(){
 
     //scene background
     scene.background = new THREE.Color( 0x17181C );
-    // scene.fog = new THREE.Fog( 0x525252, 500, 1000 );
+    scene.fog = new THREE.Fog( 0x525252, 30, 100 );
     // create ground
     loader_t = new THREE.TextureLoader();
     var textureGround = loader_t.load( 'assets/textures/ground.jpg');
