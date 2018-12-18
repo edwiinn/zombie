@@ -35,7 +35,9 @@ var group = new THREE.Group();
 var listener = new THREE.AudioListener();
 var soundGun = new THREE.Audio( listener );
 var soundZombie = new THREE.Audio( listener );
+var soundThema = new THREE.Audio( listener );
 var audioLoader = new THREE.AudioLoader();
 var isPause = false;
 var opacity=0;
+
 

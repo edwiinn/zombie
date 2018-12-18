@@ -9,8 +9,9 @@
         body{
             margin: 0;
             padding: 0;
-            overflow: hidden;
-        };
+            overflow: hidden; 
+            cursor: url("assets/cursor.png"), auto;
+        }
     </style>
     <script src="js/three.js"></script>
     <script src="js/inflate.min.js"></script>
@@ -28,7 +29,11 @@
         <img id="screenBlood" src="assets/bloodFrame.png"  style="
         position: absolute;display: block;width:100vw;height:100vw; opacity:0;">
 
-         <img  src="https://static1.squarespace.com/static/5ae8aca73c3a53300df232d2/t/5b466d6daa4a99d99e83ab23/1531342191729/Pause+Logo-white-02.png?format=1000w"  id="pause-image" style="position:absolute;display:none">
+         <img  id="pause-image" 
+         src="https://static1.squarespace.com/static/5ae8aca73c3a53300df232d2/t/5b466d6daa4a99d99e83ab23/1531342191729/Pause+Logo-white-02.png?format=1000w" style="position:absolute;display:none">
+
+         <input id="reload" type="image" src="assets/playback.png" style="position: absolute; top: 15%; left: 33%; display:none;"  onmouseover="myFunction()" onclick="reloadBack()" >
+         
 
         <div id="end-div" style="position: absolute; text-align: center; margin-top: 30px; font-family: sans-serif; margin-left: 20px;display: none; color: #ddd; ">
             <h1>Karakter anda mati, skor anda: </h1>
@@ -41,6 +46,8 @@
         <div id="hpboard" style="position: absolute; text-align: center; margin-top: 120px; font-family: sans-serif; display: none; margin-left: 50px;color: #ddd;" >
             <h2>HP</h2>
             <h2 id="hpfront">100</h2>
+
+
         </div>
     </div>
 

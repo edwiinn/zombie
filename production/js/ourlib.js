@@ -2,8 +2,11 @@ function animate(){
   if(playerHP <= 0 ){
     document.getElementById('skor').innerHTML = playerScore;
     document.getElementById('end-div').style.display = "block";
+    document.getElementById('reload').style.display = "block";
     document.getElementById('skorboard').style.display = "none";
     document.getElementById('hpboard').style.display = "none";
+    document.getElementById('screenPause').style.display = "none";
+    soundThema.stop();
     return;
   }
   document.getElementById('skorfront').innerHTML = playerScore;
@@ -58,13 +61,13 @@ function animate(){
             modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z) * deltaTime * movSpeed);
         else {
           attackXto("enemy_"+i,1000);
-          
+
         }
     }
         
 
     if (s < 40){
-        if(!audioLoader.isPlaying){
+        if(!soundZombie.isPlaying){
             audioLoader.load( 'assets/zombie.wav', function( buffer ) {
                 soundZombie.setBuffer( buffer );
                 soundZombie.setLoop( false);
