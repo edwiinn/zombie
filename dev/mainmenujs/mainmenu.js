@@ -12,6 +12,7 @@ window.addEventListener('resize', onWindowResize, false);
 window.addEventListener('mousemove', onMouseMove, false);
 window.addEventListener('mousedown', onDocumentMouseDown, false);
 
+loadingPage();
 init();
 animate();
 
@@ -41,8 +42,8 @@ function init(){
 
 
   //Create axes
-  var axes = new THREE.AxesHelper(5);
-  scene.add(axes);
+  // var axes = new THREE.AxesHelper(5);
+  // scene.add(axes);
 
   // Hemisphere light
   // var hLight = new THREE.HemisphereLight(0xffffff, 0x080820, 1);
@@ -87,8 +88,8 @@ spotLightTarget.position.set(0, 0, 0);
 spotLight.target = plane;
 scene.add( spotLight );
 
-spotLightHelper = new THREE.SpotLightHelper(spotLight);
-scene.add(spotLightHelper);
+// spotLightHelper = new THREE.SpotLightHelper(spotLight);
+// scene.add(spotLightHelper);
 
   // Create light
   // var light = new THREE.PointLight(0xffffff);
@@ -240,14 +241,14 @@ fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font
 
     // Create new Scene2
     scene2 = new THREE.Scene();
-    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-  var material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
-  cube = new THREE.Mesh( geometry, material );
-  scene2.add( cube );
+  //   var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+  // var material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+  // cube = new THREE.Mesh( geometry, material );
+  // scene2.add( cube );
 
   //Create axes
-  var axes = new THREE.AxesHelper(1);
-  scene2.add(axes);
+  // var axes = new THREE.AxesHelper(1);
+  // scene2.add(axes);
 
   // Hemisphere light
   // var hLight = new THREE.HemisphereLight(0xffffff, 0x00ff00, 1);
@@ -429,4 +430,29 @@ function onDocumentMouseDown(event){
       sound.play();
     }
     }
+}
+
+function loadingPage(){
+// https://www.w3schools.com/js/js_htmldom_nodes.asp
+  // https://www.w3schools.com/jsref/dom_obj_image.asp
+
+  /*source
+  http://1.bp.blogspot.com/-P12RJWD48B8/UI_-Pg19KeI/AAAAAAAAAlc/0jCpFfMhb_M/s1600/loading.gif
+  https://tenor.com/view/loading-gif-11193323
+  http://sisfoangud.dephub.go.id/poskoangud/resource/doc/images/icon/loading.gif
+  https://kkp.go.id/an-theme/main//images/loading.gif
+  */
+
+  var img = document.createElement("img");
+  img.setAttribute("src", "http://1.bp.blogspot.com/-P12RJWD48B8/UI_-Pg19KeI/AAAAAAAAAlc/0jCpFfMhb_M/s1600/loading.gif");
+  img.setAttribute("width", window.innerWidth);
+  img.setAttribute("height", window.innerHeight);
+  img.setAttribute("alt", "Loading");
+  img.setAttribute("id", "loading");
+  document.body.appendChild(img);
+
+  setTimeout(function(){
+    img.style.display = "none";
+  }, 3000);
+
 }
