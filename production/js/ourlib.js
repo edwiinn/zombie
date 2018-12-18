@@ -35,24 +35,26 @@ function animate(){
     }
     requestAnimationFrame( animate );
     camera.updateProjectionMatrix();
-
+    var s = 1e7;
     for(var i=0; i<numEnemy; i++){
         if(modDir["enemy_"+i] == undefined) continue;
-        var s = Math.sqrt(Math.pow(modDir["enemy_"+i].position.x, 2) + Math.pow(modDir["enemy_"+i].position.z, 2));
-        if (s < 40){
-            audioLoader.load( 'assets/zombie.wav', function( buffer ) {
-                soundZombie.setBuffer( buffer );
-                soundZombie.setLoop( false);
-                soundZombie.setVolume( 0.5 * (40.0 - s)/40.0 );
-                soundZombie.play();
-              });
-        }
+        var s_temp = Math.sqrt(Math.pow(modDir["enemy_"+i].position.x, 2) + Math.pow(modDir["enemy_"+i].position.z, 2));
+        if(s_temp < s) s = s_temp;
+        
         if(s > 5)
             modDir["enemy_"+i].position.x += ((0 - modDir["enemy_"+i].position.x) * deltaTime * movSpeed),
             modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z) * deltaTime * movSpeed);
         else attackXto("enemy_"+i);
     }
 
+    if (s < 40){
+        audioLoader.load( 'assets/zombie.wav', function( buffer ) {
+            soundZombie.setBuffer( buffer );
+            soundZombie.setLoop( false);
+            soundZombie.setVolume( 0.5 * (40.0 - s)/40.0 );
+            soundZombie.play();
+          });
+    }
 
     for(var i=0;i<mixer.length;i++)
         if ( mixer[i] ) mixer[i].update( deltaTime );

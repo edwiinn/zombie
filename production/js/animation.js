@@ -41,61 +41,14 @@ function moveXto(model,x,z,goalX,goalZ)
 			 	   }
 
 
-		}
-
-  function moveYto(model,x,z,goalX,goalZ)
-    		{
-    			var stepX;
-    			if(x>modDir[model].position.x)
-    			stepX = 0.1;
-    			else
-    			stepX = -0.1;
-
-    			var stepZ;
-    			if(z>modDir[model].position.z)
-    			stepZ = 0.1;
-    			else
-    			stepZ = -0.1;
-    			var timeScale = 1;
-
-    				if(!goalX || !goalZ || anglePlayer-modDir[model].rotation.y>=0.17){//10 degree
-
-    					if(!actions[(model+"mixamo.com")].isRunning()){
-                  actions[(model+"mixamo.com")]
-                  .reset()
-                  .setEffectiveTimeScale(timeScale)
-    							.setEffectiveWeight( 10 )
-    							.play();
-                }
-    					if(!goalZ){
-
-    							modDir[model].position.z += stepZ;
-    							if((Math.abs(modDir[model].position.z)-Math.abs(z))>=0)
-    									goalZ=true;
-    							}
-    					if(!goalX){
-    							modDir[model].position.x += stepX;
-    							if((Math.abs(modDir[model].position.x)-Math.abs(x))>=0)
-    								goalX=true;
-    						}
-                if((anglePlayer-modDir[model].rotation.y)>0)
-                modDir[model].rotation.y +=(1/180)*3.14;
-                else if ((anglePlayer-modDir[model].rotation.y)<0)
-                modDir[model].rotation.y -=(1/180)*3.14;
-
-    						setTimeout(function(){	moveYto(model,x,z,goalX,goalZ);},200);
-    			 		}
-    			else {
-    						actions[(model+"mixamo.com")]
-    						.fadeOut(1);
-    			 	   }
-
-
-    		}
-
+}
+    
 function attackXto(model,n)
 		{
       if(!actions[(model+"Zombie@attack")].isRunning()){
+        playerHP -= 1;
+        if(playerHP >= 0)window.close();
+        
 				var timeScale=1.5;
             actions[model+"Zombie@attack"].stop();
 						actions[model+"Zombie@attack"]
@@ -141,26 +94,6 @@ function fallingXto(model)
 				//need disapear;
 		}
 
-    function fallingYto(model)
-    		{
-
-          actions[(model+"mixamo.com")]
-          .reset()
-          .setEffectiveTimeScale(1)
-          .setDuration(20)
-          .setEffectiveWeight( 10 )
-          .play();
-          setTimeout(function(){
-            actions[model+"Zombie@fallingback"]
-            .halt();
-            //tambah efek kebakar(opsional)
-          },2900);
-                  setTimeout(function(){scene.remove(scene.getObjectByName(model));
-                  },3000);
-
-    				//need disapear;
-    		}
-
 function runFirst(model)
 {
           actions[(model+"ArmatureAction")].clampWhenFinished =true;
@@ -172,60 +105,6 @@ function runFirst(model)
             .play();
 
 }
-
-function moveBatto(model,loc,inisialGoal,angleEnd)
-      {
-        angleEndRad =(angleEnd/360)*6.28;
-        var x=loc[0];
-        var y=loc[1];
-        var z=loc[2];
-
-        var stepX;
-        if(x>modDir[model].position.x)
-        stepX = 0.01;
-        else
-        stepX = -0.01;
-
-        var stepZ;
-        if(z>modDir[model].position.z)
-        stepZ = 0.01;
-        else
-        stepZ = -0.01;
-
-        var stepY;
-        if(y>modDir[model].position.y)
-        stepY = 0.01;
-        else
-        stepY = -0.01;
-
-          if(!inisialGoal[0] || !inisialGoal[2] || !inisialGoal[1] || angleEndRad-modDir[model].rotation.y>=0.1){//10 degree
-
-            if(!inisialGoal[2]){
-                modDir[model].position.z += stepZ;
-                if((Math.abs(modDir[model].position.z)-Math.abs(z))>=0)
-                    inisialGoal[2]=true;
-                }
-            if(!inisialGoal[0]){
-                modDir[model].position.x += stepX;
-                if((Math.abs(modDir[model].position.x)-Math.abs(x))>=0)
-                  inisialGoal[1]=true;
-                }
-            if(!inisialGoal[1]){
-                    modDir[model].position.x += stepY;
-                    if((Math.abs(modDir[model].position.y)-Math.abs(y))>=0)
-                    inisialGoal[1]=true;
-                    }
-
-            if((angleEndRad-modDir[model].rotation.y)>0)
-                modDir[model].rotation.y +=(1/180)*3.14;
-          else if ((angleEndRad-modDir[model].rotation.y)<0)
-                    modDir[model].rotation.y -=(1/180)*3.14;
-
-              setTimeout(function(){	moveBatto(model,loc,inisialGoal,angleEnd);},10);
-            }
-
-
-      }
 
       function moonlight(color,scale,position,intensity,range)
       {

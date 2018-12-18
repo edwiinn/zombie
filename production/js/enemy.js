@@ -1,10 +1,5 @@
 "use strict";
 
-async function enemyMain(){
-    initEnemies();
-    await delay(Math.ceil(Math.sqrt(numEnemy)) * 800);
-}
-
 async function intervalAddEnemy(){
     console.log("enemy_"+(numEnemy));
     loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy), [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
@@ -15,18 +10,7 @@ async function intervalAddEnemy(){
     modDir["enemy_"+(numEnemy)].lookAt(newDir);
     numEnemy += 1;
     movSpeed += 0.005;
-    if(numEnemy == 20) clearInterval(intervalFunc);
-}
-
-function initEnemies(){
-    var name;
-	// for(var i=0; i < numEnemy ; i++){
-  //       name = "enemy_"+i;
-  //       loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
-  //       // group.add(modDir[name]);
-  //       modDirChildren.push(modDir[name].children);
-  //       console.log(modDirChildren);
-  //   }
+    if(numEnemy == 10) clearInterval(intervalFunc);
 }
 
 function getSign(){
