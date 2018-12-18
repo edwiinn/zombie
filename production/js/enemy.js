@@ -22,6 +22,7 @@ function initEnemies(){
 	for(var i=0; i < numEnemy ; i++){
         name = "enemy_"+i;
         loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
+        group.add(modDir[name]);
     }
 }
 

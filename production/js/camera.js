@@ -1,4 +1,10 @@
 "use strict";
+function createBox(x, y, z, ccolor){
+  var geometry = new THREE.BoxGeometry(x,y,z);
+  var material = new THREE.MeshPhongMaterial();
+  var box = new THREE.Mesh(geometry, material);
+  return box;
+}
 function onDocumentMouseDown(){
   event.preventDefault();
   if(selectedObject && !isGunFired){
