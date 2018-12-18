@@ -1,7 +1,7 @@
 "use strict";
 
 async function intervalAddEnemy(){
-    console.log("enemy_"+(numEnemy));
+    // console.log("enemy_"+(numEnemy));
     loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy), [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
     await delay(800);
     moveXto("enemy_"+(numEnemy), 0, 0, false, false);

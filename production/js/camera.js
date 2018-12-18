@@ -9,6 +9,7 @@ function onDocumentMouseDown(event){
   event.preventDefault();
   if(event.buttons == 1 && !isGunFired){
     if(selectedObject){
+      playerScore += 1;
       var name = selectedObject.parent.parent.parent.parent.parent.parent.parent.name;
       fallingXto(name);
     }
@@ -20,14 +21,22 @@ function onDocumentMouseDown(event){
       soundGun.setVolume( 0.5 );
       soundGun.play();
     });
-  
+
   }
 }
 
 function onDocumentKeyDown(){
   event.preventDefault();
+  var keyName = event.key;
+  if(keyName == "Escape"){
+    isPause = !isPause;
+    if(isPause)
+      document.getElementById('pause-image').style.display = "block";
+    else
+      document.getElementById('pause-image').style.display = "none";
+  }
   if(isTransitionCameraDone){
-    var keyName = event.key;
+    console.log(keyName);
     if(keyName == 'a' || keyName == 'A'){
       cameraRotateLeft = true;
       targetRotation = player.rotation.y + Math.PI/4;

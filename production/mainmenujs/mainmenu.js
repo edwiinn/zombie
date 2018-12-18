@@ -99,6 +99,7 @@ scene.add( spotLight );
     var textMaterial = new THREE.MeshLambertMaterial({color: 0xede2dc}); // color 0xd40a2e
     text = new THREE.Mesh(textstart, textMaterial);
     text.position.x = 2; text.position.y = 0; text.position.z = 0;
+	text.userData.name = "start";
     // credits
     var textcredit = new THREE.TextGeometry('Credits', {
       font: font,
@@ -328,6 +329,9 @@ function onDocumentMouseDown(event){
       text4.visible = true; text5.visible = false;
       musicStatus = 1;
       if (musicStatus == 1) sound.play();
+    }
+	else if (intersects[0].object.userData.name == "start"){
+        document.location.href = 'index_min.html';
     }
     }
 }

@@ -11,7 +11,6 @@ function generateAnimationZombie( model, animations ) {
 
 function moveXto(model,x,z,goalX,goalZ)
 		{
-
 			var timeScale = 4;
 				if(!goalX || !goalZ || anglePlayer-modDir[model].rotation.y>=0.17){//10 degree
 
@@ -42,12 +41,12 @@ function moveXto(model,x,z,goalX,goalZ)
 
 
 }
-    
+
 function attackXto(model,n)
 		{
       if(!actions[(model+"Zombie@attack")].isRunning()){
         playerHP -= 1;
-        
+
 				var timeScale=1.5;
             actions[model+"Zombie@attack"].stop();
 						actions[model+"Zombie@attack"]
@@ -108,7 +107,7 @@ function runFirst(model)
         var parentName = "moonlight";
         var objName ="moon";
         loaderGLTF_m = new THREE.GLTFLoader();
-        loaderGLTF_m.load(                                     
+        loaderGLTF_m.load(
             "assets/"+"statis/moon/scene.gltf",
             function ( obj ) {
                  if(scene.getObjectByName(objName) == null){
@@ -136,7 +135,7 @@ function runFirst(model)
                      tmp.add(obj.scene);
                      scene.add(tmp );
                      modDir[parentName]=obj.scene;
-                     console.log(objName+" have been loaded");
+                     // console.log(objName+" have been loaded");
                      return;
                  }
             },

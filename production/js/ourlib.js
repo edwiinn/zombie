@@ -1,6 +1,15 @@
 function animate(){
-
+  if(playerHP <= 0 ){
+    document.getElementById('skor').innerHTML = playerScore;
+    document.getElementById('end-div').style.display = "block";
+    return;
+  }
+  if(!isPause){
     deltaTime = clock.getDelta();
+    if(pausedDelta != null){
+      deltaTime = pausedDelta;
+      pausedDelta = null;
+    }
     if(isGunFired){
       if(isGunFiredBackTransition){
         camera.position.z += 0.3;
@@ -34,17 +43,18 @@ function animate(){
       }
     }
     requestAnimationFrame( animate );
-    camera.updateProjectionMatrix();
-    var s = 1e7;
+    // camera.updateProjectionMatrix();
+    s = 1e7;
     for(var i=0; i<numEnemy; i++){
-        if(modDir["enemy_"+i] == undefined) continue;
+        if(modDir["enemy_"+i] == undefined) break;
         var s_temp = Math.sqrt(Math.pow(modDir["enemy_"+i].position.x, 2) + Math.pow(modDir["enemy_"+i].position.z, 2));
         if(s_temp < s) s = s_temp;
-        
         if(s > 5)
             modDir["enemy_"+i].position.x += ((0 - modDir["enemy_"+i].position.x) * deltaTime * movSpeed),
             modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z) * deltaTime * movSpeed);
-        else attackXto("enemy_"+i);
+        else {
+          attackXto("enemy_"+i);
+        }
     }
 
     if (s < 40){
@@ -61,6 +71,12 @@ function animate(){
     for(var i=0;i<mixer.length;i++)
         if ( mixer[i] ) mixer[i].update( deltaTime );
     render();
+  }
+  else{
+    pausedDelta = clock.getDelta();
+    // console.log(pausedDelta);
+    requestAnimationFrame( animate );
+  }
 }
 
 function render(){
@@ -93,7 +109,7 @@ function loadObjectGLTF(filename, objName, scale, position, generateAnimation){
                 if(generateAnimation!=null)
                     generateAnimation(obj.scene,obj.animations);
                 scene.add( obj.scene );
-                console.log(objNameName+" have been loaded");
+                // console.log(objNameName+" have been loaded");
                 return;
         },
         function ( xhr ) {return;},

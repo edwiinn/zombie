@@ -45,7 +45,12 @@ function initGame(){
     meshGround.receiveShadow = true;
 
     // start interval timer to add enemy
-    intervalFunc = setInterval(intervalAddEnemy, 10000);
+    // intervalFunc = setInterval(intervalAddEnemy, 10000);
+    intervalFunc = setInterval(function(){
+      if(!isPause){
+        intervalAddEnemy();
+      }
+    }, 10000);
 
     //add decoration model
         //statis
@@ -112,5 +117,5 @@ function initGame(){
 
     var listener = new THREE.AudioListener();
     camera.add( listener );
-   
+
 }
