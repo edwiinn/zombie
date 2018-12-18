@@ -2,7 +2,7 @@
 
 var stats, scene, camera, renderer, controls, sound;
 var scene2, camera2, videoTexture, video;
-var sceneStatus;
+var sceneStatus, musicStatus = 1;
 var cube;
 var raycaster = new THREE.Raycaster();
 var mouseVector = new THREE.Vector3(), INTERSECTED;
@@ -427,11 +427,13 @@ function onDocumentMouseDown(event){
     else if (intersects[0].object.userData.name == "musicon"){
       text5.visible = true;
       text4.visible = false;
-      sound.pause();
+      musicStatus = 0;
+      if (musicStatus == 0) sound.pause();
     }
     else if (intersects[0].object.userData.name == "musicoff"){
       text4.visible = true; text5.visible = false;
-      sound.play();
+      musicStatus = 1;
+      if (musicStatus == 1) sound.play();
     }
     }
 }
@@ -464,8 +466,19 @@ function loadingPage(){
 function creditBack(){
   sceneStatus = 1;
   text.visible = true; text2.visible = true;
-  text4.visible = true;
-  sound.play();
+  video = document.getElementById('videoSeoul');
+  video.pause();
+
+  if (musicStatus == 1) {
+    sound.play();
+    text4.visible = true;
+    text5.visible = false;
+  }
+  else if (musicStatus == 0) {
+    sound.pause();
+    text4.visible = false;
+    text5.visible = true;
+  }
 }
 
 function checkScene(){
