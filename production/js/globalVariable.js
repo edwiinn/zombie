@@ -12,7 +12,8 @@ objectLoader = new THREE.ObjectLoader();
 var loaderGLTF_m;//loader gltfloader
 var loader_t;//loader texture
 var modDir = {};
-var animDir = {};
 var actions = {};
 var playeragle =(180/360)*6.28;
 var movSpeed = 0.05;
+var mixer = [];
+var anglePlayer = 3.14;

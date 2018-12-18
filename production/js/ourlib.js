@@ -11,9 +11,9 @@ async function animate(){
         
     }
 
-    //   for(var i=0;i<mixer.length;i++)
-    //   if ( mixer[i] ) mixer[i].update( deltaTime );
-      render();
+    for(var i=0;i<mixer.length;i++)
+        if ( mixer[i] ) mixer[i].update( deltaTime );
+    render();
 }
 
 function render(){
@@ -65,7 +65,7 @@ function loadObjectGLTF(filename, objName, scale, position, generateAnimation){
                  
                 modDir[objName]=obj.scene;
                 if(generateAnimation!=null)
-                    generateAnimation(modDir[objName],obj.animations);
+                    generateAnimation(obj.scene,obj.animations);
                 scene.add( obj.scene );
                 console.log(objNameName+" have been loaded");
                 return;

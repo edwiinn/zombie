@@ -1,6 +1,10 @@
 "use strict";
 
 function initGame(){
+    // debug
+    // loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy), [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
+
+
     // utils
     objectLoader.setCrossOrigin("use-credentials");
     var cont = document.getElementById("container");
@@ -32,7 +36,7 @@ function initGame(){
 
     //scene background
     scene.background = new THREE.Color( 0x17181C );
-    scene.fog = new THREE.Fog( 0x525252, 30, 100 );
+    // scene.fog = new THREE.Fog( 0x525252, 30, 100 );
     // create ground
     loader_t = new THREE.TextureLoader();
     var textureGround = loader_t.load( 'assets/textures/ground.jpg');
@@ -45,7 +49,7 @@ function initGame(){
     meshGround.receiveShadow = true;
 
     // start interval timer to add enemy
-    intervalFunc = setInterval(intervalAddEnemy, 10000);
+    intervalFunc = setInterval(intervalAddEnemy, 5000);
 
     //add decoration model
         //statis
