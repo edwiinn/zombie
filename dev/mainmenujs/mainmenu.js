@@ -305,11 +305,11 @@ fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font
 
         // var textBackMaterial = new THREE.MeshPhongMaterial({map: bloodTexture});
         var textBackMaterial = new THREE.MeshPhongMaterial({color: 0xf2ea80});
-        text5 = new THREE.Mesh(textback, textBackMaterial);
-        text5.position.x = 30; text5.position.y = -15; text5.position.z = 0;
-        text5.userData.name = 'createdby';
+        text6 = new THREE.Mesh(textback, textBackMaterial);
+        text6.position.x = 30; text6.position.y = -15; text6.position.z = 0;
+        text6.userData.name = 'createdby';
         parentcredit = new THREE.Object3D();
-        parentcredit.add(text5);
+        parentcredit.add(text6);
 
         scene2.add(parentcredit);
   });
@@ -337,7 +337,7 @@ function render(){
   if (sceneStatus == 1) renderer.render(scene, camera);
   else if (sceneStatus == 2) {
     renderer.render(scene2, camera2);
-    text5.position.x -= 0.1;
+    text6.position.x -= 0.1;
     // controls.update();
   }
 }
@@ -422,7 +422,8 @@ function onDocumentMouseDown(event){
       video.play();
     }
     else if (intersects[0].object.userData.name == "musicon"){
-      text4.visible = false; text5.visible = true;
+      text5.visible = true;
+      text4.visible = false;
       sound.pause();
     }
     else if (intersects[0].object.userData.name == "musicoff"){
@@ -449,10 +450,12 @@ function loadingPage(){
   img.setAttribute("height", window.innerHeight);
   img.setAttribute("alt", "Loading");
   img.setAttribute("id", "loading");
-  document.body.appendChild(img);
+  var divimg = document.getElementById('loading');
+  divimg.appendChild(img);
 
   setTimeout(function(){
     img.style.display = "none";
-  }, 3000);
+  }, 5000);
+
 
 }
