@@ -23,6 +23,12 @@ function initGame(){
     // init camera
     camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.2, 10000);
     camera.position.set(-200, 300, 300);
+    //MainCamera
+    // camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+    // camera.position.x = 0;
+    // camera.position.z =0;
+    // camera.position.y =1;
+    // cameraOriginVec = new THREE.Vector3(camera.position.x,camera.position.y,camera.position.z);
 
     //for test
     var controls = new THREE.OrbitControls( camera );
@@ -83,6 +89,58 @@ function initGame(){
             loadObjectGLTF("statis/ruin1/scene.gltf","ruin1_2",[0.02,0.02,0.02],[20,0,20],null);
     // push to scene
     scene.add(camera,meshGround);
+    //Camera
+    player = createBox(0.5,1,0.5);
+    scene.add(player);
+    player.add(camera);
+    player.position.set(0,0.5,0)
+    var floorGeo = new THREE.PlaneBufferGeometry(2000,2000);
+    var floorMat = new THREE.MeshPhongMaterial();
+    var floorMsh = new THREE.Mesh(floorGeo, floorMat);
+    scene.add(floorMsh);
+    floorMsh.rotation.x = - Math.PI * 0.5;
+    floorMsh.receiveShadow = true;
+    floorMsh.position.set( 0, - 0.05, 0 );
 
+    var ambientLight = new THREE.AmbientLight(0xffffff,0.1);
+    scene.add(ambientLight);
+
+    var spotLight = new THREE.SpotLight(0xffffff, 0.04);
+    spotLight.penumbra = 0.486;
+    spotLight.decay = 0.5;
+    spotLight.position.set( 0, 10, 0 );
+    scene.add(spotLight);
+    var senterSpotLight = new THREE.SpotLight(0xffffff, 0.7);
+    senterSpotLight.penumbra = 0.5;
+    senterSpotLight.position.set(0,2.3,0);
+    scene.add(senterSpotLight);
+    var senterTarget = new THREE.Object3D();
+    camera.add(senterTarget);
+    senterTarget.position.set(0,4,-8);
+    senterSpotLight.target = senterTarget;
+    var gunMetalnessTexture = new THREE.TGALoader().load( "asset/modern-weapons/Pistol/Textures/Pistol_Metallic.tga" );
+    var gunNormalTexture = new THREE.TextureLoader().load( "asset/modern-weapons/Pistol/Textures/Pistol_Normal.png" );
+    var loader = new THREE.FBXLoader();
+    var material = new THREE.MeshStandardMaterial();
+    loader.load( 'asset/modern-weapons/Pistol/Pistol.fbx', function ( object ) {
+      object.rotation.y = Math.PI/2;
+      object.position.set(0.3,-0.44,-1);
+      object.scale.set(0.05,0.05,0.05);
+      material.roughness = 1; // attenuates roughnessMap
+      material.metalness = 1; // attenuates metalnessMap
+      material.metalnessMap = material.roughnessMap = gunMetalnessTexture;
+      material.normalMap = gunNormalTexture;
+      object.traverse(function (child){
+        if(child instanceof THREE.Mesh){
+          child.material = material;
+        }
+      });
+      gun = object;
+      camera.add( object );
+    } );
+    window.addEventListener( 'resize', onWindowResize, false );
+    window.addEventListener( "mousemove", onDocumentMouseMove, false );
+    window.addEventListener('keydown', onDocumentKeyDown, false);
+    window.addEventListener("mousedown", onDocumentMouseDown, false)
 	return;
 }
