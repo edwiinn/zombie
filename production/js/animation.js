@@ -12,7 +12,7 @@ function generateAnimationZombie( model, animations ) {
 function moveXto(model,x,z,goalX,goalZ)
 		{
 			var timeScale = 4;
-				if(!goalX || !goalZ || anglePlayer-modDir[model].rotation.y>=0.17){//10 degree
+				if(!goalX || !goalZ){//10 degree
 
 					if(!actions[(model+"Zombie@walk_in_place")].isRunning()){
 							actions[(model+"Zombie@walk_in_place")]
