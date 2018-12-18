@@ -11,6 +11,7 @@ async function intervalAddEnemy(){
     await delay(800);
     moveXto("enemy_"+(numEnemy), 0, 0, false, false);
     var newDir = new THREE.Vector3(0, 0, 0);
+    group.add(modDir["enemy_"+(numEnemy)]);
     modDir["enemy_"+(numEnemy)].lookAt(newDir);
     numEnemy += 1;
     movSpeed += 0.005;
@@ -19,11 +20,13 @@ async function intervalAddEnemy(){
 
 function initEnemies(){
     var name;
-	for(var i=0; i < numEnemy ; i++){
-        name = "enemy_"+i;
-        loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
-        group.add(modDir[name]);
-    }
+	// for(var i=0; i < numEnemy ; i++){
+  //       name = "enemy_"+i;
+  //       loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
+  //       // group.add(modDir[name]);
+  //       modDirChildren.push(modDir[name].children);
+  //       console.log(modDirChildren);
+  //   }
 }
 
 function getSign(){

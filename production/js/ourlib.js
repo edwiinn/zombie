@@ -1,9 +1,41 @@
-async function animate(){
+function animate(){
+
     deltaTime = clock.getDelta();
-    
+    if(isGunFired){
+      if(isGunFiredBackTransition){
+        camera.position.z += 0.3;
+        gun.position.z += 0.1;
+        if(camera.position.z >= 1){
+          isGunFiredBackTransition = false;
+        }
+      }
+      else{
+        camera.position.z -= 0.1;
+        if(!(gun.position.z <= -1)){
+          gun.position.z -= 0.1;
+        }
+        if(camera.position.z <= 0){
+          isGunFired = false;
+        }
+      }
+    }
+    if(cameraRotateLeft){
+      player.rotation.y += 0.02;
+      if(player.rotation.y >= targetRotation){
+        cameraRotateLeft = false;
+        isTransitionCameraDone = true;
+      }
+    }
+    if(cameraRotateRight){
+      player.rotation.y -= 0.02;
+      if(player.rotation.y <= targetRotation){
+        cameraRotateRight = false;
+        isTransitionCameraDone = true;
+      }
+    }
     requestAnimationFrame( animate );
     camera.updateProjectionMatrix();
-    
+
     for(var i=0; i<numEnemy; i++){
         if(modDir["enemy_"+i] == undefined) continue;
         if(Math.sqrt(Math.pow(modDir["enemy_"+i].position.x, 2) + Math.pow(modDir["enemy_"+i].position.z, 2)) > 5)
@@ -48,8 +80,8 @@ function loadObject (filename, parentName, objName){
 }
 
 function loadObjectGLTF(filename, objName, scale, position, generateAnimation){
-    loaderGLTF_m = new THREE.GLTFLoader();                  
-    loaderGLTF_m.load(                                     
+    loaderGLTF_m = new THREE.GLTFLoader();
+    loaderGLTF_m.load(
         "assets/"+filename,
         function ( obj ) {
                 obj.scene.name = objName;
@@ -63,7 +95,7 @@ function loadObjectGLTF(filename, objName, scale, position, generateAnimation){
                     obj.scene.position.y=position[1];
                     obj.scene.position.z=position[2];
                 }
-                 
+
                 modDir[objName]=obj.scene;
                 if(generateAnimation!=null)
                     generateAnimation(obj.scene,obj.animations);
@@ -75,15 +107,6 @@ function loadObjectGLTF(filename, objName, scale, position, generateAnimation){
         function ( err ) {return;}
 
     );
-}
-
-
-
-//tambahan
-function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize( window.innerWidth, window.innerHeight );
 }
 
 const delay = (duration) => new Promise(resolve => setTimeout(resolve, duration))
