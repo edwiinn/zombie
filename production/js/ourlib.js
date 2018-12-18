@@ -1,16 +1,13 @@
-function animate(){
+async function animate(){
     deltaTime = clock.getDelta();
     
     requestAnimationFrame( animate );
     camera.updateProjectionMatrix();
     
     for(var i=0; i<numEnemy; i++){
-        modDir["enemy_"+i].position.x += ((0 - modDir["enemy_"+i].position.x)*deltaTime*0.05);
-        modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z)*deltaTime*0.05);
-        if(clock.getElapsedTime() > 1.0 && Math.floor(clock.getElapsedTime())%60 == 0 && numEnemy<40){
-            numEnemy+=1;
-            loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy-1), [0.04, 0.025, 0.03], [generatePosition(60, 120), 0, generatePosition(60, 120)], null);
-        }
+        modDir["enemy_"+i].position.x += ((0 - modDir["enemy_"+i].position.x) * deltaTime * movSpeed);
+        modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z) * deltaTime * movSpeed);
+        
     }
 
     //   for(var i=0;i<mixer.length;i++)

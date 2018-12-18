@@ -44,6 +44,9 @@ function initGame(){
     meshGround.rotation.x = - Math.PI / 2;
     meshGround.receiveShadow = true;
 
+    // start interval timer to add enemy
+    setInterval(intervalAddEnemy, 10000);
+
     //add decoration model
         //statis
           //tree

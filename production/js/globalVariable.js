@@ -15,3 +15,4 @@ var modDir = {};
 var animDir = {};
 var actions = {};
 var playeragle =(180/360)*6.28;
+var movSpeed = 0.05;
