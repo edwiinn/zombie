@@ -17,3 +17,13 @@ var playeragle =(180/360)*6.28;
 var movSpeed = 0.1;
 var mixer = [];
 var anglePlayer = 3.14;
+//Camera
+var player, cameraOriginVec, gunFlashLight, gun, mouseHelper;
+var cameraRotateLeft = false;
+var cameraRotateRight = false;
+var isTransitionCameraDone = true;
+var isGunFired = false;
+var targetRotation;
+var isGunFiredBackTransition = false;
+var selectedObject = null;
+var mouseVector = new THREE.Vector3();
