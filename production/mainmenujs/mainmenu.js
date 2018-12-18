@@ -254,6 +254,7 @@ function render(){
     renderer.render(scene2, camera2);
     text6.position.x -= 0.1;
   }
+  checkScene();
 }
 
 function initStats(){
@@ -342,4 +343,24 @@ function loadingPage(){
     img.style.display = "none";
   }, 5000);
 
+}
+
+
+function creditBack(){
+  sceneStatus = 1;
+  text.visible = true; text2.visible = true;
+  text4.visible = true;
+  sound.play();
+}
+
+function checkScene(){
+  if (sceneStatus == 1){
+    var backBtn = document.getElementById('backButton');
+    backBtn.style.visibility = "hidden";
+  }
+  else if (sceneStatus == 2) {
+    sound.pause();
+    var backBtn = document.getElementById('backButton');
+    backBtn.style.visibility = "visible";
+  }
 }

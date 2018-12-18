@@ -316,6 +316,7 @@ fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font
 
   // controls = new THREE.OrbitControls(camera);
   console.log('terserah');
+
 }
 
 function animate(){
@@ -340,6 +341,7 @@ function render(){
     text6.position.x -= 0.1;
     // controls.update();
   }
+  checkScene();
 }
 
 // from book Learning Three.js
@@ -419,6 +421,7 @@ function onDocumentMouseDown(event){
       if (intersects[0].object.userData.name == "credits"){
       sceneStatus = 2;
       text.visible = false; text2.visible = false;
+      text4.visible = false; text5.visible = false;
       video.play();
     }
     else if (intersects[0].object.userData.name == "musicon"){
@@ -456,6 +459,23 @@ function loadingPage(){
   setTimeout(function(){
     img.style.display = "none";
   }, 5000);
+}
 
+function creditBack(){
+  sceneStatus = 1;
+  text.visible = true; text2.visible = true;
+  text4.visible = true;
+  sound.play();
+}
 
+function checkScene(){
+  if (sceneStatus == 1){
+    var backBtn = document.getElementById('backButton');
+    backBtn.style.visibility = "hidden";
+  }
+  else if (sceneStatus == 2) {
+    sound.pause();
+    var backBtn = document.getElementById('backButton');
+    backBtn.style.visibility = "visible";
+  }
 }
