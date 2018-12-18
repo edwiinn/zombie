@@ -45,7 +45,7 @@ function initGame(){
     meshGround.receiveShadow = true;
 
     // start interval timer to add enemy
-    setInterval(intervalAddEnemy, 10000);
+    intervalFunc = setInterval(intervalAddEnemy, 10000);
 
     //add decoration model
         //statis

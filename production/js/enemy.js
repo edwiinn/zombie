@@ -6,9 +6,10 @@ async function enemyMain(){
 }
 
 function intervalAddEnemy(){
-    loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy-1), [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], null);
+    loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy), [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], null);
     numEnemy += 1;
     movSpeed += 0.005;
+    if(numEnemy == 30) clearInterval(intervalFunc);
 }
 
 function initEnemies(){
