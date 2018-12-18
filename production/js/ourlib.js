@@ -6,7 +6,7 @@ async function animate(){
     
     for(var i=0; i<numEnemy; i++){
         if(modDir["enemy_"+i] == undefined) continue;
-        if(Math.sqrt(Math.pow(modDir["enemy_"+i].position.x, 2) + Math.pow(modDir["enemy_"+i].position.z, 2)) > 100)
+        if(Math.sqrt(Math.pow(modDir["enemy_"+i].position.x, 2) + Math.pow(modDir["enemy_"+i].position.z, 2)) > 5)
             modDir["enemy_"+i].position.x += ((0 - modDir["enemy_"+i].position.x) * deltaTime * movSpeed),
             modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z) * deltaTime * movSpeed);
         else attackXto("enemy_"+i);
