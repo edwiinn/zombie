@@ -2,7 +2,7 @@
 
 // enemy: hash table. Key => object name. Value => enemy object reference
 
-var scene, player, light, ground, camera, objectLoader, numEnemy = 10;
+var scene, player, light, ground, camera, objectLoader, numEnemy = 1;
 var renderer, clock, deltaTime;
 
 objectLoader = new THREE.ObjectLoader();

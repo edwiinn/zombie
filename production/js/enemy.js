@@ -6,15 +6,16 @@ async function enemyMain(){
 }
 
 function intervalAddEnemy(){
-    loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy-1), [0.04, 0.025, 0.03], [generatePosition(60, 120), 0, generatePosition(60, 120)], null);
+    loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy-1), [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], null);
     numEnemy += 1;
+    movSpeed += 0.005;
 }
 
 function initEnemies(){
     var name;
 	for(var i=0; i < numEnemy ; i++){
         name = "enemy_"+i;
-        loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(60, 120), 0, generatePosition(60, 120)], null);
+        loadObjectGLTF("zombie/scene.gltf", name, [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
     }
 }
 
