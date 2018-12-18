@@ -2,7 +2,7 @@
 
 var stats, scene, camera, renderer, controls, sound;
 var scene2, camera2, videoTexture, video;
-var sceneStatus;
+var sceneStatus, musicStatus = 1;
 var cube;
 var raycaster = new THREE.Raycaster();
 var mouseVector = new THREE.Vector3(), INTERSECTED;
@@ -225,7 +225,7 @@ fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font
 
         });
 
-        var textBackMaterial = new THREE.MeshPhongMaterial({color: 0xf2ea80});
+        var textBackMaterial = new THREE.MeshPhongMaterial({color: 0xdb160f});
         text6 = new THREE.Mesh(textback, textBackMaterial);
         text6.position.x = 30; text6.position.y = -15; text6.position.z = 0;
         text6.userData.name = 'createdby';
@@ -244,6 +244,7 @@ function animate(){
   requestAnimationFrame(animate);
   // controls.update();
   render();
+  checkScene();
 
 }
 var t = 0;
@@ -254,7 +255,7 @@ function render(){
     renderer.render(scene2, camera2);
     text6.position.x -= 0.1;
   }
-  checkScene();
+
 }
 
 function initStats(){
@@ -320,11 +321,13 @@ function onDocumentMouseDown(event){
     }
     else if (intersects[0].object.userData.name == "musicon"){
       text4.visible = false; text5.visible = true;
-      sound.pause();
+      musicStatus = 0;
+      if (musicStatus == 0) sound.pause();
     }
     else if (intersects[0].object.userData.name == "musicoff"){
       text4.visible = true; text5.visible = false;
-      sound.play();
+      musicStatus = 1;
+      if (musicStatus == 1) sound.play();
     }
     }
 }
@@ -345,18 +348,30 @@ function loadingPage(){
 
 }
 
-
 function creditBack(){
   sceneStatus = 1;
   text.visible = true; text2.visible = true;
-  text4.visible = true;
-  sound.play();
+  video = document.getElementById('videoSeoul');
+  video.pause();
+
+  if (musicStatus == 1) {
+    sound.play();
+    text4.visible = true;
+    text5.visible = false;
+  }
+  else if (musicStatus == 0) {
+    sound.pause();
+    text4.visible = false;
+    text5.visible = true;
+  }
 }
 
 function checkScene(){
   if (sceneStatus == 1){
     var backBtn = document.getElementById('backButton');
     backBtn.style.visibility = "hidden";
+    video = document.getElementById('videoSeoul');
+    video.pause();
   }
   else if (sceneStatus == 2) {
     sound.pause();

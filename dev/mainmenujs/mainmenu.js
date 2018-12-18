@@ -304,7 +304,7 @@ fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font
         });
 
         // var textBackMaterial = new THREE.MeshPhongMaterial({map: bloodTexture});
-        var textBackMaterial = new THREE.MeshPhongMaterial({color: 0xf2ea80});
+        var textBackMaterial = new THREE.MeshPhongMaterial({color: 0xdb160f});
         text6 = new THREE.Mesh(textback, textBackMaterial);
         text6.position.x = 30; text6.position.y = -15; text6.position.z = 0;
         text6.userData.name = 'createdby';
@@ -324,6 +324,7 @@ function animate(){
   requestAnimationFrame(animate);
   // controls.update();
   render();
+  checkScene();
 
 }
 var t = 0;
@@ -341,7 +342,7 @@ function render(){
     text6.position.x -= 0.1;
     // controls.update();
   }
-  checkScene();
+
 }
 
 // from book Learning Three.js
@@ -425,8 +426,7 @@ function onDocumentMouseDown(event){
       video.play();
     }
     else if (intersects[0].object.userData.name == "musicon"){
-      text5.visible = true;
-      text4.visible = false;
+      text4.visible = false; text5.visible = true;
       musicStatus = 0;
       if (musicStatus == 0) sound.pause();
     }
@@ -485,6 +485,8 @@ function checkScene(){
   if (sceneStatus == 1){
     var backBtn = document.getElementById('backButton');
     backBtn.style.visibility = "hidden";
+    video = document.getElementById('videoSeoul');
+    video.pause();
   }
   else if (sceneStatus == 2) {
     sound.pause();
