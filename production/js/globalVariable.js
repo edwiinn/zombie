@@ -14,6 +14,6 @@ var loader_t;//loader texture
 var modDir = {};
 var actions = {};
 var playeragle =(180/360)*6.28;
-var movSpeed = 0.05;
+var movSpeed = 0.1;
 var mixer = [];
 var anglePlayer = 3.14;

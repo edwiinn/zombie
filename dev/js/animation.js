@@ -14,28 +14,28 @@ function generateAnimationZombie( model, animations ) {
 function moveXto(model,x,z,goalX,goalZ)
 		{
       var stepX;
-      modDir[model].loop = THREE.LoopRepeat;
       if (modDir[model] == undefined) return;
 			if(x>modDir[model].position.x)
-			stepX = 0.2;
+			  stepX = 0.2;
 			else
-			stepX = -0.2;
+			  stepX = -0.2;
 
 			var stepZ;
 			if(z>modDir[model].position.z)
-			stepZ = 0.2;
+			  stepZ = 0.2;
 			else
-			stepZ = -0.2;
+			  stepZ = -0.2;
 
 			var timeScale = 4;
-				if(!goalX || !goalZ || anglePlayer-modDir[model].rotation.y>=0.17){//10 degree
+				if(!goalX || !goalZ){
 
 					if(!actions[(model+"Zombie@walk_in_place")].isRunning()){
 							actions[(model+"Zombie@walk_in_place")]
 							.reset()
 							.setEffectiveTimeScale(timeScale)
 							.setEffectiveWeight( 10 )
-							.play();
+              .play();
+          }
 					if(!goalZ){
 
 							modDir[model].position.z += stepZ;
@@ -49,8 +49,6 @@ function moveXto(model,x,z,goalX,goalZ)
 								goalX=true;
 							}
 
-						}
-
 					}
 						setTimeout(function(){	moveXto(model,x,z,goalX,goalZ);},50);
 			 		}
@@ -58,10 +56,7 @@ function moveXto(model,x,z,goalX,goalZ)
 						actions[(model+"Zombie@walk_in_place")]
 						.fadeOut(1);
 			 	   }
-        if((anglePlayer-modDir[model].rotation.y)>0)
-        modDir[model].rotation.y +=(1/180)*3.14;
-        else if ((anglePlayer-modDir[model].rotation.y)<0)
-        modDir[model].rotation.y -=(1/180)*3.14;
+      
 
 		}
 

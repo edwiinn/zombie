@@ -13,17 +13,6 @@ function generateAnimationZombie( model, animations ) {
 
 function moveXto(model,x,z,goalX,goalZ)
 		{
-			var stepX;
-			if(x>modDir[model].position.x)
-			stepX = 0.2;
-			else
-			stepX = -0.2;
-
-			var stepZ;
-			if(z>modDir[model].position.z)
-			stepZ = 0.2;
-			else
-			stepZ = -0.2;
 
 			var timeScale = 4;
 				if(!goalX || !goalZ || anglePlayer-modDir[model].rotation.y>=0.17){//10 degree
@@ -37,13 +26,10 @@ function moveXto(model,x,z,goalX,goalZ)
           }
 					if(!goalZ){
 
-							modDir[model].position.z += stepZ;
-
 							if((Math.abs(modDir[model].position.z)-Math.abs(z))>=0)
 									goalZ=true;
 							}
 					if(!goalX){
-							modDir[model].position.x += stepX;
 							if((Math.abs(modDir[model].position.x)-Math.abs(x))>=0){
 								goalX=true;
 							}
@@ -111,6 +97,7 @@ function moveXto(model,x,z,goalX,goalZ)
 
 function attackXto(model,n)
 		{
+      if(!actions[(model+"Zombie@attack")].isRunning()){
 				var timeScale=1.5;
             actions[model+"Zombie@attack"].stop();
 						actions[model+"Zombie@attack"]
@@ -124,26 +111,29 @@ function attackXto(model,n)
 					if(n==0)
 					{
 						actions[model+"Zombie@attack"].halt();
-					}
+          }
+      }
 		}
 
 function fallingXto(model)
 		{
+      if(!actions[(model+"Zombie@fallingback")].isRunning()){
 					var timeScale=2;
 							actions[model+"Zombie@fallingback"]
 							.reset()
-							.setEffectiveTimeScale (3)
+							.setEffectiveTimeScale (5)
               .setEffectiveWeight(40)
-							.setDuration(3)
+							.setDuration(1)
 							.play();
 							setTimeout(function(){
-                actions[model+"Zombie@fallingback"]
-                .halt();
+                actions[model+"Zombie@fallingback"].halt();
+                actions[model+"Zombie@attack"].halt();
+                actions[model+"Zombie@walk_in_place"].halt();
 								//tambah efek kebakar(opsional)
-							},2890);
-              setTimeout(function(){scene.remove(scene.getObjectByName(model));
-              },2891);
-
+							},900);
+              // setTimeout(function(){scene.remove(scene.getObjectByName(model));
+              // },2891);
+            }
 				//need disapear;
 		}
 
