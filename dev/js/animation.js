@@ -8,12 +8,14 @@ function generateAnimationZombie( model, animations ) {
         action.clampWhenFinished = true;
         action.loop = THREE.LoopOnce;
   }
-  console.log("done animation for"+model.name);
+  // console.log("done animation for"+model.name);
 }
 
 function moveXto(model,x,z,goalX,goalZ)
 		{
-			var stepX;
+      var stepX;
+      modDir[model].loop = THREE.LoopRepeat;
+      if (modDir[model] == undefined) return;
 			if(x>modDir[model].position.x)
 			stepX = 0.2;
 			else
