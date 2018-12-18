@@ -56,7 +56,11 @@ function init(){
   // scene.add(directionalLight);
 
   // Load plane
-  var menuTexture = new THREE.TextureLoader().load('mainmenujs/texture/stockvault-grunge-stone-wall-texture.jpg');
+  // var menuTexture = new THREE.TextureLoader().load('mainmenujs/texture/stockvault-grunge-stone-wall-texture.jpg');
+  var menuTexture = new THREE.TextureLoader().load('mainmenujs/texture/blood-stain-horror-texture.jpg');
+  // menuTexture.wrapS = THREE.RepeatWrapping;
+  // menuTexture.wrapT = THREE.RepeatWrapping;
+  // menuTexture.repeat.set(4,4);
   var geometry = new THREE.PlaneGeometry(150, 100);
   var material = new THREE.MeshPhongMaterial({side: THREE.DoubleSide, map: menuTexture}); //0x424447
   var plane = new THREE.Mesh(geometry, material);
@@ -206,7 +210,7 @@ fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font
   //   size: 5,
   //   height: 2,
   // });
-  var textTitleMaterial = new THREE.MeshLambertMaterial({color: 0xe50606}); //0xc60909
+  var textTitleMaterial = new THREE.MeshLambertMaterial({color: 0xea1409}); //0xc60909
   text3 = new THREE.Mesh(texttitle, textTitleMaterial);
   text3.position.x = -10; text3.position.y = 8; text3.position.z = 0;
 
@@ -246,8 +250,13 @@ fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font
   scene2.add(axes);
 
   // Hemisphere light
-  var hLight = new THREE.HemisphereLight(0xffffff, 0x00ff00, 1);
-  scene2.add(hLight);
+  // var hLight = new THREE.HemisphereLight(0xffffff, 0x00ff00, 1);
+  // scene2.add(hLight);
+
+  // Spotlight
+  var spotLight2 = new THREE.SpotLight(0xffffff);
+  spotLight2.position.set(10, 0, 60);
+  scene2.add(spotLight2);
 
   camera2 = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
   camera2.position.set(0, 0, 50);
@@ -262,36 +271,50 @@ fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font
 // https://stemkoski.github.io/Three.js/Video.html
   // https://github.com/mrdoob/three.js/blob/master/examples/webgl_materials_video.html
   geometry = new THREE.PlaneGeometry(60, 30);
-  videoMaterial = new THREE.MeshLambertMaterial({color: 0xffffff, map: videoTexture});
+  videoMaterial = new THREE.MeshLambertMaterial({map: videoTexture});
   videoMesh = new THREE.Mesh(geometry, videoMaterial);
+  videoMesh.position.set(0, 5, 2);
   scene2.add(videoMesh);
   // videoMesh.rotation.x = -0.25;
-/*
-  fontLoader.load('mainmenujs/fonts/optimer_regular.typeface.json', function(font){
-        var textback = new THREE.TextGeometry('Back', {
+
+  var bloodTexture = new THREE.TextureLoader().load('mainmenujs/texture/stockvault-grunge-stone-wall-texture.jpg');
+
+
+  var geometry2 = new THREE.PlaneGeometry(150, 100);
+  var material2 = new THREE.MeshPhongMaterial({side: THREE.DoubleSide, map: bloodTexture}); //0x424447
+  var plane2 = new THREE.Mesh(geometry2, material2);
+  plane2.position.set(0, 0, -1);
+  // plane.rotation.y = Math.PI;
+  plane2.receiveShadow = true;
+  scene2.add(plane2);
+
+
+  fontLoader.load('mainmenujs/fonts/Blood_Lust_Regular.json', function(font){
+        var textback = new THREE.TextGeometry('Created By: Edwin (109), Taufiq (016), Rahma (117), Natasha (183)', {
           font: font,
-          size: 2,
+          size: 4,
           height: 2,
-          curveSegments: 5,
+          curveSegments: 2,
           bevelEnabled: true,
           bevelThickness: 0.2,
-          bevelSize: 0.1,
-          bevelSegments: 1,
+          bevelSize: 0.2,
+          bevelSegments: 5,
 
         });
-        textback.computeBoundingBox();
-        var textBackMaterial = new THREE.MeshLambertMaterial({color: 0xcc44907});
+
+        // var textBackMaterial = new THREE.MeshPhongMaterial({map: bloodTexture});
+        var textBackMaterial = new THREE.MeshPhongMaterial({color: 0xf2ea80});
         text5 = new THREE.Mesh(textback, textBackMaterial);
-        text5.position.x = -30; text5.position.y = -15; text5.position.z = 0;
-        text5.userData.name = 'back';
+        text5.position.x = 30; text5.position.y = -15; text5.position.z = 0;
+        text5.userData.name = 'createdby';
         parentcredit = new THREE.Object3D();
         parentcredit.add(text5);
 
-
-        // parentmenu.add(text5);
         scene2.add(parentcredit);
   });
-*/
+
+  // controls = new THREE.OrbitControls(camera);
+  console.log('terserah');
 }
 
 function animate(){
@@ -309,38 +332,13 @@ function render(){
   // cube.position.z = 20 * Math.sin(t) + 0;
   // camera.lookAt(cube.position.x, 0, 0);
   // camera.rotation.y += 0.001;
-/*
-  // raycaster find intersections
-  raycaster.setFromCamera( mouseVector, camera );
-  var intersects = raycaster.intersectObjects(parentmenu.children);
-  if (intersects.length > 0){
-    if (INTERSECTED != intersects[0].object){
-      // if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-      if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.material.color.getHex());
-      INTERSECTED = intersects[0].object;
-      console.log(INTERSECTED);
-      INTERSECTED.currentHex = INTERSECTED.material.color.getHex();
-      // INTERSECTED.material.emmisive.setHex(0xff0000);
-      INTERSECTED.material.color.setHex(0xffffff);
-    }
-  } else {
-    if (INTERSECTED) INTERSECTED.material.color.setHex(INTERSECTED.currentHex);
-    INTERSECTED = null;
-  }
-  */
-
-  // if ( intersects.length > 0 ) {
-  //   var res = intersects.filter( function ( res ) {
-  //     return res && res.object;
-  //   })[ 0 ];
-  //   if ( res && res.object ) {
-  //     selectedObject = res.object;
-  //     selectedObject.material.color.set( '#f00' );
-  //   }
-  // }
 
   if (sceneStatus == 1) renderer.render(scene, camera);
-  else if (sceneStatus == 2) renderer.render(scene2, camera2);
+  else if (sceneStatus == 2) {
+    renderer.render(scene2, camera2);
+    text5.position.x -= 0.1;
+    // controls.update();
+  }
 }
 
 // from book Learning Three.js
@@ -415,7 +413,7 @@ function onDocumentMouseDown(event){
     raycaster.setFromCamera(mouseVector, camera);
     var intersects = raycaster.intersectObjects(parentmenu.children);
     if (intersects.length > 0) {
-      alert(intersects[0].object.uuid);
+      // alert(intersects[0].object.uuid);
       // camera.lookAt(new THREE.Vector3(0, 10, 0));
       if (intersects[0].object.userData.name == "credits"){
       sceneStatus = 2;
