@@ -16,6 +16,13 @@ function onDocumentMouseDown(event){
     }
     isGunFired = true;
     isGunFiredBackTransition = true;
+    audioLoader.load( 'assets/soundGun.wav', function( buffer ) {
+      soundGun.setBuffer( buffer );
+      soundGun.setLoop( false );
+      soundGun.setVolume( 0.5 );
+      soundGun.play();
+    });
+  
   }
 }
 

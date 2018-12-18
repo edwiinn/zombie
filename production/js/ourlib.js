@@ -38,11 +38,21 @@ function animate(){
 
     for(var i=0; i<numEnemy; i++){
         if(modDir["enemy_"+i] == undefined) continue;
-        if(Math.sqrt(Math.pow(modDir["enemy_"+i].position.x, 2) + Math.pow(modDir["enemy_"+i].position.z, 2)) > 5)
+        var s = Math.sqrt(Math.pow(modDir["enemy_"+i].position.x, 2) + Math.pow(modDir["enemy_"+i].position.z, 2));
+        if (s < 40){
+            audioLoader.load( 'assets/zombie.wav', function( buffer ) {
+                soundZombie.setBuffer( buffer );
+                soundZombie.setLoop( false);
+                soundZombie.setVolume( 0.5 * (40.0 - s)/40.0 );
+                soundZombie.play();
+              });
+        }
+        if(s > 5)
             modDir["enemy_"+i].position.x += ((0 - modDir["enemy_"+i].position.x) * deltaTime * movSpeed),
             modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z) * deltaTime * movSpeed);
         else attackXto("enemy_"+i);
     }
+
 
     for(var i=0;i<mixer.length;i++)
         if ( mixer[i] ) mixer[i].update( deltaTime );

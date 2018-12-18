@@ -136,4 +136,11 @@ function initGame(){
     window.addEventListener( "mousemove", onDocumentMouseMove, false );
     window.addEventListener('keydown', onDocumentKeyDown, false);
     window.addEventListener("mousedown", onDocumentMouseDown, false);
+
+    var listener = new THREE.AudioListener();
+    camera.add( listener );
+
+    // load a sound and set it as the Audio object's buffer
+    
+   
 }
