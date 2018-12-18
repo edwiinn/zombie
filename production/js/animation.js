@@ -33,7 +33,8 @@ function moveXto(model,x,z,goalX,goalZ)
 							.reset()
 							.setEffectiveTimeScale(timeScale)
 							.setEffectiveWeight( 10 )
-							.play();
+              .play();
+          }
 					if(!goalZ){
 
 							modDir[model].position.z += stepZ;
@@ -48,18 +49,13 @@ function moveXto(model,x,z,goalX,goalZ)
 							}
 
 						}
-
-					}
 						setTimeout(function(){	moveXto(model,x,z,goalX,goalZ);},50);
 			 		}
 			else {
 						actions[(model+"Zombie@walk_in_place")]
 						.fadeOut(1);
 			 	   }
-        if((anglePlayer-modDir[model].rotation.y)>0)
-        modDir[model].rotation.y +=(1/180)*3.14;
-        else if ((anglePlayer-modDir[model].rotation.y)<0)
-        modDir[model].rotation.y -=(1/180)*3.14;
+
 
 		}
 

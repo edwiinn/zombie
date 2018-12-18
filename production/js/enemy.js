@@ -10,6 +10,8 @@ async function intervalAddEnemy(){
     loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy), [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
     await delay(500);
     moveXto("enemy_"+(numEnemy), 0, 0, false, false);
+    var newDir = new THREE.Vector3(0, 0, 0);
+    modDir["enemy_"+(numEnemy)].lookAt(newDir);
     numEnemy += 1;
     movSpeed += 0.005;
     if(numEnemy == 30) clearInterval(intervalFunc);
