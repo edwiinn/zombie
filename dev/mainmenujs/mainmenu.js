@@ -100,7 +100,7 @@ scene.add(spotLightHelper);
   sound = new THREE.Audio (listener);
   var audioLoader = new THREE.AudioLoader();
   // audioLoader.load('mainmenujs/sound/Scary_Demon_Haunting.mp3', function (buffer) {
-  audioLoader.load('mainmenujs/sound/hell-Mike.mp3', function (buffer) {
+  audioLoader.load('mainmenujs/sound/hell-Mike.ogg', function (buffer) {
     sound.setBuffer(buffer);
     sound.setLoop(true);
     sound.setVolume(1.0);
@@ -226,14 +226,6 @@ fontLoader.load('mainmenujs/fonts/Something_Strange_Regular.json', function(font
   // var text2  = new THREEx.Text('Hello');
   // text2.scale.multiplyScalar(1/2);
   // scene.add(text2);
-
-
-
-  var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-var material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
-cube = new THREE.Mesh( geometry, material );
-cube.position.z = 10;
-scene.add( cube );
 
 
 
