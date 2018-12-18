@@ -8,7 +8,7 @@ async function enemyMain(){
 async function intervalAddEnemy(){
     console.log("enemy_"+(numEnemy));
     loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy), [0.04, 0.025, 0.03], [generatePosition(30, 90), 0, generatePosition(30, 90)], generateAnimationZombie);
-    await delay(500);
+    await delay(800);
     moveXto("enemy_"+(numEnemy), 0, 0, false, false);
     var newDir = new THREE.Vector3(0, 0, 0);
     modDir["enemy_"+(numEnemy)].lookAt(newDir);

@@ -45,7 +45,7 @@ function initGame(){
     //scene background
     var textureBackground = loader_t.load( 'assets/textures/background.jpg');
     textureBackground.wrapS = textureBackground.wrapT = THREE.RepeatWrapping;
-    textureBackground.repeat.set( 1, 1 );
+    textureBackground.repeat.set( 2, 2 );
     textureBackground.anisotropy = 20;
     scene.background = textureBackground;
     //scene.fog = new THREE.Fog( 0x525252, 30, 100 );
@@ -61,7 +61,7 @@ function initGame(){
     meshGround.receiveShadow = true;
    
     // start interval timer to add enemy
-    intervalFunc = setInterval(intervalAddEnemy, 5000);
+    intervalFunc = setInterval(intervalAddEnemy, 20000);
 
     //add decoration model
         //statis
@@ -72,8 +72,7 @@ function initGame(){
             loadObjectGLTF("statis/tree/scene.gltf","tree_4",[0.02,0.02,0.02],[20,0,20],null);
             loadObjectGLTF("statis/tree/scene.gltf","tree_5",[0.02,0.02,0.02],[-40,0,70],null);
             loadObjectGLTF("statis/tree/scene.gltf","tree_6",[0.02,0.02,0.02],[40,0,-70],null);
-            loadObjectGLTF("statis/tree/scene.gltf","tree_7",[0.02,0.02,0.02],[-40,0,-70],null);
-            loadObjectGLTF("statis/tree/scene.gltf","tree_8",[0.02,0.02,0.02],[40,0,70],null);
+            
             //bat apear from
           //tomb
             loadObjectGLTF("statis/tomb1/scene.gltf","tomb1_1",[0.4,0.4,0.4],[20,0,10],null);
@@ -89,58 +88,5 @@ function initGame(){
             loadObjectGLTF("statis/ruin1/scene.gltf","ruin1_2",[0.02,0.02,0.02],[20,0,20],null);
     // push to scene
     scene.add(camera,meshGround);
-    //Camera
-    player = createBox(0.5,1,0.5);
-    scene.add(player);
-    player.add(camera);
-    player.position.set(0,0.5,0)
-    var floorGeo = new THREE.PlaneBufferGeometry(2000,2000);
-    var floorMat = new THREE.MeshPhongMaterial();
-    var floorMsh = new THREE.Mesh(floorGeo, floorMat);
-    scene.add(floorMsh);
-    floorMsh.rotation.x = - Math.PI * 0.5;
-    floorMsh.receiveShadow = true;
-    floorMsh.position.set( 0, - 0.05, 0 );
-
-    var ambientLight = new THREE.AmbientLight(0xffffff,0.1);
-    scene.add(ambientLight);
-
-    var spotLight = new THREE.SpotLight(0xffffff, 0.04);
-    spotLight.penumbra = 0.486;
-    spotLight.decay = 0.5;
-    spotLight.position.set( 0, 10, 0 );
-    scene.add(spotLight);
-    var senterSpotLight = new THREE.SpotLight(0xffffff, 0.7);
-    senterSpotLight.penumbra = 0.5;
-    senterSpotLight.position.set(0,2.3,0);
-    scene.add(senterSpotLight);
-    var senterTarget = new THREE.Object3D();
-    camera.add(senterTarget);
-    senterTarget.position.set(0,4,-8);
-    senterSpotLight.target = senterTarget;
-    var gunMetalnessTexture = new THREE.TGALoader().load( "asset/modern-weapons/Pistol/Textures/Pistol_Metallic.tga" );
-    var gunNormalTexture = new THREE.TextureLoader().load( "asset/modern-weapons/Pistol/Textures/Pistol_Normal.png" );
-    var loader = new THREE.FBXLoader();
-    var material = new THREE.MeshStandardMaterial();
-    loader.load( 'asset/modern-weapons/Pistol/Pistol.fbx', function ( object ) {
-      object.rotation.y = Math.PI/2;
-      object.position.set(0.3,-0.44,-1);
-      object.scale.set(0.05,0.05,0.05);
-      material.roughness = 1; // attenuates roughnessMap
-      material.metalness = 1; // attenuates metalnessMap
-      material.metalnessMap = material.roughnessMap = gunMetalnessTexture;
-      material.normalMap = gunNormalTexture;
-      object.traverse(function (child){
-        if(child instanceof THREE.Mesh){
-          child.material = material;
-        }
-      });
-      gun = object;
-      camera.add( object );
-    } );
-    window.addEventListener( 'resize', onWindowResize, false );
-    window.addEventListener( "mousemove", onDocumentMouseMove, false );
-    window.addEventListener('keydown', onDocumentKeyDown, false);
-    window.addEventListener("mousedown", onDocumentMouseDown, false)
-	return;
+  
 }

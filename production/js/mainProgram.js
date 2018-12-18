@@ -1,7 +1,8 @@
 "use strict";
 
-function main() {
+async function main() {
     initGame();
+    await delay(10000);
 
     // main menu
 
