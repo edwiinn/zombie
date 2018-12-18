@@ -48,12 +48,14 @@ function animate(){
     }
 
     if (s < 40){
-        audioLoader.load( 'assets/zombie.wav', function( buffer ) {
-            soundZombie.setBuffer( buffer );
-            soundZombie.setLoop( false);
-            soundZombie.setVolume( 0.5 * (40.0 - s)/40.0 );
-            soundZombie.play();
-          });
+        if(!audioLoader.isPlaying){
+            audioLoader.load( 'assets/zombie.wav', function( buffer ) {
+                soundZombie.setBuffer( buffer );
+                soundZombie.setLoop( false);
+                soundZombie.setVolume( 0.5 * (40.0 - s)/40.0 );
+                soundZombie.play();
+            });
+        }
     }
 
     for(var i=0;i<mixer.length;i++)
@@ -68,26 +70,6 @@ function render(){
 function LockCamera(){
     controls.lock();
     controls.enabled = true;
-}
-
-
-function loadObject (filename, parentName, objName){
-    objectLoader.load(
-        "assets/"+filename,
-        function ( obj ) {
-            // Add the loaded object to the scene
-            if(scene.getObjectByName(objName) == null){
-                var tmp = new THREE.Group();
-                tmp.name = parentName;
-                obj.name = objName;
-                tmp.add(obj);
-                scene.add( tmp );
-                return;
-            }
-        },
-        function ( xhr ) {return;},
-        function ( err ) {return;}
-    );
 }
 
 function loadObjectGLTF(filename, objName, scale, position, generateAnimation){

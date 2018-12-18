@@ -10,7 +10,7 @@ async function intervalAddEnemy(){
     modDir["enemy_"+(numEnemy)].lookAt(newDir);
     numEnemy += 1;
     movSpeed += 0.005;
-    if(numEnemy == 10) clearInterval(intervalFunc);
+    if(numEnemy == 6) clearInterval(intervalFunc);
 }
 
 function getSign(){

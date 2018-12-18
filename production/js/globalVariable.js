@@ -17,6 +17,7 @@ var playeragle =(180/360)*6.28;
 var movSpeed = 0.1;
 var mixer = [];
 var anglePlayer = 3.14;
+
 //Camera
 var player, cameraOriginVec, gunFlashLight, gun, mouseHelper;
 var cameraRotateLeft = false;
@@ -33,4 +34,3 @@ var listener = new THREE.AudioListener();
 var soundGun = new THREE.Audio( listener );
 var soundZombie = new THREE.Audio( listener );
 var audioLoader = new THREE.AudioLoader();
-// var modDirChildren =[];

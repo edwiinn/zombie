@@ -11,8 +11,6 @@ function onDocumentMouseDown(event){
     if(selectedObject){
       var name = selectedObject.parent.parent.parent.parent.parent.parent.parent.name;
       fallingXto(name);
-     // modDir[name].position.x = generatePosition(30, 90);
-      console.log(name);
     }
     isGunFired = true;
     isGunFiredBackTransition = true;
@@ -47,7 +45,6 @@ function onDocumentMouseMove( event ) {
   event.preventDefault();
 
   if ( selectedObject ) {
-    console.log("zombieeee");
     selectedObject = null;
   }
   var intersects = getIntersects( event.layerX, event.layerY );

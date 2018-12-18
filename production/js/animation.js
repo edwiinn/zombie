@@ -47,7 +47,6 @@ function attackXto(model,n)
 		{
       if(!actions[(model+"Zombie@attack")].isRunning()){
         playerHP -= 1;
-        if(playerHP >= 0)window.close();
         
 				var timeScale=1.5;
             actions[model+"Zombie@attack"].stop();
@@ -80,7 +79,6 @@ function fallingXto(model)
                 actions[model+"Zombie@fallingback"].halt();
                 actions[model+"Zombie@attack"].halt();
                 actions[model+"Zombie@walk_in_place"].halt();
-								//tambah efek kebakar(opsional)
 							},900);
                setTimeout(function(){
                  modDir[model].position.x = generatePosition(30, 90);
@@ -91,7 +89,6 @@ function fallingXto(model)
                 actions[model+"Zombie@walk_in_place"].fadeOut(1);
               },1210);
             }
-				//need disapear;
 		}
 
 function runFirst(model)
@@ -110,8 +107,8 @@ function runFirst(model)
       {
         var parentName = "moonlight";
         var objName ="moon";
-        loaderGLTF_m = new THREE.GLTFLoader();                  //position =[[x],[y],[z]]
-        loaderGLTF_m.load(                                     //scale =[[x],[y],[z]]
+        loaderGLTF_m = new THREE.GLTFLoader();
+        loaderGLTF_m.load(                                     
             "assets/"+"statis/moon/scene.gltf",
             function ( obj ) {
                  if(scene.getObjectByName(objName) == null){
