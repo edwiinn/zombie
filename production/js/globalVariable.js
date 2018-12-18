@@ -3,7 +3,7 @@
 // enemy: hash table. Key => object name. Value => enemy object reference
 
 var scene, player, light, ground, camera, objectLoader, numEnemy = 0;
-var renderer, clock, deltaTime, intervalFunc, playerHP = 50;
+var renderer, clock, deltaTime, intervalFunc, playerHP = 100,limitHP =15;
 
 objectLoader = new THREE.ObjectLoader();
 
@@ -37,3 +37,5 @@ var soundGun = new THREE.Audio( listener );
 var soundZombie = new THREE.Audio( listener );
 var audioLoader = new THREE.AudioLoader();
 var isPause = false;
+var opacity=0;
+

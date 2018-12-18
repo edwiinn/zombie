@@ -57,9 +57,11 @@ function animate(){
             modDir["enemy_"+i].position.x += ((0 - modDir["enemy_"+i].position.x) * deltaTime * movSpeed),
             modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z) * deltaTime * movSpeed);
         else {
-          attackXto("enemy_"+i);
+          attackXto("enemy_"+i,1000);
+          
         }
     }
+        
 
     if (s < 40){
         if(!audioLoader.isPlaying){

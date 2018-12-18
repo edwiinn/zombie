@@ -46,7 +46,12 @@ function attackXto(model,n)
 		{
       if(!actions[(model+"Zombie@attack")].isRunning()){
         playerHP -= 1;
-
+      if(playerHP<=limitHP){
+          opacity+=0.05;
+          document.getElementById('screenBlood').style.opacity = opacity;
+          console.log(document.getElementById('screenBlood').style.opacity);
+      }
+      console.log(document.getElementById('screenBlood').style.opacity);
 				var timeScale=1.5;
             actions[model+"Zombie@attack"].stop();
 						actions[model+"Zombie@attack"]
