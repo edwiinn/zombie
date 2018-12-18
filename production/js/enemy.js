@@ -15,7 +15,7 @@ async function intervalAddEnemy(){
     modDir["enemy_"+(numEnemy)].lookAt(newDir);
     numEnemy += 1;
     movSpeed += 0.005;
-    if(numEnemy == 30) clearInterval(intervalFunc);
+    if(numEnemy == 20) clearInterval(intervalFunc);
 }
 
 function initEnemies(){

@@ -67,13 +67,16 @@ function initGame(){
     //add decoration model
         //statis
           //tree
-            loadObjectGLTF("statis/tree/scene.gltf","tree",[0.02,0.02,0.02],[-20,0,20],null);
-            loadObjectGLTF("statis/tree/scene.gltf","tree_2",[0.02,0.02,0.02],[20,0,-20],null);
-            loadObjectGLTF("statis/tree/scene.gltf","tree_3",[0.02,0.02,0.02],[-20,0,-20],null);
-            loadObjectGLTF("statis/tree/scene.gltf","tree_4",[0.02,0.02,0.02],[20,0,20],null);
-            loadObjectGLTF("statis/tree/scene.gltf","tree_5",[0.02,0.02,0.02],[-40,0,70],null);
-            
-            //ruin
+            loadObjectGLTF("statis/tree/scene.gltf","tree",[0.03,0.05,0.02],[-20,0,20],null);
+            loadObjectGLTF("statis/tree/scene.gltf","tree_2",[0.03,0.05,0.02],[20,0,-20],null);
+            loadObjectGLTF("statis/tree/scene.gltf","tree_3",[0.02,0.05,0.02],[-20,0,-20],null);
+            loadObjectGLTF("statis/tree/scene.gltf","tree_4",[0.02,0.02,0.03],[20,0,20],null);
+            loadObjectGLTF("statis/tree/scene.gltf","tree_5",[0.02,0.05,0.04],[-60,0,70],null);
+            loadObjectGLTF("statis/tree/scene.gltf","tree_6",[0.03,0.05,0.02],[-60,0,-70],null);
+            loadObjectGLTF("statis/tree/scene.gltf","tree_7",[0.06,0.05,0.06],[60,0,-70],null);
+            loadObjectGLTF("statis/tree/scene.gltf","tree_8",[0.08,0.08,0.08],[60,0,70],null);
+            //
+           //ruin
             loadObjectGLTF("statis/ruin2/scene.gltf","ruin2_1",[0.04,0.04,0.04],[-20,0,-20],null);
             loadObjectGLTF("statis/ruin1/scene.gltf","ruin1_2",[0.02,0.02,0.02],[20,0,20],null);
     // push to scene
