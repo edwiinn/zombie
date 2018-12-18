@@ -12,7 +12,7 @@ function generateAnimationZombie( model, animations ) {
 function moveXto(model,x,z,goalX,goalZ)
 		{
 			var timeScale = 4;
-				if(!goalX || !goalZ){//10 degree
+				if(!goalX || !goalZ ){//10 degree
 
 					if(!actions[(model+"Zombie@walk_in_place")].isRunning()){
 							actions[(model+"Zombie@walk_in_place")]
@@ -23,11 +23,11 @@ function moveXto(model,x,z,goalX,goalZ)
           }
 					if(!goalZ){
 
-							if((Math.abs(modDir[model].position.z)-Math.abs(z))>=0)
+							if((Math.abs(modDir[model].position.z)-Math.abs(z))<=0.5)
 									goalZ=true;
 							}
 					if(!goalX){
-							if((Math.abs(modDir[model].position.x)-Math.abs(x))>=0){
+							if((Math.abs(modDir[model].position.x)-Math.abs(x))<=0.5){
 								goalX=true;
 							}
 
