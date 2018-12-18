@@ -70,7 +70,6 @@ function loadObject (filename, parentName, objName){
                 obj.name = objName;
                 tmp.add(obj);
                 scene.add( tmp );
-                console.log(objName+" have been loaded");
                 return;
             }
         },

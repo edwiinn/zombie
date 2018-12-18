@@ -2,13 +2,11 @@ function generateAnimationZombie( model, animations ) {
   mixer.push(new THREE.AnimationMixer( model ));
   for ( var i = 0; i < animations.length; i++ ) {
     var clip = animations[ i ];
-    console.log(clip.name);
     var action = mixer[mixer.length-1].clipAction( clip );
     actions[model.name+clip.name ] = action;
         action.clampWhenFinished = true;
         action.loop = THREE.LoopOnce;
   }
-  console.log("done animation for"+model.name);
 }
 
 function moveXto(model,x,z,goalX,goalZ)
