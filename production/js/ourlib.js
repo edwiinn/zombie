@@ -5,6 +5,7 @@ async function animate(){
     camera.updateProjectionMatrix();
     
     for(var i=0; i<numEnemy; i++){
+        if(modDir["enemy_"+i] == undefined) continue;
         modDir["enemy_"+i].position.x += ((0 - modDir["enemy_"+i].position.x) * deltaTime * movSpeed);
         modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z) * deltaTime * movSpeed);
         

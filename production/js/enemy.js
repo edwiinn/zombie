@@ -8,7 +8,6 @@ async function enemyMain(){
 function intervalAddEnemy(){
     loadObjectGLTF("zombie/scene.gltf", "enemy_"+(numEnemy-1), [0.04, 0.025, 0.03], [generatePosition(60, 120), 0, generatePosition(60, 120)], null);
     numEnemy += 1;
-    console.log(numEnemy);
 }
 
 function initEnemies(){
