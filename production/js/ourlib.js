@@ -9,8 +9,8 @@ function animate(){
     soundThema.stop();
     return;
   }
-  document.getElementById('skorfront').innerHTML = playerScore;
-  document.getElementById('hpfront').innerHTML = playerHP;
+
+
   if(!isPause){
     deltaTime = clock.getDelta();
     if(pausedDelta != null){
@@ -51,8 +51,8 @@ function animate(){
     }
     requestAnimationFrame( animate );
     // camera.updateProjectionMatrix();
-    s = 1e7;
     for(var i=0; i<numEnemy; i++){
+      s = 1e7;
         if(modDir["enemy_"+i] == undefined) break;
         var s_temp = Math.sqrt(Math.pow(modDir["enemy_"+i].position.x, 2) + Math.pow(modDir["enemy_"+i].position.z, 2));
         if(s_temp < s) s = s_temp;
@@ -61,10 +61,10 @@ function animate(){
             modDir["enemy_"+i].position.z += ((0 - modDir["enemy_"+i].position.z) * deltaTime * movSpeed);
         else {
           attackXto("enemy_"+i,1000);
-
+          healthBoard.innerHTML = playerHP;
         }
     }
-        
+
 
     if (s < 40){
         if(!soundZombie.isPlaying){

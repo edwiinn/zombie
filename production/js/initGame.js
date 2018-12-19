@@ -1,6 +1,9 @@
 "use strict";
 console.warn = function(){};
 function initGame(){
+  healthBoard = document.getElementById('hpfront');
+  scoreBoard = document.getElementById('skorfront');
+
     // utils
     objectLoader.setCrossOrigin("use-credentials");
     var cont = document.getElementById("container");

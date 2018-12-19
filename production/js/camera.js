@@ -10,6 +10,7 @@ function onDocumentMouseDown(event){
   if(event.buttons == 1 && !isGunFired){
     if(selectedObject){
       playerScore += 1;
+      scoreBoard.innerHTML = playerScore;
       var name = selectedObject.parent.parent.parent.parent.parent.parent.parent.name;
       fallingXto(name);
     }

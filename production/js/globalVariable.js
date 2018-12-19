@@ -20,6 +20,8 @@ var anglePlayer = 3.14;
 var s;
 var playerScore = 0;
 var pausedDelta = null;
+var healthBoard;
+var scoreBoard;
 //Camera
 var player, cameraOriginVec, gunFlashLight, gun, mouseHelper;
 var cameraRotateLeft = false;
@@ -39,5 +41,3 @@ var soundThema = new THREE.Audio( listener );
 var audioLoader = new THREE.AudioLoader();
 var isPause = false;
 var opacity=0;
-
-
