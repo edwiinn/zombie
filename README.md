@@ -1,6 +1,7 @@
 # zombie
 
 Cara main :
+
 Tekan tombol 'A' atau 'D' untuk menggerakkan kamera ke kiri atau ke kanan.
 
 Tekan tombol 'Escape' untuk pause atau memberhentikan game sementara.
