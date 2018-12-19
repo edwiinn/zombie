@@ -331,7 +331,7 @@ function onDocumentMouseDown(event){
       if (musicStatus == 1) sound.play();
     }
 	else if (intersects[0].object.userData.name == "start"){
-        document.location.href = 'index_min.html';
+        document.location.href = 'index.html';
     }
     }
 }
