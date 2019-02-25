@@ -1,5 +1,7 @@
 # zombie
 
+Game FPS menembak zombie berbasis ThreeJs
+
 Cara main :
 
 Tekan tombol 'A' atau 'D' untuk menggerakkan kamera ke kiri atau ke kanan.
